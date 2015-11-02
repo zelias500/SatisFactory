@@ -25,7 +25,7 @@ describe('Product model', function () {
         expect(Product).to.be.a('function');
     });
 
-    describe('product validation', function () 
+    describe('product validation', function (){ 
 
         describe('required fields', function () {
 
@@ -33,10 +33,11 @@ describe('Product model', function () {
                 var product = new Product({ 
                     description: 'Some cool stuff',
                     price: 12.99,
-                    quantity: 10
+                    quantity: 10,
+                    category: ["Tag1"]
                   })
 
-                  product.save(err, function (savedproduct){
+                  product.save(function (err, savedproduct){
                     expect(err.message).to.equal('Product validation failed');
                     done();
                   })       
@@ -45,12 +46,13 @@ describe('Product model', function () {
 
             it('requires description', function (done){
                 var product = new Product({ 
-                  title: "Some cool thing"
+                  title: "Some cool thing",
                   price: 12.99,
-                  quantity: 10
+                  quantity: 10,
+                  category: ["Tag1"]
                 })
 
-                product.save(err, function (savedProduct){
+                product.save(function (err, savedProduct){
                   expect(err.message).to.equal('Product validation failed');
                   done();
                 })
@@ -60,26 +62,42 @@ describe('Product model', function () {
               var product = new Product({
                 title: "Something cool",
                 description: "Some more cool",
-                quantity: 10
+                quantity: 10,
+                category: ["Tag1"]
               })
 
-              product.save(err, function(savedProduct){
+              product.save(function (err, savedProduct){
                 expect(err.message).to.equal('Product validation failed');
                 done();
               })
             })
 
-            it('requires quantity value', function(done){
+            it('requires quantity value', function (done){
                 var product = new Product({
                   title: "Something cool",
                   description: "Some more cool",
-                  price: 12.99
+                  price: 12.99,
+                  category: ["Tag1"]
                 })
 
-              product.save(err, function(savedProduct){
+              product.save(function (err, savedProduct){
                 expect(err.message).to.equal('Product validation failed');
                 done();
               })
+            })
+
+            it('requires at least one category', function (done){
+                var product = new Product({
+                  title: "Something cool",
+                  description: "Some more cool",
+                  price: 12.99,
+                  category: []
+                })
+
+                product.save(function (err, savedProduct){
+                  expect(err.message).to.equal('Product validation failed');
+                  done();
+                })
             })
 
         });
