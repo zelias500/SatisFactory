@@ -1,0 +1,89 @@
+var dbURI = 'mongodb://localhost:27017/testingDB';
+var clearDB = require('mocha-mongoose')(dbURI);
+
+var sinon = require('sinon');
+var expect = require('chai').expect;
+var mongoose = require('mongoose');
+
+// Require in all models.
+require('../../../server/db/models');
+
+var Product = mongoose.model('Product');
+
+describe('Product model', function () {
+
+    beforeEach('Establish DB connection', function (done) {
+        if (mongoose.connection.db) return done();
+        mongoose.connect(dbURI, done);
+    });
+
+    afterEach('Clear test database', function (done) {
+        clearDB(done);
+    });
+
+    it('should exist', function () {
+        expect(Product).to.be.a('function');
+    });
+
+    describe('product validation', function () 
+
+        describe('required fields', function () {
+
+            it('requires title', function (done) {
+                var product = new Product({ 
+                    description: 'Some cool stuff',
+                    price: 12.99,
+                    quantity: 10
+                  })
+
+                  product.save(err, function (savedproduct){
+                    expect(err.message).to.equal('Product validation failed');
+                    done();
+                  })       
+    
+            });
+
+            it('requires description', function (done){
+                var product = new Product({ 
+                  title: "Some cool thing"
+                  price: 12.99,
+                  quantity: 10
+                })
+
+                product.save(err, function (savedProduct){
+                  expect(err.message).to.equal('Product validation failed');
+                  done();
+                })
+            })
+
+            it('requires price', function (done){
+              var product = new Product({
+                title: "Something cool",
+                description: "Some more cool",
+                quantity: 10
+              })
+
+              product.save(err, function(savedProduct){
+                expect(err.message).to.equal('Product validation failed');
+                done();
+              })
+            })
+
+            it('requires quantity value', function(done){
+                var product = new Product({
+                  title: "Something cool",
+                  description: "Some more cool",
+                  price: 12.99
+                })
+
+              product.save(err, function(savedProduct){
+                expect(err.message).to.equal('Product validation failed');
+                done();
+              })
+            })
+
+        });
+
+    });
+
+});
