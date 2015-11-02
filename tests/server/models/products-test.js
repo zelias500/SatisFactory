@@ -131,7 +131,7 @@ describe('Product model', function () {
         // Remember pre-save hooks!
 
         describe('default photo assigned if no photo submitted', function(){
-          it('document should have a url assigned', function (done){
+          it('document should have a photo url assigned', function (done){
                 var productOne = new Product({
                   title: "Something cool",
                   description: "Some more cool",
@@ -141,6 +141,7 @@ describe('Product model', function () {
 
                 productOne.save(function (err, savedProduct){
                   expect(typeof savedProduct.photo).to.equal('String');
+                  done();
                 })
           })
         })
