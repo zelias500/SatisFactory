@@ -101,6 +101,49 @@ describe('Product model', function () {
             })
 
         });
+        
+        describe('unique fields', function(){
+
+          it('requires title to be unique', function (done){
+                var productOne = new Product({
+                  title: "Something cool",
+                  description: "Some more cool",
+                  price: 12.99,
+                  category: ["saved"]
+                })
+
+                productOne.save();
+
+                var productTwo = new Product({
+                  title: "Something cool",
+                  description: "This shouldn't be saved!",
+                  price: 13.99,
+                  category: ["not saved"]
+                })
+
+                productTwo.save(function (err, savedProduct){
+                  expect(err.message).to.equal("Product validation failed");
+                  done();
+                })
+          });
+        })
+
+        // Remember pre-save hooks!
+
+        describe('default photo assigned if no photo submitted', function(){
+          it('document should have a url assigned', function (done){
+                var productOne = new Product({
+                  title: "Something cool",
+                  description: "Some more cool",
+                  price: 12.99,
+                  category: ["saved"]
+                })
+
+                productOne.save(function (err, savedProduct){
+                  expect(typeof savedProduct.photo).to.equal('String');
+                })
+          })
+        })
 
     });
 
