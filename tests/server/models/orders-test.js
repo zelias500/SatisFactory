@@ -78,6 +78,7 @@ describe('Order model', function () {
                 title: "Something cool",
                 description: "Some more cool",
                 quantity: 10,
+                price :14,
                 category: ["Tag1"]
               })
 
@@ -93,6 +94,38 @@ describe('Order model', function () {
               order.save(function (err, savedorder){
                   expect(err.message).to.equal('Order validation failed');
                   done();
+            })
+            it('should keep price of item even when product price changes', function (done){
+              var productId;
+              var product = new Product({
+                title: "Something cool",
+                description: "Some more cool",
+                quantity: 10,
+                price :14,
+                category: ["Tag1"]
+              })
+
+              product.save(function(err, savedProduct){
+                 productId = savedProduct._id
+              });
+
+              var order = new Order({
+                   user: userId;
+                   item:[{price: 14, productId:productId, quantity: 5}]
+              })
+
+              var orderId;
+              order.save(function(err, savedorder){
+                orderId = savedorder._id
+              };
+
+              product.findByIdAndUpdate(productId, {price: 16})
+
+              order.findbyId(orderId).then(function(order){
+                 expect(order.item[0].price).to.equal(14)
+              })
+                        
+
             })
 
             
