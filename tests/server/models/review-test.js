@@ -9,10 +9,10 @@ var mongoose = require('mongoose');
 require('../../../server/db/models');
 
 var User = mongoose.model('User');
-// var Review = mongoose.model('Review');
+var Review = mongoose.model('Review');
 var Product = mongoose.model('Product');
 
-xdescribe('Review Model', function() {
+describe('Review Model', function() {
 
 	beforeEach('Establish DB connection', function (done) {
         if (mongoose.connection.db) return done();
