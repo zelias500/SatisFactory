@@ -9,7 +9,10 @@ var mongoose = require('mongoose');
 require('../../../server/db/models');
 
 var User = mongoose.model('User');
+var Review = mongoose.model('Review');
+var Order = mongoose.model('Order');
 
+var validEmailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 describe('User model', function () {
 
     beforeEach('Establish DB connection', function (done) {
@@ -20,9 +23,118 @@ describe('User model', function () {
     afterEach('Clear test database', function (done) {
         clearDB(done);
     });
+   
+    var createUser = function () {
+        return User.create({ email: 'obama@gmail.com', password: 'potus' });
+    };
 
     it('should exist', function () {
         expect(User).to.be.a('function');
+    });
+
+    it('should start as a regular user', function (done){
+        createUser().then(function (user) {
+            expect(user.isAdmin).to.be.falsey;
+            done();
+        }).then(null, done)
+    });
+
+    it('should only accept valid email addresses', function(done){
+        var user = new User();
+        user.email = 'hello';
+        return user.validate(function(err){
+            err.errors.content.type.should.equal('Email is invalid')
+            done();
+        })
+    })
+
+    it('should only have unique email addresses', function(done){
+        createUser().then(function(user){
+            var newUser = new User();
+            newUser.email = 'obama@gmail.com';
+            return newUser.validate(function(err){
+                err.errors.content.type.should.equal('Email must be unique')
+                done();
+            })
+        }}
+    })
+
+
+    createReview().then(function(review){
+            review.content = "DEELISH";
+            review.validate(function(err) {
+                err.errors.content.type.should.equal('Content is invalid')
+            })
+            done();
+        }).then(null, done);
+
+    describe('reviews', function() {
+
+        it('should be an array', function(done) {
+            createUser().then(function(user){
+                expect(typeof user.reviews).to.be.equal('array');
+                done();
+            }).then(null, done);
+        });
+
+        it('should reference Review model objects', function(done) {
+            createUser().then(function(user){
+                return Review.create({name: user.name})
+            })
+            .then(function(){
+                done();
+            })
+            .then(null, done);
+        });
+
+    });
+
+    describe('$$ dolla dolla bill yall $$', function() {
+
+        it('should be an array of objects', function(done){
+            createUser().then(function(user){
+                expect(typeof user.billing).to.be.equal('object');
+                done();
+            }).then(null, done)
+        })
+
+        it('should have a method that adds credit card information', function(done){
+            createUser().then(function(user) {
+                var cc = {
+                    type: "Visa",
+                    number: "123123123123123",
+                    name: "Silvia",
+                    address: "123 Fake Street",
+                    zip: "10021",
+                    expiration: "01/42",
+                    code: "789",
+                    city: "New York",
+                    state: "NY"
+                }
+                return user.addBillingOption(cc)
+            }).then(function (user) {
+                expect(user.billing[0].name).to.be.equal('Silvia');
+                done();
+            }).then(null, done);
+        })
+
+    });
+
+    describe('shipping addresses', function () {
+        it('should store addresses using a method', function(done){
+            createUser().then(function(user){
+                var address = {
+                    name: "Zack",
+                    address: "124 Fake Street",
+                    zip: "10099",
+                    city: "New York",
+                    state: "NY"
+                }
+                return user.addShippingAddress(address);
+            }).then(function (user) {
+                expect(user.shipping[0].name).to.be.equal('Zack');
+            }).then(null, done);
+        })
     });
 
     describe('password encryption', function () {
@@ -101,10 +213,6 @@ describe('User model', function () {
 
             var encryptSpy;
             var saltSpy;
-
-            var createUser = function () {
-                return User.create({ email: 'obama@gmail.com', password: 'potus' });
-            };
 
             beforeEach(function () {
                 encryptSpy = sinon.spy(User, 'encryptPassword');
