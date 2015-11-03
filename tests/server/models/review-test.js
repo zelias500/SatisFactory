@@ -31,7 +31,7 @@ describe('Review Model', function() {
     				return Product.create({name: "chocolate"})
     			})
     			.then(function(product) {
-    				return Review.create({user: theUser._id, product: product._id, numStars: 5})
+    				return Review.create({user: theUser._id, product: product._id, content: "badblablabalbal", numStars: 5})
     			})
 
     }
@@ -40,7 +40,7 @@ describe('Review Model', function() {
         	createReview().then(function(review) {
         		return Product.findById(review.product)
         	}).then(function(product){
-        		expect(product.name).to.be('chocolate')
+        		expect(product.name).to.equal('chocolate');
         		done();
         	}).then(null, done);
     });
@@ -54,18 +54,23 @@ describe('Review Model', function() {
         	}).then(null, done);
     });
 
-    it('does not error without content', function(done){
+    it('should require content', function(done){
     	createReview().then(function(review){
-    		return review.validate()
+            review.content ="";
+            return review.save()
+    		//return review.validate()
     	}).then(done)
-        .then(null, done);
+        .then(null, function(err){
+            expect(err.name).to.equal('ValidationError');
+            done()
+        });
     });
 
     it('errors if it has content with length <10 characters', function(done){
     	createReview().then(function(review){
     		review.content = "DEELISH";
     		review.validate(function(err) {
-    			err.errors.content.type.should.equal('Content is invalid')
+    			expect(err.errors.content.message).to.equal('Content is invalid')
     		})
     		done();
     	}).then(null, done);
@@ -75,8 +80,9 @@ describe('Review Model', function() {
     	createReview().then(function(review){
     		review.content = "DEEEEEEEEEEEEEEEEEEELISH";
     		review.validate(function(err) {
-    			assert.equal(err, null);
+    			expect(err).to.equal(undefined)
     		})
+
     		done();
     	}).then(null, done);
     })
