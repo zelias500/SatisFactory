@@ -31,14 +31,10 @@ describe('Review Model', function() {
     				return Product.create({name: "chocolate"})
     			})
     			.then(function(product) {
-    				return Review.create({user: user._id, product: product._id, numStars: 5})
+    				return Review.create({user: theUser._id, product: product._id, numStars: 5})
     			})
 
     }
-
-    it('should not error on creation', function(done) {
-    	expect(createReview().then(null, done)).to.not.throw(Error)
-    })
 
     it('reviews must belong to a product', function(done) {
         	createReview().then(function(review) {
@@ -53,17 +49,16 @@ describe('Review Model', function() {
         	createReview().then(function(review) {
         		return User.findById(review.user)
         	}).then(function(user){
-        		expect(user.email).to.be('obama@gmail.com')
+        		expect(user.email).to.equal('obama@gmail.com')
         		done();
         	}).then(null, done);
     });
 
     it('does not error without content', function(done){
     	createReview().then(function(review){
-    		review.validate(function(err){
-    			assert.equal(err, null);
-    		})
-    	})
+    		return review.validate()
+    	}).then(done)
+        .then(null, done);
     });
 
     it('errors if it has content with length <10 characters', function(done){

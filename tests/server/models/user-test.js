@@ -49,7 +49,9 @@ describe('User model', function () {
 
         it('should reference Review model objects', function(done) {
             createUser().then(function(user){
-                return Review.create({reviewer: user.name})
+                return Review.create({name: user.name})
+            })
+            .then(function(){
                 done();
             })
             .then(null, done);
@@ -58,13 +60,6 @@ describe('User model', function () {
     });
 
     describe('$$ dolla dolla bill yall $$', function() {
-
-        it('should be an array of objects', function(done){
-            createUser().then(function(user){
-                expect(typeof user.billing).to.be.equal('object');
-                done();
-            }).then(null, done)
-        })
 
         it('should be an array of objects', function(done){
             createUser().then(function(user){
