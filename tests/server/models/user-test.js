@@ -9,11 +9,11 @@ var mongoose = require('mongoose');
 require('../../../server/db/models');
 
 var User = mongoose.model('User');
-var Review = mongoose.model('Review');
+// var Review = mongoose.model('Review');
 var Order = mongoose.model('Order');
 
 var validEmailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-describe('User model', function () {
+xdescribe('User model', function () {
 
     beforeEach('Establish DB connection', function (done) {
         if (mongoose.connection.db) return done();
@@ -56,17 +56,8 @@ describe('User model', function () {
                 err.errors.content.type.should.equal('Email must be unique')
                 done();
             })
-        }}
+        })
     })
-
-
-    createReview().then(function(review){
-            review.content = "DEELISH";
-            review.validate(function(err) {
-                err.errors.content.type.should.equal('Content is invalid')
-            })
-            done();
-        }).then(null, done);
 
     describe('reviews', function() {
 

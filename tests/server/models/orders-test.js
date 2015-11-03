@@ -88,17 +88,21 @@ describe('Order model', function () {
 
               product.save(function (err, savedProduct){
                  productId = savedProduct._id
-                 savedProduct.remove()
+                 return savedProduct.remove()
+              }).then(function(){
+                var order = new Order({
+                     user: user._id,
+                     item:[{price: 15, productId:productId, quantity: 5}]
+                })
+
+                return order.save();
+              }).then(function(order) {
+                done();
+              }).then(null, function(err){
+                  expect(err.message).to.equal('Order validation failed');
+                  done(err);
               })
 
-              var order = new Order({
-                   user: user._id,
-                   item:[{price: 15, productId:productId, quantity: 5}]
-              })
-              order.save(function (err, savedorder){
-                  expect(err.message).to.equal('Order validation failed');
-                  done();
-              });
             });
 
             it('should keep price of item even when product price changes', function (done){
@@ -111,26 +115,29 @@ describe('Order model', function () {
                 category: ["Tag1"]
               })
 
-              product.save(function(err, savedProduct){
-                 productId = savedProduct._id
-              });
-
-              var order = new Order({
-                   user: user._id,
-                   item:[{price: 14, productId:productId, quantity: 5}]
-              })
-
               var orderId;
-              order.save(function(err, savedorder){
-                orderId = savedorder._id
-              });
 
-              product.findByIdAndUpdate(productId, {price: 16})
-
-              order.findbyId(orderId).then(function(order){
-                 expect(order.item[0].price).to.equal(14)
-              })
-                        
+              product.save()
+                .then(function(product) {
+                  productId = product._id
+                  var order = new Order({
+                    user: user._id, 
+                    item: [{price: 14, productId: productId, quantity: 5}]
+                  })
+                  return order.save()
+                })
+                .then(function(order) {
+                  orderId = order._id
+                  return Product.findByIdAndUpdate(productId, {price: 16})
+                })
+                .then(function() {
+                  return Order.findById(orderId)
+                })
+                .then(function(order) {
+                  expect(order.item[0].price).to.equal(14)
+                  done()
+                })
+                .then(null, done)   
 
             })
 
