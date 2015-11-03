@@ -12,6 +12,7 @@ var User = mongoose.model('User');
 var Review = mongoose.model('Review');
 var Order = mongoose.model('Order');
 
+var validEmailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 describe('User model', function () {
 
     beforeEach('Establish DB connection', function (done) {
@@ -37,6 +38,35 @@ describe('User model', function () {
             done();
         }).then(null, done)
     });
+
+    it('should only accept valid email addresses', function(done){
+        var user = new User();
+        user.email = 'hello';
+        return user.validate(function(err){
+            err.errors.content.type.should.equal('Email is invalid')
+            done();
+        })
+    })
+
+    it('should only have unique email addresses', function(done){
+        createUser().then(function(user){
+            var newUser = new User();
+            newUser.email = 'obama@gmail.com';
+            return newUser.validate(function(err){
+                err.errors.content.type.should.equal('Email must be unique')
+                done();
+            })
+        }}
+    })
+
+
+    createReview().then(function(review){
+            review.content = "DEELISH";
+            review.validate(function(err) {
+                err.errors.content.type.should.equal('Content is invalid')
+            })
+            done();
+        }).then(null, done);
 
     describe('reviews', function() {
 
