@@ -1,10 +1,22 @@
 'use strict';
 var crypto = require('crypto');
 var mongoose = require('mongoose');
+var Review = require('./review');
+var Schema = mongoose.Schema;
 
-var schema = new mongoose.Schema({
+var validEmailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+
+var schema = new Schema({
     email: {
-        type: String
+        type: String,
+        unique: true, 
+        validate: { 
+            validator: function(v){
+                return validEmailRegex.test(v);
+            },
+            message: "Email is invalid"
+
+        }
     },
     password: {
         type: String
@@ -23,7 +35,13 @@ var schema = new mongoose.Schema({
     },
     google: {
         id: String
-    }
+    },
+    reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
+
+    billing: Array,
+
+    shipping: Array
+
 });
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
@@ -50,11 +68,24 @@ schema.pre('save', function (next) {
 
 });
 
+
 schema.statics.generateSalt = generateSalt;
 schema.statics.encryptPassword = encryptPassword;
 
 schema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
+
+schema.method('addBillingOption', function(card){
+    this.billing.push(card);
+    return card;
+})
+
+schema.method('addShippingAddress', function(address){
+    this.shipping.push(address);
+    return address;
+})
+
+
 
 mongoose.model('User', schema);

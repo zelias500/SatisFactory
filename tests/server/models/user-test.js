@@ -42,44 +42,41 @@ describe('User model', function () {
     it('should only accept valid email addresses', function(done){
         var user = new User();
         user.email = 'hello';
-        return user.validate(function(err){
-            err.errors.content.type.should.equal('Email is invalid')
+        user.validate(function(err){
+            expect(err.errors.email.message).to.equal('Email is invalid')
             done();
         })
     })
 
     it('should only have unique email addresses', function(done){
-        createUser().then(function(user){
+        createUser()
+        .then(function(user){
             var newUser = new User();
             newUser.email = 'obama@gmail.com';
-            return newUser.validate(function(err){
-                err.errors.content.type.should.equal('Email must be unique')
-                done();
-            })
-        }}
+            return newUser.save()
+        })
+        .then(function(user){
+            done();    
+        })
+        .then(null, function(err){
+             expect(err.message.match(/duplicate key error/g).length).to.equal(1);
+             done();
+        });
     })
 
-
-    createReview().then(function(review){
-            review.content = "DEELISH";
-            review.validate(function(err) {
-                err.errors.content.type.should.equal('Content is invalid')
-            })
-            done();
-        }).then(null, done);
 
     describe('reviews', function() {
 
         it('should be an array', function(done) {
             createUser().then(function(user){
-                expect(typeof user.reviews).to.be.equal('array');
+                expect(Array.isArray(user.reviews)).to.be.true;
                 done();
             }).then(null, done);
         });
 
         it('should reference Review model objects', function(done) {
             createUser().then(function(user){
-                return Review.create({name: user.name})
+                return Review.create({name: user.name, content: "shfksdfhwkhe"})
             })
             .then(function(){
                 done();
@@ -93,7 +90,7 @@ describe('User model', function () {
 
         it('should be an array of objects', function(done){
             createUser().then(function(user){
-                expect(typeof user.billing).to.be.equal('object');
+                expect(Array.isArray(user.billing)).to.be.true;
                 done();
             }).then(null, done)
         })
@@ -111,7 +108,8 @@ describe('User model', function () {
                     city: "New York",
                     state: "NY"
                 }
-                return user.addBillingOption(cc)
+                user.addBillingOption(cc);
+                return user;
             }).then(function (user) {
                 expect(user.billing[0].name).to.be.equal('Silvia');
                 done();
@@ -130,9 +128,11 @@ describe('User model', function () {
                     city: "New York",
                     state: "NY"
                 }
-                return user.addShippingAddress(address);
+                user.addShippingAddress(address);
+                return user;
             }).then(function (user) {
                 expect(user.shipping[0].name).to.be.equal('Zack');
+                done();
             }).then(null, done);
         })
     });

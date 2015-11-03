@@ -4,3 +4,4 @@
 require('./user');
 require('./product');
 require('./order');
+require('./review');
