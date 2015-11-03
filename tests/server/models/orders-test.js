@@ -9,6 +9,8 @@ var mongoose = require('mongoose');
 require('../../../server/db/models');
 
 var Order = mongoose.model('Order');
+var User = mongoose.model('User');
+var Product = mongoose.model('Product');
 
 describe('Order model', function () {
 
@@ -29,23 +31,25 @@ describe('Order model', function () {
     describe('order validation', function (){ 
 
         describe('required fields', function () {
+           var user;
            beforeEach('Create User', function (done) {
-                var userId;
-                var user  = new User({email:"jellyqq@gmail.com"})
+                user  = new User({email:"jellyqq@gmail.com"})
                 user.save(function(err, saveduser){
-                  userId = saveduser._id
-                })
-                done();         
+                  user = saveduser;
+                  done();
+                })         
            });
 
             it('requires user or sessionId', function (done) {
                var productId;
                var product = new Product({ 
+                    title: "Some cool thing",
                     description: 'Some cool stuff',
                     price: 12.99,
                     quantity: 10,
                     category: ["Tag1"]
                   })
+
                product.save(function(err, savedproduct){
                    productId = savedproduct._id
                })
@@ -63,10 +67,10 @@ describe('Order model', function () {
 
             it('requires item', function (done){
                  var order = new Order({
-                    user: userId;
+                    user: user._id
                  })
 
-                  order.save(function (err, savedorder){
+                order.save(function (err, savedorder){
                   expect(err.message).to.equal('Order validation failed');
                   done();
                 })
@@ -88,13 +92,15 @@ describe('Order model', function () {
               })
 
               var order = new Order({
-                   user: userId;
+                   user: user._id,
                    item:[{price: 15, productId:productId, quantity: 5}]
               })
               order.save(function (err, savedorder){
                   expect(err.message).to.equal('Order validation failed');
                   done();
-            })
+              });
+            });
+
             it('should keep price of item even when product price changes', function (done){
               var productId;
               var product = new Product({
@@ -110,14 +116,14 @@ describe('Order model', function () {
               });
 
               var order = new Order({
-                   user: userId;
+                   user: user._id,
                    item:[{price: 14, productId:productId, quantity: 5}]
               })
 
               var orderId;
               order.save(function(err, savedorder){
                 orderId = savedorder._id
-              };
+              });
 
               product.findByIdAndUpdate(productId, {price: 16})
 
@@ -129,6 +135,7 @@ describe('Order model', function () {
             })
 
             
-    });
+        });
 
+    });
 });
