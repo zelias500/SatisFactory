@@ -56,17 +56,9 @@ describe('User model', function () {
                 err.errors.content.type.should.equal('Email must be unique')
                 done();
             })
-        }}
+        })
     })
 
-
-    createReview().then(function(review){
-            review.content = "DEELISH";
-            review.validate(function(err) {
-                err.errors.content.type.should.equal('Content is invalid')
-            })
-            done();
-        }).then(null, done);
 
     describe('reviews', function() {
 

@@ -12,7 +12,7 @@ var Order = mongoose.model('Order');
 var User = mongoose.model('User');
 var Product = mongoose.model('Product');
 
-describe('Order model', function () {
+xdescribe('Order model', function () {
 
     beforeEach('Establish DB connection', function (done) {
         if (mongoose.connection.db) return done();
