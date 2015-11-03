@@ -135,12 +135,14 @@ xdescribe('Product model', function () {
                 var productOne = new Product({
                   title: "Something cool",
                   description: "Some more cool",
+                  quantity: 2,
                   price: 12.99,
                   category: ["saved"]
                 })
 
                 productOne.save(function (err, savedProduct){
-                  expect(typeof savedProduct.photo).to.equal('String');
+                  if (err) done(err);
+                  expect(typeof savedProduct.photo).to.equal('string');
                   done();
                 })
           })
