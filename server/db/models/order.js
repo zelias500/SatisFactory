@@ -3,19 +3,19 @@ var User = require("./user");
 var Product = require("./product");
 var Schema = mongoose.Schema;
 
-var lineItemSchema = new Schema({
-  price: Number,
-  product: { type: Schema.Types.ObjectId, ref: 'Product'},
-  quantity: Number
-})
-
 var orderSchema = new mongoose.Schema({
   user: {type: Schema.Types.ObjectId, ref: 'User', required: true}, 
-  items: [lineItemSchema],
+  item: {type: [{
+  	price: Number,
+  	productId: { type: Schema.Types.ObjectId, ref:"Product"  },
+  	quantity: Number
+  }],
+	required: true
+	},
   status: {type: String, enum: ['pending', 'shipping', 'completed', 'cancelled'], required: true, default: 'pending'},
   shipTo: String,
   billWith: String,
-  orderDate: {type: Date, default: new Date }
+  orderDate: {type: Date, default: new Date()}
 })
 
 orderSchema.methods.addToOrder = function(cost, id, amount) {

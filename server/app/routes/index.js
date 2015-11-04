@@ -15,3 +15,7 @@ router.use('/orders', require('./orders'));
 router.use(function (req, res) {
     res.status(404).end();
 });
+
+// router.use(function (err, req, res, next) {
+//     res.status(err.status).json(err);
+// });

@@ -7,25 +7,30 @@ var User = mongoose.model('User');
 var Order = mongoose.model('Order');
 var Review = mongoose.model('Review');
 
+// GTPT: how about a get '/me' route to get current user?
+
 router.get('/', function(req, res, next){
-	User.find({}).exec().then(function(users){
+	User.find({}).exec().then(function(users){ // GTPT: technically you don't need exec anymore I think
 		res.status(200).json(users);
 	}).then(null,next);
 })
 
 router.post('/', function(req, res, next){
-	User.create({email: req.body.email}).then(function(user){
-		res.status(201).json(user);
-	}).then(null, next);
+  // GTPT: why just email?
+  User.create({email: req.body.email}).then(function(user){
+    res.status(201).json(user);
+  }).then(null, next);
 })
 
+// GTPT: this should be a query string probs
+// GTPT:  /users/?email=griffin@fullstackacademy.com
 router.get('/email/:email', function(req, res, next){
 	User.findOne({email: req.params.email}).exec().then(function(user){
 		res.status(200).json(user);
 	}).then(null, next);
 })
 
-
+// GTPT: how about router.param('id', blahblah)
 router.get('/:id', function(req,res,next){
 	console.log("reqparams", req.params.id, "is type", typeof req.params.id)
 	User.findById(req.params.id).exec().then(function(user){
@@ -66,6 +71,7 @@ router.delete('/:id', function(req, res, next){
 	});
 })
 
+// GTPT: good good, very RESTful (whatever that means)
 router.get('/:id/orders', function(req, res, next){
 	Order.find({user: req.params.id}).exec().then(function(orders){
 		res.status(200).json(orders);
