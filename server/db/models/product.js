@@ -1,17 +1,44 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+var Review = require('./review')
+
 
 var productSchema = new Schema({
   title: { type: String, required: true, unique: true},
   description: { type: String, required: true },
-  price: {type: Number, required: true}, // GTPT: in cents? validate?
-  quantity: {type: Number, required: true, default: 0, min: 0}, // GTPT:  is this quantity in stock?, default?
+  price: {type: Number, get: getPrice, set: setPrice},
+  quantity: {type: Number, required: true, default: 0, min: 0}, 
   category: {type: Schema.Types.ObjectId, required: true, ref: 'Category'},
-  photo: {type: String}
+  photo: {type: String},
+  reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
 })
 
-// GTPT: how about a method that gets the average numStars of all reviews of that product
-// GTPT: or a method that gets all reviews for that product
+function getPrice(num) {
+  return (num/100).toFixed(2)
+}
+
+function setPrice(num) {
+  return num * 100
+}
+
+productSchema.methods.averageStars = function() {
+  var aveStars, sum, numReviews;
+  this.populate('reviews').execPopulate()
+    .then(function(product) {
+        product.reviews.forEach(function(review) {
+          numReviews++
+          sum += review.numStars 
+        })
+        return aveStars = sum / numReviews
+    })
+}
+
+productSchema.methods.getAllReviews = function(){
+    return this.populate('reviews').execPopulate()
+      .then(function(product){
+        return product.reviews;
+    })
+}
 
 productSchema.pre('save', function(next) {
 	if (!this.photo) {
