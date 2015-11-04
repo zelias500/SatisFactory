@@ -33,7 +33,8 @@ var schema = new Schema({
     },
     password: {// GTPT: setter?
         type: String,
-        select: false
+        select: false,
+        set: encryptPassword
     },
     salt: {
         type: String,
