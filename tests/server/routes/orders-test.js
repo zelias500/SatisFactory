@@ -13,7 +13,7 @@ var clearDB = require('mocha-mongoose')(dbURI);
 var supertest = require('supertest');
 var app = require('../../../server/app');
 
-describe('Orders Route', function () {
+xdescribe('Orders Route', function () {
 
 	var guestAgent;
 	var createOrder = function(){

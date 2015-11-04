@@ -1,204 +1,255 @@
-// Instantiate all models
-var mongoose = require('mongoose');
-require('../../../server/db/models');
-var User = mongoose.model('User');
-var Order = mongoose.model('Order');
-var Product = mongoose.model('Product');
-var Review = mongoose.model('Review');
-
-var expect = require('chai').expect;
-
 var dbURI = 'mongodb://localhost:27017/testingDB';
 var clearDB = require('mocha-mongoose')(dbURI);
 
-var supertest = require('supertest');
-var app = require('../../../server/app');
+var sinon = require('sinon');
+var expect = require('chai').expect;
+var mongoose = require('mongoose');
 
-describe('Users Route:', function (){
+// Require in all models.
+require('../../../server/db/models');
 
-  beforeEach('Establish DB connection', function (done) {
-    if (mongoose.connection.db) return done();
-    mongoose.connect(dbURI, done);
-  });
+var User = mongoose.model('User');
+var Review = mongoose.model('Review');
+var Order = mongoose.model('Order');
 
-  afterEach('Clear test database', function (done) {
-    clearDB(done);
-  });
+var validEmailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+xdescribe('User model', function () {
 
-  var guestAgent;
+    beforeEach('Establish DB connection', function (done) {
+        if (mongoose.connection.db) return done();
+        mongoose.connect(dbURI, done);
+    });
 
-  beforeEach('Create guest agent', function () {
-    guestAgent = supertest.agent(app);
-  });
+    afterEach('Clear test database', function (done) {
+        clearDB(done);
+    });
 
-  var user;
+    var createUser = function () {
+        return User.create({ email: 'obama@gmail.com', password: 'potus' });
+    };
 
-  beforeEach('Create an existing user', function() {
-    user = new User({ email: "someone@something.com"})
-  })
+    it('should exist', function () {
+        expect(User).to.be.a('function');
+    });
 
-  describe('GET /users', function (){
-
-    
-    it("gets all users with a 200 response and an array as the body", function (done){
-      guestAgent.get('/api/users')
-        .expect(200)
-        .end(function(err, response){
-          if(err) return done (err);
-          expect(response.body).to.be.an.instanceOf( Array );
-          done();
-        })
-    })
-
-    it('gets information on a single user with a 200 response', function (done){
-      guestAgent.get('/api/users/' + user._id)
-        .expect(200)
-        .end(function(err, response){
-          if(err) done(err);
-          expect(response.body.email).to.be("someone@something.com")
-          done();
-        })
-    })
-
-    it('get one that does not exist', function (done){
-      guestAgent.get('/api/users/1sh0uldn0tex1st')
-        .expect(404)
-        .end(done)
-    })
-
-    it('gets a user by their email with a 200 response', function (done){
-        guestAgent.get('/api/users/email/' + user._id)
-          .expect(200)
-          .end(function(err, response) {
-            if (err) done(err);
-            expect(response.body.email).to.be('someone@something.com')
+    it('should start as a regular user', function (done){
+        createUser().then(function (user) {
+            expect(user.isAdmin).to.be.falsey;
             done();
-          })
-  })
+        }).then(null, done)
+    });
 
-  })
-
-  describe('POST /users', function() {
-    // var guestAgent;
-    // beforeEach('Create guest agent', function() {
-    //   guestAgent = supertest.agent(app)
-    // })
-
-    it('creates a new user', function(done) {
-      guestAgent.post('/api/users/')
-          .send({email: 'silvia@silvia.com'})
-        .expect(201)
-        .end(function(err, response) {
-          if (err) done(err);
-          expect(response.body.email).to.be('silvia@silvia.com')
-          done()
+    it('should only accept valid email addresses', function(done){
+        var user = new User();
+        user.email = 'hello';
+        user.validate(function(err){
+            expect(err.errors.email.message).to.equal('Email is invalid')
+            done();
         })
     })
 
-  })
-
-  describe('PUT /users', function() {
-
-    it('updates an existing users details', function (done){
-      guestAgent.put('/api/users/' + user._id)
-        .send({ password: "somepassword" })
-        .expect(200)
-        .end(function(err, response){
-          if(err) done(err);
-          expect(response.body.password).to.be("somepassword");
-          done();
+    it('should only have unique email addresses', function(done){
+        createUser()
+        .then(function(user){
+            var newUser = new User();
+            newUser.email = 'obama@gmail.com';
+            return newUser.save()
         })
+        .then(function(user){
+            done();
+        })
+        .then(null, function(err){
+             expect(err.message.match(/duplicate key error/g).length).to.equal(1);
+             done();
+        });
     })
 
-    it('does not update a user that does not exist', function (done) {
-      guestAgent.put('/api/users/1sh0uldn0tex1st')
-        .expect(404)
-        .end(done)
-    })
 
-  })
+    describe('reviews', function() {
 
-  describe('DELETE /users', function() {
-    it('removes an existing user', function (done) {
-      guestAgent.delete('/api/users/' + user._id)
-        .expect(204)
-        .end(function (err, response){
-          User.findById(user._id)
-            .then(function(user){
-              expect(user).to.be.null;
-              done()
+        it('should be an array', function(done) {
+            createUser().then(function(user){
+                expect(Array.isArray(user.reviews)).to.be.true;
+                done();
+            }).then(null, done);
+        });
+
+        it('should reference Review model objects', function(done) {
+            createUser().then(function(user){
+                return Review.create({name: user.name, content: "shfksdfhwkhe"})
             })
+            .then(function(){
+                done();
+            })
+            .then(null, done);
+        });
+
+    });
+
+    describe('$$ dolla dolla bill yall $$', function() {
+
+        it('should be an array of objects', function(done){
+            createUser().then(function(user){
+                expect(Array.isArray(user.billing)).to.be.true;
+                done();
+            }).then(null, done)
+        })
+
+        it('should have a method that adds credit card information', function(done){
+            createUser().then(function(user) {
+                var cc = {
+                    type: "Visa",
+                    number: "123123123123123",
+                    name: "Silvia",
+                    address: "123 Fake Street",
+                    zip: "10021",
+                    expiration: "01/42",
+                    code: "789",
+                    city: "New York",
+                    state: "NY"
+                }
+                user.addBillingOption(cc);
+                return user;
+            }).then(function (user) {
+                expect(user.billing[0].name).to.be.equal('Silvia');
+                done();
+            }).then(null, done);
+        })
+
+    });
+
+    describe('shipping addresses', function () {
+        it('should store addresses using a method', function(done){
+            createUser().then(function(user){
+                var address = {
+                    name: "Zack",
+                    address: "124 Fake Street",
+                    zip: "10099",
+                    city: "New York",
+                    state: "NY"
+                }
+                user.addShippingAddress(address);
+                return user;
+            }).then(function (user) {
+                expect(user.shipping[0].name).to.be.equal('Zack');
+                done();
+            }).then(null, done);
         })
     });
 
-    it('does not delete a user that does not exist', function (done) {
-      guestAgent.delete('/api/users/1sh0uldn0tex1st')
-        .expect(404)
-        .end(done)
-    })
+    describe('password encryption', function () {
 
-  })
+        describe('generateSalt method', function () {
 
-  describe('GET /users/:id/orders', function() {
-    it('retrieves all orders by a single user', function (done) {
+            it('should exist', function () {
+                expect(User.generateSalt).to.be.a('function');
+            });
 
-      Product.create({
-        title: "SomeCoolStuff",
-        description: "So F****N cool",
-        price: 9.99,
-        quantity: 5000,
-        category: ["CoolS**t"]
-      })
-      .then(function(product){
-        return Order.create({ 
-          user: user._id,
-          item: [{
-            price: 9.99,
-            productId: product._id,
-            quantity: 1
-          }],
-          status: 'pending'
+            it('should return a random string basically', function () {
+                expect(User.generateSalt()).to.be.a('string');
+            });
+
         });
 
-        }).then(function(order){
-          guestAgent.get("/api/users/" + user._id + "/orders")
-          .expect(200)
-          .end(function(err, response) {
-            if(err) return done(err);
-            expect(order.item.length).to.equal(1);
-            done();
-          });
-        })
-      })
-  })
+        describe('encryptPassword', function () {
 
-  describe('GET /users/:id/reviews', function(){ 
-    it("should get all reviews by a single user", function (done) {
-      Product.create({
-        title: "SomeCoolStuff",
-        description: "So F****N cool",
-        price: 9.99,
-        quantity: 5000,
-        category: ["CoolS**t"]
-      })  
-      .then(function(product){
-        return Review.create({
-          product: product._id,
-          user: user._id,
-          content: "Blahblahblah, was very good"
-        })
-      })
-        .then(function(review){
-          console.log(review);
-          guestAgent.get("/api/users/" + user._id + "/reviews")
-          .expect(200)
-          .end(function(err, response){
-            if(err) done(err);
-            expect(user.reviews.length).to.equal(1);
-            done();
-          })
-        })
-      })
-    })
-  });
+            var cryptoStub;
+            var hashUpdateSpy;
+            var hashDigestStub;
+            beforeEach(function () {
 
+                cryptoStub = sinon.stub(require('crypto'), 'createHash');
+
+                hashUpdateSpy = sinon.spy();
+                hashDigestStub = sinon.stub();
+
+                cryptoStub.returns({
+                    update: hashUpdateSpy,
+                    digest: hashDigestStub
+                });
+
+            });
+
+            afterEach(function () {
+                cryptoStub.restore();
+            });
+
+            it('should exist', function () {
+                expect(User.encryptPassword).to.be.a('function');
+            });
+
+            it('should call crypto.createHash with "sha1"', function () {
+                User.encryptPassword('asldkjf', 'asd08uf2j');
+                expect(cryptoStub.calledWith('sha1')).to.be.ok;
+            });
+
+            it('should call hash.update with the first and second argument', function () {
+
+                var pass = 'testing';
+                var salt = '1093jf10j23ej===12j';
+
+                User.encryptPassword(pass, salt);
+
+                expect(hashUpdateSpy.getCall(0).args[0]).to.be.equal(pass);
+                expect(hashUpdateSpy.getCall(1).args[0]).to.be.equal(salt);
+
+            });
+
+            it('should call hash.digest with hex and return the result', function () {
+
+                var x = {};
+                hashDigestStub.returns(x);
+
+                var e = User.encryptPassword('sdlkfj', 'asldkjflksf');
+
+                expect(hashDigestStub.calledWith('hex')).to.be.ok;
+                expect(e).to.be.equal(x);
+
+            });
+
+        });
+
+        describe('on creation', function () {
+
+            var encryptSpy;
+            var saltSpy;
+
+            beforeEach(function () {
+                encryptSpy = sinon.spy(User, 'encryptPassword');
+                saltSpy = sinon.spy(User, 'generateSalt');
+            });
+
+            afterEach(function () {
+                encryptSpy.restore();
+                saltSpy.restore();
+            });
+
+            it('should call User.encryptPassword with the given password and generated salt', function (done) {
+                createUser().then(function () {
+                    var generatedSalt = saltSpy.getCall(0).returnValue;
+                    expect(encryptSpy.calledWith('potus', generatedSalt)).to.be.ok;
+                    done();
+                });
+            });
+
+            it('should set user.salt to the generated salt', function (done) {
+               createUser().then(function (user) {
+                   var generatedSalt = saltSpy.getCall(0).returnValue;
+                   expect(user.salt).to.be.equal(generatedSalt);
+                   done();
+               });
+            });
+
+            it('should set user.password to the encrypted password', function (done) {
+                createUser().then(function (user) {
+                    var createdPassword = encryptSpy.getCall(0).returnValue;
+                    expect(user.password).to.be.equal(createdPassword);
+                    done();
+                });
+            });
+
+        });
+
+    });
+
+});
