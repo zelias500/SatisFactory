@@ -12,7 +12,7 @@ var User = mongoose.model('User');
 var Review = mongoose.model('Review');
 var Product = mongoose.model('Product');
 
-describe('Review Model', function() {
+xdescribe('Review Model', function() {
 
 	beforeEach('Establish DB connection', function (done) {
         if (mongoose.connection.db) return done();
