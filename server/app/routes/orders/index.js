@@ -19,6 +19,7 @@ router.post("/", function(req, res, next){
   .then(null, next);
 })
 
+// GTPT: yayyyy
 router.param("id", function(req, res, next, id){
   Order.findById(id)
   .then(function(order){
@@ -32,7 +33,10 @@ router.get("/:id", function(req, res, next){
   res.status(200).json(req.order);
 })
 
+// GTPT: that should be put
+// GTPT: 'orders/:id/items'
 router.post('/:id', function(req, res, next) {
+  // GTPT: probs shouldn't use findByIdAndUpdate
   Order.findByIdAndUpdate(req.order._id, { $addToSet: { item: req.body} })
     .then(function(oldOrder) {
       return Order.findById(oldOrder._id)
@@ -57,7 +61,7 @@ router.put("/:id", function(req, res, next){
 router.delete("/:id", function(req, res, next){
   req.order.remove()
   .then(function(){
-    res.sendStatus(200);
+    res.sendStatus(200); // GTPT: status 204 means success with no return content
   })
   .then(null, next);
 })

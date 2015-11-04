@@ -19,12 +19,14 @@ router.post('/', function(req, res, next) {
     .then(null, next)
 })
 
+// GTPT: query string
 router.get('/category', function(req, res, next) {
   if (Object.keys(req.query).length === 0) {
   var allCats = [];
   Product.find({})
   .select('category -_id')
   .then(function(categories) {
+    // GTPT: _.unique(categories)
     categories.forEach(function(element) {
       element.category.forEach(function(cat){
         if(allCats.indexOf(cat) === -1){
@@ -59,6 +61,9 @@ router.get("/:id", function(req, res, next){
 
 
 router.put("/:id", function(req, res, next){
+  // GTPT: router.param('id', blah)
+  // GTPT: req.product.set(req.body)
+  // GTPT: req.product.save()
   Product.findByIdAndUpdate(req.product._id, req.body)
   .then(function(product){
     return Product.findById(product._id)
@@ -70,6 +75,7 @@ router.put("/:id", function(req, res, next){
 })
 
 router.delete("/:id", function(req, res, next){
+  // GTPT: yay
   req.product.remove()
   .then(function(){
     res.sendStatus(200);
