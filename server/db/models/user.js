@@ -73,7 +73,7 @@ var encryptPassword = function (plainText, salt) {
     return hash.digest('hex');
 };
 
-schema.virtual("billing").get(function(){
+schema.virtual("billing.creditcard").get(function(){
     this.billing.forEach(function(cc){
         cc.number = "************" + cc.number.slice(-4);
     })

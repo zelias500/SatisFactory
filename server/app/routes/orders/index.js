@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose')
 var Order = mongoose.model('Order');
+var _ = require('lodash');
 
 router.get("/", function(req, res, next){
   Order.find({})
@@ -19,7 +20,6 @@ router.post("/", function(req, res, next){
   .then(null, next);
 })
 
-// GTPT: yayyyy
 router.param("id", function(req, res, next, id){
   Order.findById(id)
   .then(function(order){
@@ -33,35 +33,24 @@ router.get("/:id", function(req, res, next){
   res.status(200).json(req.order);
 })
 
-// GTPT: that should be put
-// GTPT: 'orders/:id/items'
-router.post('/:id', function(req, res, next) {
-  // GTPT: probs shouldn't use findByIdAndUpdate
-  Order.findByIdAndUpdate(req.order._id, { $addToSet: { item: req.body} })
-    .then(function(oldOrder) {
-      return Order.findById(oldOrder._id)
-    })
-    .then(function(newOrder) {
-      res.status(201).json(newOrder)
-    })
-    .then(null, next)
+router.post('/:id/items', function(req, res, next) {
+  req.order.addToOrder(req.body.price, req.body.productID, req.body.quantity).then(function(order){
+      res.status(201).json(order);
+  }).then(null, next);
 })
 
 router.put("/:id", function(req, res, next){
-  Order.findByIdAndUpdate(req.order._id, req.body)
-    .then(function(oldOrder) {
-      return Order.findById(oldOrder._id)
-    })
-    .then(function(newOrder) {
-      res.status(200).json(newOrder)
-    })
-    .then(null, next)
+  delete req.body._id;
+  _.extend(req.order, req.body);
+  req.order.save().then(function(order){
+    res.status(200).json(order)
+  }).then(null, next);
 })
 
 router.delete("/:id", function(req, res, next){
   req.order.remove()
   .then(function(){
-    res.sendStatus(200); // GTPT: status 204 means success with no return content
+    res.sendStatus(204);
   })
   .then(null, next);
 })

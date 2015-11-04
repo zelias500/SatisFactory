@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose')
 var Product = mongoose.model('Product')
+var Category = mongoose.model('Category');
+var _ = require('lodash');
 
 router.get('/', function(req, res, next) {
   Product.find({})
@@ -19,30 +21,18 @@ router.post('/', function(req, res, next) {
     .then(null, next)
 })
 
-// GTPT: query string
 router.get('/category', function(req, res, next) {
-  if (Object.keys(req.query).length === 0) {
-  var allCats = [];
-  Product.find({})
-  .select('category -_id')
-  .then(function(categories) {
-    // GTPT: _.unique(categories)
-    categories.forEach(function(element) {
-      element.category.forEach(function(cat){
-        if(allCats.indexOf(cat) === -1){
-          allCats.push(cat);
-        }
-      })
-    })
-    res.status(200).json(allCats)
-  })
-  .then(null, next)
+  if (!Object.keys(req.query).length) {
+    Category.find({}).exec().then(function(categories){
+      res.status(201).json(categories)
+    }).then(null, next)
   }
+
   else {
-    Product.find(req.query)
-      .then(function(products) {
-        res.status(200).json(products)
-      })
+    Category.find(req.query).populate('products').exec().then(function(products){
+      res.status(201).json(products)
+    }).then(null, next)
+
   }
 })
 
@@ -61,24 +51,18 @@ router.get("/:id", function(req, res, next){
 
 
 router.put("/:id", function(req, res, next){
-  // GTPT: router.param('id', blah)
-  // GTPT: req.product.set(req.body)
-  // GTPT: req.product.save()
-  Product.findByIdAndUpdate(req.product._id, req.body)
-  .then(function(product){
-    return Product.findById(product._id)
-  })
-  .then(function(product){
-      res.status(201).json(product);
-  })
-  .then(null, next);
+  delete req.body._id
+  _.extend(req.product, req.body);
+  req.product.save().then(function(product){
+    res.status(201).json(product);
+  }).then(null, next);
 })
 
 router.delete("/:id", function(req, res, next){
   // GTPT: yay
   req.product.remove()
   .then(function(){
-    res.sendStatus(200);
+    res.sendStatus(204);
   })
 })
 
