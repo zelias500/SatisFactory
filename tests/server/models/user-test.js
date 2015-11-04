@@ -13,7 +13,7 @@ var Review = mongoose.model('Review');
 var Order = mongoose.model('Order');
 
 var validEmailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-describe('User model', function () {
+xdescribe('User model', function () {
 
     beforeEach('Establish DB connection', function (done) {
         if (mongoose.connection.db) return done();
