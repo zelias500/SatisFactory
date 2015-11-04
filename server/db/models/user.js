@@ -3,23 +3,14 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var Review = require('./review');
 var Schema = mongoose.Schema;
-
-var validEmailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+var validator = require('node-mongoose-validator')
 
 var schema = new Schema({
-    // GTPT: what about name?
+    name: String,
     email: {
         type: String,
         unique: true,
-        // GTPT: you could use https://github.com/SamVerschueren/node-mongoose-validator
-        // for this so you don't have to maintain the regex yourself
-        validate: {
-            validator: function(v){
-                return validEmailRegex.test(v);
-            },
-            message: "Email is invalid"
-
-        }
+        validate: validator.$isEmail({msg: "Invalid Email"})
     },
     password: {// GTPT: setter?
         type: String,
@@ -46,13 +37,11 @@ var schema = new Schema({
     billing: Array, // GTPT: an array of what?
     // GTPT: you could make a getter on credit card number to *** out all but the last 4 digits
 
-    shipping: Array // GTPT: an array of what?
+    shipping: Array, // GTPT: an array of what?
 
     // GTPT: maybe you want an address schema? credit card schema?
-
+    isAdmin: {type: Boolean, required: true, default: false}
 });
-// GTPT: how are you indicating admin users?
-
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
 // are all used for local authentication security.

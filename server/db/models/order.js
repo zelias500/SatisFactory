@@ -21,7 +21,6 @@ var orderSchema = new mongoose.Schema({
   billWith: String,
   // GTPT: schema?
   orderDate: {type: Date, default: new Date}
-  // GTPT: you want `new Date`, not `new Date()`, since this always has the date the server started
 })
 
 // GTPT: you should save
