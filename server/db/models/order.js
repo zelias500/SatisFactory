@@ -5,9 +5,9 @@ var Schema = mongoose.Schema;
 var _ = require('lodash')
 
 var lineItemSchema = new Schema({
-  price: Number,
-  product: { type: Schema.Types.ObjectId, ref: 'Product'},
-  quantity: Number
+  price: {type:Number, required:true}
+  product: { type: Schema.Types.ObjectId, ref: 'Product', required:true},
+  quantity: {type:Number, required:true}
 })
 
 var orderSchema = new mongoose.Schema({
@@ -33,6 +33,18 @@ orderSchema.methods.addToOrder = function(cost, id, amount) {
   }
   this.save()
 }
+
+lineItemSchema.methods.isInStock = function(){
+  var self = this
+    this.populate('product')
+    .execPopulate()
+    .then(function(item){
+        return item.product.quantity > self.quantity      
+    })
+
+}
+
+
 
 
 
