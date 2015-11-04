@@ -16,8 +16,8 @@ var orderSchema = new mongoose.Schema({
 
   status: {type: String, enum: ['pending', 'shipping', 'completed', 'cancelled'], required: true, default: 'pending'},
 
-  shipTo: { type: Address },
-  billWith: { type: Billing }
+  shipTo: { type: Schema.ObjectId, ref:'Address' },
+  billWith: { type: Schema.ObjectId, ref: 'Billing' },
   orderDate: {type: Date, default: new Date }
 
 })
