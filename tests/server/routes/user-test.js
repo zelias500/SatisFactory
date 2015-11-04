@@ -254,5 +254,3 @@ xdescribe('User model', function () {
         });
 
     });
-
-});

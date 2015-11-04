@@ -12,8 +12,7 @@ var User = mongoose.model('User');
 var Review = mongoose.model('Review');
 var Order = mongoose.model('Order');
 
-var validEmailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-xdescribe('User model', function () {
+describe('User model', function () {
 
     beforeEach('Establish DB connection', function (done) {
         if (mongoose.connection.db) return done();
@@ -43,7 +42,7 @@ xdescribe('User model', function () {
         var user = new User();
         user.email = 'hello';
         user.validate(function(err){
-            expect(err.errors.email.message).to.equal('Email is invalid')
+            expect(err.errors.email.message).to.equal('Invalid Email')
             done();
         })
     })

@@ -15,6 +15,7 @@ var orderSchema = new mongoose.Schema({
   items: [lineItemSchema],
 
   status: {type: String, enum: ['pending', 'shipping', 'completed', 'cancelled'], required: true, default: 'pending'},
+
   shipTo: { type: Address },
   billWith: { type: Billing }
   orderDate: {type: Date, default: new Date }
