@@ -6,6 +6,10 @@ router.use('/members', require('./members'));
 router.use('/users', require('./users'));
 router.use('/review', require('./reviews'));
 
+router.use('/products', require('./products'));
+
+router.use('/orders', require('./orders'));
+
 // Make sure this is after all of
 // the registered routes!
 router.use(function (req, res) {

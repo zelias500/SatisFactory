@@ -11,7 +11,7 @@ var clearDB = require('mocha-mongoose')(dbURI);
 var supertest = require('supertest');
 var app = require('../../../server/app');
 
-xdescribe('Product Route', function () {
+describe('Product Route', function () {
 
 	var createProduct = function(){
 		return Product.create({title: "book", description: "reading", price : 45, quantity:1, category : ['books']})
@@ -45,7 +45,8 @@ xdescribe('Product Route', function () {
 
 		})
 		it("should post to create new product", function (done){
-			guestAgent.post('/api/products', {title: "chocolate", description: "reading", price : 45, quantity:1, category : ['books']})
+			guestAgent.post('/api/products')
+        .send({title: "chocolate", description: "reading", price : 45, quantity:1, category : ['books']})
 			.expect(201)
 			.expect(function(res){
 				expect(res.body.title).to.equal('chocolate')
@@ -105,7 +106,8 @@ xdescribe('Product Route', function () {
       })
       it('should update product by Id', function (done){
       	  createProduct().then(function(product){
-      	  	 guestAgent.put('/api/products/'+ product._id, {title: "Mac and Cheese"})
+      	  	 guestAgent.put('/api/products/'+ product._id)
+             .send({title: "Mac and Cheese"})
       	  	 .expect(201)
       	  	 .expect(function(res){
       	  	 	expect(res.body.title).to.equal("Mac and Cheese")

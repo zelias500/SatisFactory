@@ -58,10 +58,11 @@ xdescribe('Orders Route', function () {
 			createOrder().then(function(order){
 				userID = order.user;
 				productID = order.item[0].productId;
-				guestAgent.post('/api/orders', {user:userID, item:{price: 10, productId: productID, quantity: 50}})
+				guestAgent.post('/api/orders') 
+				.send({user:userID, item:{price: 10, productId: productID, quantity: 50}})
 				.expect(201)
 				.expect(function(res){
-					expect(res.body.user).to.equal(userID)
+					expect(res.body.user).to.equal(userID.toString())
 				}).end(done)
 			}).then(null, done);
 		})
@@ -74,14 +75,15 @@ xdescribe('Orders Route', function () {
 				guestAgent.get('/api/orders/'+order._id)
 				.expect(200)
 				.expect(function(res){
-					expect(res.body[0].item[0].price).to.equal(20);
+					expect(res.body.item[0].price).to.equal(20);
 				}).end(done)
 			}).then(null, done)
 		})
 
 		it('should add a product to an order with a post request', function(done){
 			createOrder().then(function(order){
-				guestAgent.post('/api/orders/'+order._id, {price: 10, productId: order.item[0].productId, quantity: 60})
+				guestAgent.post('/api/orders/'+order._id)
+				.send({price: 10, productId: order.item[0].productId, quantity: 60})
 				.expect(201)
 				.expect(function(res){
 					expect(res.body.item[1].price).to.equal(10)
@@ -92,7 +94,8 @@ xdescribe('Orders Route', function () {
 
 		it('should modify an order by id', function(done){
 			createOrder().then(function(order){
-				guestAgent.put('/api/orders/'+order._id, {shipTo: '123 Fake Street'})
+				guestAgent.put('/api/orders/'+order._id)
+				.send({shipTo: '123 Fake Street'})
 				.expect(200)
 				.expect(function(res){
 					expect(res.body.shipTo).to.equal('123 Fake Street');
