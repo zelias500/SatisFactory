@@ -5,6 +5,25 @@ var Review = require('./review');
 var Schema = mongoose.Schema;
 var validator = require('node-mongoose-validator')
 
+var Address = new Schema({
+    name: {type: String, required: true },
+    lineOne: { type: String, required: true }, 
+    lineTwo: String,
+    city: { type: String, required: true }, 
+    zip: { type: Number, required: true }, 
+    state: { type: String, required: true}
+})
+
+var Billing = new Schema({
+    address: {type: Address },
+    number: { type: String, required: true }, 
+    exp_month: { type: Number, required: true }, 
+    exp_year: { type: Number, required: true }, 
+    cvc:  { type: String, required: true }
+})
+
+
+
 var schema = new Schema({
     name: String,
     email: {
@@ -34,13 +53,10 @@ var schema = new Schema({
     },
     reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
 
-    billing: Array, // GTPT: an array of what?
-    // GTPT: you could make a getter on credit card number to *** out all but the last 4 digits
+    billing: [Billing],
 
-    shipping: Array, // GTPT: an array of what?
+    shipping: [Address]
 
-    // GTPT: maybe you want an address schema? credit card schema?
-    isAdmin: {type: Boolean, required: true, default: false}
 });
 
 // generateSalt, encryptPassword and the pre 'save' and 'correctPassword' operations
@@ -55,6 +71,13 @@ var encryptPassword = function (plainText, salt) {
     hash.update(salt);
     return hash.digest('hex');
 };
+
+schema.virtual("billing").get(function(){
+    this.billing.forEach(function(cc){
+        cc.number = "************" + cc.number.slice(-4);
+    })
+    return this.billing;
+})
 
 schema.pre('save', function (next) {
 
@@ -75,17 +98,15 @@ schema.method('correctPassword', function (candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
-// GTPT: this seems like an unnecessary method
-// also it doesn't save
+
 schema.method('addBillingOption', function(card){
-    this.billing.push(card); // GTPT: addToSet
-    return card;
+    this.billing.push(card); 
+    this.save();
 })
 
-// GTPT: ditto
 schema.method('addShippingAddress', function(address){
     this.shipping.push(address);
-    return address;
+    this.save();
 })
 
 
