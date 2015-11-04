@@ -25,27 +25,29 @@ xdescribe('Product model', function () {
         expect(Product).to.be.a('function');
     });
 
-    describe('product validation', function (){ 
+    describe('product validation', function (){
 
         describe('required fields', function () {
 
             it('requires title', function (done) {
-                var product = new Product({ 
+                var product = new Product({
                     description: 'Some cool stuff',
                     price: 12.99,
                     quantity: 10,
                     category: ["Tag1"]
                   })
 
+                // GTPT: promises plz
                   product.save(function (err, savedproduct){
                     expect(err.message).to.equal('Product validation failed');
                     done();
-                  })       
-    
+                  })
+
             });
 
+// GTPT: you don't need to test mongoose's validations
             it('requires description', function (done){
-                var product = new Product({ 
+                var product = new Product({
                   title: "Some cool thing",
                   price: 12.99,
                   quantity: 10,
@@ -101,7 +103,7 @@ xdescribe('Product model', function () {
             })
 
         });
-        
+
         describe('unique fields', function(){
 
           it('requires title to be unique', function (done){

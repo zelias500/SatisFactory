@@ -28,7 +28,7 @@ xdescribe('Order model', function () {
         expect(Order).to.be.a('function');
     });
 
-    describe('order validation', function (){ 
+    describe('order validation', function (){
 
         describe('required fields', function () {
            var user;
@@ -37,15 +37,15 @@ xdescribe('Order model', function () {
                 user.save(function(err, saveduser){
                   user = saveduser;
                   done();
-                })         
+                })
            });
 
             it('requires user or sessionId', function (done) {
                var productId;
-               var product = new Product({ 
+               var product = new Product({
                     title: "Some cool thing",
                     description: 'Some cool stuff',
-                    price: 12.99,
+                    price: 12.99, // GTPT: in cents
                     quantity: 10,
                     category: ["Tag1"]
                   })
@@ -61,8 +61,8 @@ xdescribe('Order model', function () {
                 order.save(function (err, savedorder){
                   expect(err.message).to.equal('Order validation failed');
                   done();
-                })       
-    
+                })
+
             });
 
             it('requires item', function (done){
@@ -121,7 +121,7 @@ xdescribe('Order model', function () {
                 .then(function(product) {
                   productId = product._id
                   var order = new Order({
-                    user: user._id, 
+                    user: user._id,
                     item: [{price: 14, productId: productId, quantity: 5}]
                   })
                   return order.save()
@@ -137,11 +137,11 @@ xdescribe('Order model', function () {
                   expect(order.item[0].price).to.equal(14)
                   done()
                 })
-                .then(null, done)   
+                .then(null, done)
 
             })
 
-            
+
         });
 
     });
