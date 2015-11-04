@@ -5,7 +5,7 @@ var productSchema = new Schema({
   title: { type: String, required: true, unique: true},
   description: { type: String, required: true },
   price: {type: Number, required: true}, // GTPT: in cents? validate?
-  quantity: {type: Number, required: true, default: 0}, // GTPT:  is this quantity in stock?, default?
+  quantity: {type: Number, required: true, default: 0, min: 0}, // GTPT:  is this quantity in stock?, default?
   category: {type: Schema.Types.ObjectId, required: true, ref: 'Category'},
   photo: {type: String}
 })
