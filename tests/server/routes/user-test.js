@@ -13,7 +13,7 @@ var Review = mongoose.model('Review');
 var Order = mongoose.model('Order');
 
 var validEmailRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-describe('User model', function () {
+xdescribe('User model', function () {
 
     beforeEach('Establish DB connection', function (done) {
         if (mongoose.connection.db) return done();
@@ -23,7 +23,7 @@ describe('User model', function () {
     afterEach('Clear test database', function (done) {
         clearDB(done);
     });
-   
+
     var createUser = function () {
         return User.create({ email: 'obama@gmail.com', password: 'potus' });
     };
@@ -56,7 +56,7 @@ describe('User model', function () {
             return newUser.save()
         })
         .then(function(user){
-            done();    
+            done();
         })
         .then(null, function(err){
              expect(err.message.match(/duplicate key error/g).length).to.equal(1);

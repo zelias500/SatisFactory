@@ -48,10 +48,10 @@ describe('Review Routes:', function (){
       .then(function(product) {
         theproduct = product
         return Review.create({
-          product: product._id, 
-          user: theUser._id, 
+          product: product._id,
+          user: theUser._id,
           content: "AWESOMESSSSSSSS"
-        })       
+        })
       })
   }
 
@@ -72,10 +72,11 @@ describe('Review Routes:', function (){
   describe("POST /review/", function(){
     it("can create a single review", function(done){
       createReview().then(function(review){
-        guestAgent.post("/api/review", {
+        guestAgent.post("/api/review")
+        .send({
           product: theproduct._id,
           user: theUser._id,
-          content: "Somecontent stuff here",
+          content: "Somecontent stuff heresjflsjflsjfs",
           numStars: 5
         })
         .expect(201)
@@ -91,7 +92,8 @@ describe('Review Routes:', function (){
   describe("PUT /review/:id", function(){
     it("can update a single review", function(done){
       createReview().then(function(review){
-        guestAgent.put("/api/review/" + review._id, {
+        guestAgent.put("/api/review/" + review._id)
+        .send({
           content: "Some updated content"
         })
         .expect(200)
@@ -114,7 +116,7 @@ describe('Review Routes:', function (){
       .then(null, done);
     })
   })
-      
+
 })
 
 
