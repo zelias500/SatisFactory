@@ -59,7 +59,6 @@ router.put("/:id", function(req, res, next){
 })
 
 router.delete("/:id", function(req, res, next){
-  // GTPT: yay
   req.product.remove()
   .then(function(){
     res.sendStatus(204);

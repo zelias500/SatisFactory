@@ -53,9 +53,9 @@ var schema = new Schema({
     },
     reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
 
-    billing: [Billing],
+    billing: {type: [Billing], select: false},
 
-    shipping: [Address],
+    shipping: {type: [Address], select: false},
 
     wishlist: [lineItemSchema],
 
