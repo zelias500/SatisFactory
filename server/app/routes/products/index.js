@@ -49,6 +49,17 @@ router.get("/:id", function(req, res, next){
   res.status(200).json(req.product)
 })
 
+router.get('/:id/reviews', function(req, res, next){
+    if(req.product.reviews.length === 0){
+      res.status(200).json("There are no Reviews")
+    }
+    else{
+    req.product.populate('reviews')
+    .then(function(product){
+        res.status(200).json(product);
+    }).then(null, next)}
+})
+
 
 router.put("/:id", function(req, res, next){
   delete req.body._id

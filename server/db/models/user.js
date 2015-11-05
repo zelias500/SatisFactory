@@ -32,8 +32,8 @@ var schema = new Schema({
     },
     password: {
         type: String,
-        select: false,
-        set: encryptPassword
+        select: false
+        // set: encryptPassword
     },
     salt: {
         type: String,
@@ -57,7 +57,7 @@ var schema = new Schema({
 
     shipping: [Address],
 
-    wishlist: [lineItemSchema],
+    //wishlist: [lineItemSchema],
 
     orders: [{type:Schema.Types.ObjectId, ref: 'Order'}]
 
