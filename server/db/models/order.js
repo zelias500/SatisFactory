@@ -5,7 +5,7 @@ var Schema = mongoose.Schema;
 var _ = require('lodash')
 
 var lineItemSchema = new Schema({
-  price: {type:Number, required:true}
+  price: {type:Number, required:true},
   product: { type: Schema.Types.ObjectId, ref: 'Product', required:true},
   quantity: {type:Number, required:true}
 })
