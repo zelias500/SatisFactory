@@ -32,8 +32,8 @@ var schema = new Schema({
     },
     password: {
         type: String,
-        select: false,
-        set: encryptPassword
+        select: false
+        // set: encryptPassword
     },
     salt: {
         type: String,
