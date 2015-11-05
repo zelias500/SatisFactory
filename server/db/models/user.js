@@ -22,16 +22,15 @@ var Billing = new Schema({
     cvc:  { type: String, required: true }
 })
 
-
-
 var schema = new Schema({
     name: String,
+    isAdmin: {type: Boolean, default: false},
     email: {
         type: String,
         unique: true,
         validate: validator.$isEmail({msg: "Invalid Email"})
     },
-    password: {// GTPT: setter?
+    password: {
         type: String,
         select: false,
         set: encryptPassword
@@ -56,7 +55,11 @@ var schema = new Schema({
 
     billing: [Billing],
 
-    shipping: [Address]
+    shipping: [Address],
+
+    wishlist: [lineItemSchema],
+
+    orders: [{type:Schema.Types.ObjectId, ref: 'Order'}]
 
 });
 

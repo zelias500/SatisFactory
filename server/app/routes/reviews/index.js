@@ -16,10 +16,17 @@ router.get('/:id', function(req, res, next){
 })
 
 router.post('/', function(req, res, next){
+	var theReview;
 	Review.create(req.body).then(function(review){
-		res.status(201).json(review)
-	}).then(null, next);
-
+		theReview = review;
+		return User.findById(review.user)
+	}).then(function(user){
+		user.reviews.push(theReview._id);
+		return user.save()
+	}).then(function(){
+		res.status(201).json(review);
+	})
+	.then(null, next);
 })
 
 router.put('/:id', function(req, res, next){
@@ -35,6 +42,4 @@ router.delete('/:id', function(req, res, next){
 	Review.remove({_id : req.params.id}).exec().then(function(){
       res.status(200).end()
 	}).then(null, next)
-
-
 })

@@ -13,9 +13,16 @@ router.get("/", function(req, res, next){
 });
 
 router.post("/", function(req, res, next){
+  var order;
   Order.create(req.body)
   .then(function(createdOrder){
-    res.status(201).json(createdOrder);
+    order = createdOrder;
+    return User.findById(createdOrder.user)
+  }).then(function(user){
+    user.orders.push(order._id)
+    return user.save();
+  }).then(function(){
+    res.status(201).json(order);
   })
   .then(null, next);
 })
