@@ -9,16 +9,7 @@ app.factory('UserFactory', function($http){
 		return $http.get(baseURL+user._id)
 	}
 
-	var currentUser;
-
 	return {
-		getCurrentUser: function(){
-			return $http.get(baseURL+'me').then(function(res){
-				currentUser = toData(res);
-				return currentUser;
-			})
-		},
-
 		getOne: function(user){
 			return getAUser(user).then(function(res){
 				return toData(res);
