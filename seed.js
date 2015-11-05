@@ -23,6 +23,7 @@ var chalk = require('chalk');
 var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
 var Product = Promise.promisifyAll(mongoose.model('Product'));
+var Category = Promise.promisifyAll(mongoose.model('Category'))
 
 var seedUsers = function () {
 
@@ -34,7 +35,12 @@ var seedUsers = function () {
         {
             email: 'obama@gmail.com',
             password: 'potus'
+        },
+        {
+            email: 'someone@somewhere.com',
+            password: 'password'
         }
+
     ];
 
     return User.createAsync(users);
@@ -167,36 +173,62 @@ var seedProducts = function() {
 
     ]
 
-    return Product.createAsync(products);
+    return Category.find({}).then(function(categories){
+         return products.map(function(element){
+               for(var i=0 ; i<categories.length; i++){
+                  if(element.category == categories[i].name){
+                      element.category = categories[i]._id
+                  }
+               }
+               return element;
+         })
+    }).then(function(updateProduct){
+        return Product.createAsync(updateProduct);
+    })
+
+    
 };
 
-connectToDb.then(function () {
+var seedCategories = function(){
+    var category = [
+       {name: "Cars"},
+       {name: "Food"},
+       {name: "Experiences"},
+       {name: "Vacations"},
+       {name: "Services"},
+       {name: "Sports"},
+       {name: "Concerts"}
+    ]
+    return Category.createAsync(category);
+}
+
+connectToDb.then(function (db) {
+
     User.findAsync({}).then(function (users) {
-        if (users.length === 0) {
+        User.remove()
+        .then(function(){
             return seedUsers();
-        } else {
-            console.log(chalk.magenta('Seems to already be user data, exiting!'));
-            process.kill(0);
-        }
-    }).then(function () {
-        Product.findAsync({}).then(function(products){
-            if(products.length === 0){
-                return seedProducts();
-            } else {
-                console.log(chalk.magenta('Seems to already be product data, exiting!'))
-                process.kill(0)
-            }
         })
-       
+        .then(function(){
+            return Category.remove()
+            .then(function(){
+                return seedCategories();
+            })
+        })
+        .then(function(){
+            return seedProducts()
+        })
+        .then(function(){
+            console.log(chalk.green("All data has been seeded."));
+            process.kill(0);
+        })
+        .catch(function(err){
+            console.log(chalk.magenta(err));
+            process.kill(1);
+
+        })
+            
     })
-    .then(function(){
-        console.log(chalk.green('Seed successful!'));
-        process.kill(0);
-    })
-    .catch(function (err) {
-        console.error(err);
-        process.kill(1);
-    });
 
 
 });

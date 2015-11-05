@@ -24,7 +24,9 @@ var orderSchema = new mongoose.Schema({
 
 orderSchema.methods.addToOrder = function(cost, id, amount) {
 
-  var checking = _.find(this.item, i => (i.product.equals(id) && i.price === cost));
+  var checking = _.find(this.item, function (i) {
+    return i.product.equals(id) && i.price === cost;
+  });
   if (checking) {
     checking.quantity += amount
   }
