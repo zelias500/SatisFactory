@@ -63,6 +63,10 @@
             return !!Session.user;
         };
 
+        this.getCurrentUser = function() {
+            return Session.user;
+        }
+
         this.getLoggedInUser = function (fromServer) {
 
             // If an authenticated session exists, we

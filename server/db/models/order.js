@@ -12,7 +12,8 @@ var lineItemSchema = new Schema({
 })
 
 var orderSchema = new mongoose.Schema({
-  user: {type: Schema.Types.ObjectId, ref: 'User', required: true}, 
+  purchasingUser: {type: Schema.Types.ObjectId, ref: 'User'}, 
+  targetUser: {type: Schema.Types.ObjectId, ref: 'User'},
   items: [lineItemSchema],
 
   status: {type: String, enum: ['pending', 'shipping', 'completed', 'cancelled'], required: true, default: 'pending'},

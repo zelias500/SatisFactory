@@ -19,8 +19,14 @@ router.post("/", function(req, res, next){
     order = createdOrder;
     return User.findById(createdOrder.user)
   }).then(function(user){
-    user.orders.push(order._id)
-    return user.save();
+    if (user) {
+      user.orders.push(order._id)
+      return user.save();
+    }
+    else {
+      res.status(201).json(order);
+    }
+    
   }).then(function(){
     res.status(201).json(order);
   })
