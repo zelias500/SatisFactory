@@ -68,3 +68,35 @@ router.get('/:id/reviews', function(req, res, next){
 		res.status(200).json(reviews);
 	}).then(null, next)
 })
+
+router.get('/:id/wishlist', function(req, res, next) {
+    res.status(200).json(req.targetUser.wishlist)
+})
+
+router.post('/:id/wishlist', function(req, res, next) {
+    req.body.wishlistedBy = req.targetUser._id
+    req.targetUser.wishlist.push(req.body)
+    req.targetUser.save()
+        .then(function(user) {
+            res.status(201).json(user.wishlist)
+        })
+})
+
+router.put('/:id/wishlist', function(req, res, next) {
+    var x  = _.findIndex(req.targetUser.wishlist, function(i) {
+        return i === req.body
+    })
+    req.targetUser.wishlist.splice(x, 1)
+    req.targetUser.save()
+        .then(function(user) {
+            res.status(200).json(user.wishlist)
+        })
+})
+
+router.delete('/:id/wishlist', function(req, res, next) {
+    delete req.targetUser.wishlist
+    req.targetUser.save()
+        .then(function(user) {
+            res.status(204).end()
+        })
+})

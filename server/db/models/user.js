@@ -56,7 +56,9 @@ var schema = new Schema({
 
     billing: [Billing],
 
-    shipping: [Address]
+    shipping: [Address],
+
+    wishlist: [lineItemSchema]
 
 });
 
