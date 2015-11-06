@@ -1,0 +1,26 @@
+<section id="product">
+  <div class="product-img">
+    <!-- For header image on product -->
+    <img ng-src="{{ theProduct.photo }}"/>
+  </div>
+  <article>
+    <header>
+      <h2>{{ theProduct.title }}</h2>
+    </header>
+    <aside>
+      <button class="add-to-cart"></button>
+      <button class="add-to-wishlist"></button>
+      <span class="product-price">{{ theProduct.price | currency  }}</span>
+    </aside>
+    <!-- For Title of product, and description -->
+    <p>{{ theProduct.description }}</p>
+  </article>
+  <div>
+    <!-- For reviews (when loaded) -->
+    <ul>  
+      <div class="product-reviews" ng-repeat=" review in theProduct.reviews">
+        <h3> {{ review.user }} </h3>
+      </div>
+    </ul>
+  </div>
+</section>

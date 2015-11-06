@@ -24,6 +24,7 @@ var connectToDb = require('./server/db');
 var User = Promise.promisifyAll(mongoose.model('User'));
 var Product = Promise.promisifyAll(mongoose.model('Product'));
 var Category = Promise.promisifyAll(mongoose.model('Category'))
+var _ = require('lodash');
 
 var seedUsers = function () {
 
@@ -216,7 +217,29 @@ connectToDb.then(function (db) {
             })
         })
         .then(function(){
-            return seedProducts()
+            return Product.remove()
+            .then(function(){
+                return seedProducts()
+            });
+        })
+        .then(function(){
+            var productsToUse;
+            return Product.find({})
+            .then(function(products){
+                productsToUse = products;
+
+                return Category.find({})
+                .then(function(categories){
+                    categories.forEach(function(category){
+                        productsToUse.forEach(function(product){
+                            if(product.category == category.id){
+                                category.products.addToSet(product);
+                            }
+                        })
+                        category.save();
+                    })
+                });
+            })
         })
         .then(function(){
             console.log(chalk.green("All data has been seeded."));
