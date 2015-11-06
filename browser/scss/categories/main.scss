@@ -82,13 +82,21 @@ label {
 
 }
 
+.catimg {
+  width: 300px;
+  height: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+
 #promote {
   z-index: 0;
   top: 80px;
   width: 100vw;
   height: 100vh;
   background-color: grey;
-  background-image: url('Fishing.jpg');
+  background-image: url('photos/Fishing.jpg');
   background-repeat: no-repeat;
   background-origin: center;
   background-position: center;
@@ -136,8 +144,8 @@ label {
 }
 
 #product-holder {
-  top: 80px;
-  padding: 80px;
+  top: 20px;
+  padding: 20px;
   transition: all 0.5s ease-in-out;
   -webkit-transition: all 0.5 ease-in-out;
   header {
@@ -148,7 +156,7 @@ label {
   .product {
     float: left;
     width: 300px;
-    height: 400px;
+    height: 500px;
     border-radius: 10px;
     background-color: white;
     box-shadow: $shadow;
@@ -158,15 +166,13 @@ label {
     .product-content {
       display: inline-block;
       padding: 10px;
-
     }
 
     .pic {
       display: block;
-      height: 33%;
+      height: 45%;
       width: 100%;
       background-color: grey;
-      background-image: url('Fishing.jpg');
       background-repeat: no-repeat;
       background-origin: center;
       background-position: center;
@@ -181,6 +187,22 @@ label {
 
   }
 
+}
+
+#title{
+  overflow:auto;
+  font-size: auto;
+}
+
+#description {
+  overflow: auto;
+}
+
+h3 {
+  overflow:auto;
+  height: 20%;
+  text-align:center;
+  margin: 0px 0px;
 }
 
 footer {

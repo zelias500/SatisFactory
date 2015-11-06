@@ -4,14 +4,17 @@
       </header>
       <div class="product" ng-repeat="item in items">
         <div class="pic"> 
-          <img ng-src={{item.photo}} />
+          <img class='catimg' ng-src={{item.photo}} />
         </div>
         <div class="product-content">
-          <header>
-            <h3>{{item.name}}</h3>
+          <header id='title'>
+            <h3>{{item.title}}</h3>
           </header>
           <hr>
+        <div id='description'>
           <p>{{item.description}}</p>
+        </div>
+          <br />
           <p>{{item.price}}</p>
           <form>
             <input type="text">
@@ -19,4 +22,8 @@
           </form>
         </div>
       </div>
+      <br />
     </section>
+
+
+
