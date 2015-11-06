@@ -5,6 +5,7 @@ app.config(function($stateProvider) {
 		controller: 'CategoryCtrl',
 		resolve: {
 			categoryItems: function(ProductFactory, $stateParams) {
+				console.log($stateParams)
 
 				return ProductFactory.getAllByCategory($stateParams.category)
 			},

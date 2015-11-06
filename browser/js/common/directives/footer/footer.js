@@ -1,11 +1,14 @@
-app.directive('footer', function(ProductFactory) {
+app.directive('footer', function(ProductFactory, $state) {
 	return {
 		restrict: 'E',
 		templateUrl: 'js/common/directives/footer/footer.html',
 		link: function(scope) {
-			scope.categories = ProductFactory.getAllCategories();
+			scope.categories;
+			ProductFactory.getAllCategories().then(function(categories){
+				scope.categories = categories;
+			})
 			scope.goToCategory = function(category) {
-				$state.go('Category', {
+				$state.go('categories', {
 					category: category
 				})
 			}
