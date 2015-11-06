@@ -1,0 +1,222 @@
+@font-face {
+  font-family: satisfy;
+  src: url('./fonts/Satisfy/Satisfy-Regular.ttf');
+}
+
+$shadow: 0px 5px 10px rgba(0, 0, 0, 0.55);
+
+body {
+  background-color: salmon;
+  width: 100vw;
+}
+
+nav {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  height: 80px;
+  background-color: black;
+  z-index: 100;
+  box-shadow: $shadow;
+}
+
+
+.toolbar-button {
+  border: 1px solid white;
+  border-radius: 10px;
+  font-family: satisfy;
+  outline: none;
+  background-color: grey;
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+  width: 150px;
+  text-align: center;
+
+}
+
+.toolbar-button:hover {
+  color: white;
+  border-color: salmon;
+  background-color: black;
+
+}
+
+input[type='text'] {
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid white;  
+  background-color: black;
+}
+
+input[type='text']:focus {
+  background-color: salmon;
+}
+
+label {
+  margin: 10px;
+  display: block;
+  color: white;
+  font-family: satisfy;
+}
+
+#logo {
+  display: inline-block;
+  margin-left: 40px;
+  color: white;
+  font-family: satisfy;
+}
+
+#search {
+  position: fixed;
+  z-index: 100;
+  top: 100px;
+  height: 400px;
+  width: 300px;
+  left: -250px;
+  background-color: rgba(0, 0, 0, 0.75);
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+  transition: transform 0.5s ease-in-out;
+  -webkit-transition: transform 0.5s ease-in-out;
+  box-shadow: $shadow;
+
+}
+
+.catimg {
+  width: 300px;
+  height: 100%;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+
+#promote {
+  z-index: 0;
+  top: 80px;
+  width: 100vw;
+  height: 100vh;
+  background-color: grey;
+  background-image: url('photos/Fishing.jpg');
+  background-repeat: no-repeat;
+  background-origin: center;
+  background-position: center;
+  background-size: cover;
+  transition: all 0.25s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out; 
+   h1 {
+    position: relative;
+    top: 250px;
+    left: 300px;
+    font-family: satisfy;
+    font-size: 3em;
+    color: white;
+   }
+}
+
+#tools {
+  display: inline-block;
+  margin-left: 100px;
+}
+
+#search:hover {
+  transform: translate(250px)
+}
+
+#search:hover ~ #promote {
+  filter: blur(10px);
+  -webkit-filter: blur(10px);
+}
+
+#search:hover ~ #product-holder {
+  -webkit-filter: blur(10px);
+}
+
+.internal-holder {
+  padding: 20px;
+
+  header {
+    h3 {
+      font-family: satisfy;
+      font-height: 1.2em;
+      color: salmon;
+    }
+  }
+}
+
+#product-holder {
+  top: 20px;
+  padding: 20px;
+  transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5 ease-in-out;
+  header {
+    h1 {
+      font-family: satisfy;
+    }
+  }
+  .product {
+    float: left;
+    width: 300px;
+    height: 500px;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: $shadow;
+    margin: 15px;
+
+
+    .product-content {
+      display: inline-block;
+      padding: 10px;
+    }
+
+    .pic {
+      display: block;
+      height: 45%;
+      width: 100%;
+      background-color: grey;
+      background-repeat: no-repeat;
+      background-origin: center;
+      background-position: center;
+      background-size: cover;
+      border-top-right-radius: 10px;
+      border-top-left-radius: 10px;
+
+    }
+  }
+
+  .product:hover {
+
+  }
+
+}
+
+#title{
+  overflow:auto;
+  font-size: auto;
+}
+
+#description {
+  overflow: auto;
+}
+
+h3 {
+  overflow:auto;
+  height: 20%;
+  text-align:center;
+  margin: 0px 0px;
+}
+
+footer {
+  position: fixed;
+  width: 100vw;
+  height: 50px;
+  background-color: salmon;
+  bottom: 0px;
+
+  ul {
+    font-family: satisfy;
+    li {
+      display: inline-block;
+    }
+  }
+
+}
