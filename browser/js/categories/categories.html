@@ -8,18 +8,19 @@
         </div>
         <div class="product-content">
           <header id='title'>
-            <h3>{{item.title}}</h3>
+            <h3><a ui-sref="product(product)">{{item.title}}</a></h3>
           </header>
           <hr>
         <div id='description'>
           <p>{{item.description}}</p>
         </div>
           <br />
-          <p>{{item.price}}</p>
+          <p>Purchase Satisfaction For: ${{item.price}}/unit</p>
           <form>
-            <input type="text">
+            Quantity: <input ng-model="toBuy" type="text">
             <button>Add To Cart</button>
           </form>
+          <button ng-show="isLoggedIn()" ng-click="addToWishlist(item)">Add to Wishlist</button>
         </div>
       </div>
       <br />

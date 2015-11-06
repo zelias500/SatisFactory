@@ -14,8 +14,18 @@ app.config(function($stateProvider) {
 	})
 })
 
-app.controller('CategoryCtrl', function($scope, $state, ProductFactory, categoryItems, category) {
-	$scope.items = categoryItems[0].products;
+app.controller('CategoryCtrl', function($scope, $state, ProductFactory, categoryItems, category, AuthService) {
+	$scope.items = categoryItems[0].products.map(function(i){
+		i.price = i.price/100;
+		return i;
+	})
 	$scope.category = category;
+	$scope.isLoggedIn = AuthService.isAuthenticated;
+	$scope.goToProduct = function(product){
+		$state.go('product', {id: product._id});
+	};
+	$scope.addToCart = function(product, quantity){
+
+	}
 
 })
