@@ -230,15 +230,21 @@ connectToDb.then(function (db) {
 
                 return Category.find({})
                 .then(function(categories){
-                    categories.forEach(function(category){
-                        productsToUse.forEach(function(product){
-                            if(product.category == category.id){
-                                category.products.addToSet(product);
+                    return categories.map(function(category){
+                        for(var i = 0; i < productsToUse.length; i++){
+                            if(productsToUse[i].category == category.id){
+                                category.products.addToSet(productsToUse[i]);
                             }
-                        })
-                        category.save();
+                        }
+                        return category;
                     })
-                });
+                })
+                .then(function(categories){
+                    return Promise.all(categories.map(function(cat){
+                        return cat.save();
+                        })
+                    );
+                })
             })
         })
         .then(function(){
