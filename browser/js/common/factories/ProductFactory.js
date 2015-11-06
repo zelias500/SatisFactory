@@ -21,7 +21,10 @@ app.factory('ProductFactory', function($http){
     deleteOne: function(id){
       return $http.delete(id).then(toData)
     },
-    getAllbyCategory: function(category){
+    getAllCategories: function() {
+      return $http.get(baseURL+'/category').then(toData)
+    },
+    getAllByCategory: function(category){
       return $http.get(baseURL+'/category/' + '?name='+category).then(toData)
     },
     getAllReviews: function(id){

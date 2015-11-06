@@ -57,7 +57,7 @@ var schema = new Schema({
 
     shipping: {type: [Address], select: false},
 
-    //wishlist: [lineItemSchema],
+    wishlist: [{type: Schema.Types.ObjectId, ref: 'lineItemSchema'}],
 
     orders: [{type:Schema.Types.ObjectId, ref: 'Order'}]
 

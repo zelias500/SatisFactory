@@ -56,7 +56,7 @@ var seedProducts = function() {
             price: 100000.00,
             quantity: 10,
             category: "Cars",
-            photo: "/public/photos/ferrari.png"
+            photo: "/photos/ferrari.png"
         }, 
         {
             title: "Buy a Porsche 911",
@@ -64,7 +64,7 @@ var seedProducts = function() {
             price: 50000.00,
             quantity: 10,
             category: "Cars",
-            photo: "/public/photos/Porsche.jpeg"  
+            photo: "/photos/Porsche.jpeg"  
         },
 
         {
@@ -73,7 +73,7 @@ var seedProducts = function() {
             price: 999.99,
             quantity: 100,
             category: "Food",
-            photo: "/public/photos/MaxBrenner.JPG" 
+            photo: "/photos/MaxBrenner.JPG" 
         },
 
         {
@@ -82,7 +82,7 @@ var seedProducts = function() {
             price: 3.99,
             quantity: 10000,
             category: "Food",
-            photo: "/public/photos/hershey.jpg" 
+            photo: "/photos/hershey.jpg" 
         },
 
         {
@@ -91,7 +91,7 @@ var seedProducts = function() {
             price: 500.00,
             quantity: 4,
             category: "Experiences",
-            photo: "/public/photos/grumpycat.png" 
+            photo: "/photos/grumpycat.png" 
         },        
         {
             title: "Dinner with Omri Bernstein",
@@ -99,7 +99,7 @@ var seedProducts = function() {
             price: 2000.00,
             quantity: 2,
             category: "Experiences",
-            photo: "/public/photos/omri_bernstein.jpg"
+            photo: "/photos/omri_bernstein.jpg"
         }, 
         {
             title: "Luxury vacation to the Seychelles",
@@ -107,7 +107,7 @@ var seedProducts = function() {
             price: 12000.00,
             quantity: 10,
             category: "Vacations",
-            photo: "/public/photos/Fishing.jpg"  
+            photo: "/photos/Fishing.jpg"  
         },
 
         {
@@ -116,7 +116,7 @@ var seedProducts = function() {
             price: 15000.00,
             quantity: 20,
             category: "Vacations",
-            photo: "/public/photos/snowboarding.jpg"  
+            photo: "/photos/snowboarding.jpg"  
         },
 
         {
@@ -125,7 +125,7 @@ var seedProducts = function() {
             price: 2000.00,
             quantity: 12,
             category: "Services",
-            photo: "/public/photos/Spa.jpg"  
+            photo: "/photos/Spa.jpg"  
         },
 
         {
@@ -134,7 +134,7 @@ var seedProducts = function() {
             price: 10000.00,
             quantity: 15,
             category: "Services",
-            photo: "/public/photos/house.jpg"  
+            photo: "/photos/house.jpg"  
         },        
         {
             title: "Superbowl 2016 - VIP",
@@ -142,7 +142,7 @@ var seedProducts = function() {
             price: 5000.00,
             quantity: 1,
             category: "Sports",
-            photo: "/public/photos/Superbowl.jpg"
+            photo: "/photos/Superbowl.jpg"
         }, 
         {
             title: "Pickup Basketball with the man himself...",
@@ -150,7 +150,7 @@ var seedProducts = function() {
             price: 60.00,
             quantity: 20,
             category: "Sports",
-            photo: "/public/photos/LeBron.jpg" 
+            photo: "/photos/LeBron.jpg" 
         },
 
         {
@@ -159,7 +159,7 @@ var seedProducts = function() {
             price: 100.00,
             quantity: 10,
             category: "Concerts",
-            photo: "/public/photos/Phish.jpg"  
+            photo: "/photos/Phish.jpg"  
         },
 
         {
@@ -168,7 +168,7 @@ var seedProducts = function() {
             price: 150.00,
             quantity: 10,
             category: "Concerts",
-            photo: "/public/photos/jayz.jpg"  
+            photo: "/photos/jayz.jpg"  
         }
 
     ]
