@@ -6,7 +6,7 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Order = mongoose.model('Order');
 var Review = mongoose.model('Review');
-
+var Product = mongoose.model('Product');
 
 router.get('/:id', function(req, res, next){
 	Review.findById(req.params.id).exec().then(function(review){
@@ -23,8 +23,16 @@ router.post('/', function(req, res, next){
 	}).then(function(user){
 		user.reviews.push(theReview._id);
 		return user.save()
-	}).then(function(){
-		res.status(201).json(review);
+	})
+	.then(function(){
+		return Product.findById(theReview.product)
+	})
+	.then(function(product){
+		product.reviews.push(theReview);
+		return product.save();
+	})
+	.then(function(){
+		res.sendStatus(201);
 	})
 	.then(null, next);
 })
