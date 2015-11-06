@@ -30,6 +30,7 @@ app.factory('ProductFactory', function($http){
     getAllReviews: function(id){
         return $http.get(baseURL+ id +"/reviews").then(toData)
     }
+
   }
 
 

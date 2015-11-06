@@ -26,15 +26,24 @@ function setPrice(num) {
 }
 
 productSchema.methods.averageStars = function() {
-  var aveStars, sum, numReviews;
-  this.populate('reviews').execPopulate()
-    .then(function(product) {
+
+var aveStars = 0, sum = 0, numReviews=0;
+  his.populate('reviews').execPopulate()
+    .then(function(product) {    
+       if(product.reviews.length == 0){
+         aveStars = 1;
+       }
+       else{
         product.reviews.forEach(function(review) {
           numReviews++
-          sum += review.numStars 
-        })
-        return aveStars = sum / numReviews
+          sum += review.numStars
+        }) 
+       aveStars = sum / numReviews
+    }
+       return aveStars;
     })
+
+     
 }
 
 productSchema.methods.getAllReviews = function(){

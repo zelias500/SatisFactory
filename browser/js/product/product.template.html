@@ -1,25 +1,28 @@
-<section id="product">
+<section id="product" class="panel-body">
   <div class="product-img">
     <!-- For header image on product -->
-    <img ng-src="{{ theProduct.photo }}"/>
+    <img ng-src="{{ product.photo }}"/>
+    <div class="stars">
+        <span class="glyphicon glyphicon-star"></span>
+    </div>
   </div>
   <article>
     <header>
-      <h2>{{ theProduct.title }}</h2>
+      <h2>{{ product.title }}</h2>
     </header>
     <aside>
-      <button class="add-to-cart"></button>
-      <button class="add-to-wishlist"></button>
-      <span class="product-price">{{ theProduct.price | currency  }}</span>
+      <button class="btn add-to-cart"><span class="glyphicon glyphicon-plus"></span>Add Cart</button>
+      <button class=" btn add-to-wishlist"><span class="glyphicon glyphicon-heart"></span>Add to Wishlist</button>
+      <span class="product-price">{{ product.price | currency  }}</span>
     </aside>
     <!-- For Title of product, and description -->
-    <p>{{ theProduct.description }}</p>
+    <p>{{ product.description }}</p>
   </article>
   <div>
     <!-- For reviews (when loaded) -->
     <ul>  
-      <div class="product-reviews" ng-repeat=" review in theProduct.reviews">
-        <h3> {{ review.user.name }} </h3>
+      <div class="product-reviews" ng-repeat=" review in product.reviews">
+        <h3> {{ review.user.email }} </h3>
         <p>{{review.content}}</p>
       </div>
     </ul>

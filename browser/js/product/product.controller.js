@@ -1,6 +1,7 @@
-app.controller('productCtrl', function ($scope, ProductFactory){
-
-  //$scope.product = theProduct;
+app.controller('ProductCtrl', function ($scope, theProduct){
+    console.log(theProduct);
+    var product = theProduct;
+   $scope.product = product;
 
 
 })
