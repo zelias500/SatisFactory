@@ -19,7 +19,8 @@
     <!-- For reviews (when loaded) -->
     <ul>  
       <div class="product-reviews" ng-repeat=" review in theProduct.reviews">
-        <h3> {{ review.user }} </h3>
+        <h3> {{ review.user.name }} </h3>
+        <p>{{review.content}}</p>
       </div>
     </ul>
   </div>

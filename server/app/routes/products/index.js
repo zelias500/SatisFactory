@@ -40,10 +40,9 @@ router.get('/category', function(req, res, next) {
 
 router.param("id", function(req, res, next, id){
   Product.findById(id)
-  .populate('reviews')
+  .deepPopulate('reviews.user')
   .exec()
   .then(function(product){
-
     console.log(product);
     req.product = product;
     next();

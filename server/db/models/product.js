@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Review = require('./review')
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
+
 
 
 var productSchema = new Schema({
@@ -12,6 +14,8 @@ var productSchema = new Schema({
   photo: {type: String},
   reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
 })
+
+productSchema.plugin(deepPopulate, {}); 
 
 function getPrice(num) {
   return (num/100).toFixed(2)
@@ -46,4 +50,6 @@ productSchema.pre('save', function(next) {
 	}
 	next();
 })
+
+
 mongoose.model("Product", productSchema);
