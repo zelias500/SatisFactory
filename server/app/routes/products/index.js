@@ -56,6 +56,7 @@ router.get('/:id/reviews', function(req, res, next){
     else{
     req.product.populate('reviews')
     .then(function(product){
+        product.reviews.populate('user').exec();
         res.status(200).json(product);
     }).then(null, next)}
 })
