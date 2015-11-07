@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose')
 var Order = mongoose.model('Order');
+var User = mongoose.model('User');
 var _ = require('lodash');
 
 router.get("/", function(req, res, next){
@@ -37,7 +38,9 @@ router.param("id", function(req, res, next, id){
   Order.findById(id)
   .then(function(order){
     req.order = order;
-    next();
+    // req.order.items.populate('product').execPopulate()
+    //   .then(next)
+    // next();
   })
   .then(null, next);
 })
@@ -47,6 +50,7 @@ router.get("/:id", function(req, res, next){
 })
 
 router.post('/:id/items', function(req, res, next) {
+  console.log(req.order);
   req.order.addToOrder(req.body.price, req.body.productID, req.body.quantity).then(function(order){
       res.status(201).json(order);
   }).then(null, next);
