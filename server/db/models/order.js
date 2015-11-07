@@ -2,7 +2,9 @@ var mongoose = require('mongoose');
 var User = require("./user");
 var Product = require("./product");
 var Schema = mongoose.Schema;
-var _ = require('lodash')
+var _ = require('lodash');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
+
 
 var lineItemSchema = new Schema({
   price: {type:Number, required:true},
@@ -24,8 +26,10 @@ var orderSchema = new mongoose.Schema({
 
 })
 
-orderSchema.methods.addToOrder = function(cost, id, amount) {
+orderSchema.plugin(deepPopulate); 
 
+orderSchema.methods.addToOrder = function(cost, id, amount) {
+  console.log("THIS IS THE ID", id)
   var checking = _.find(this.item, function (i) {
     return i.product.equals(id) && i.price === cost;
   });
@@ -35,7 +39,8 @@ orderSchema.methods.addToOrder = function(cost, id, amount) {
   else {
     this.items.push({price: cost, product: id, quantity: amount})
   }
-  this.save()
+  console.log("HELLOSDFJIUFSDS", this.items)
+  return this.save()
 }
 
 lineItemSchema.methods.isInStock = function(){
