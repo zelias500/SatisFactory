@@ -19,8 +19,8 @@
       <h4 class="product-price">{{ product.price | currency  }}</h4>
     </aside>
   </article>
+  <hr>
   <div class="product-reviews-holder">
-    
     <ul>  
       <li class="product-review" ng-repeat=" review in product.reviews">
         <h3> {{ review.user.name }} </h3>

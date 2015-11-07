@@ -152,6 +152,8 @@ label {
 #product-holder {
   top: 20px;
   padding: 20px;
+  margin: 0px;
+  text-align: center;
   transition: all 0.5s ease-in-out;
   -webkit-transition: all 0.5 ease-in-out;
   header {
@@ -160,8 +162,9 @@ label {
     }
   }
   .product {
-    float: left;
-    width: 300px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 45%;
     height: 500px;
     border-radius: 10px;
     background-color: white;
