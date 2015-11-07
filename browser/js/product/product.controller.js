@@ -3,5 +3,7 @@ app.controller('ProductCtrl', function ($scope, theProduct){
     var product = theProduct;
    $scope.product = product;
 
+   
+
 
 })
