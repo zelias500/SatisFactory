@@ -18,20 +18,25 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
     }
 
     $scope.addProductReview = function(){
-    	console.log("here")
-    	$uibModal.open({
-           animation: $scope.animationEnabled,
-           templateUrl: "/js/product//product.review.template.html",
-           controller: "ModalCtrl",
-           resolve: {
-           	  product: function(){
-           	  	  return theProduct
-           	  }
-           }
-    	})
-    }
+    	var user = AuthService.getCurrentUser();
+    	if(user && user.id){
+	    	$uibModal.open({
+	           animation: $scope.animationEnabled,
+	           templateUrl: "/js/product//product.review.template.html",
+	           controller: "ModalCtrl",
+	           resolve: {
+	           	  product: function(){
+	           	  	  return theProduct
+	           	  }
+	           }
+	    	})
+	    }else{
+    		console.log("Please sign in");
+        	return "Please sign up or login to create a wishlist.";
+    	}
+    };
 
-   };
+
 	$scope.product.price = $scope.product.price / 100;
 
 
@@ -79,7 +84,6 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
 app.controller('ModalCtrl', function($scope,$uibModalInstance, ProductFactory, product){
 
 	$scope.ok = function(){
-        console.log($scope.review)
         ProductFactory.createReview({product:product._id, content: $scope.review.content, numStars:$scope.review.stars })
 		$uibModalInstance.close()
 	}
