@@ -1,3 +1,9 @@
+.clearfix {
+  width: 100%;
+  height: 1px;
+  clear: both;
+}
+
 @mixin button-transition {
   transition: all 0.25s;
   -webkit-transition: all 0.25s;
@@ -9,6 +15,10 @@
   border-radius: 10px;
   padding: 0px 0px 20px 0px;
   box-shadow: $dark-shadow;
+
+  hr {
+    border-color: #541954;
+  }
 
   button {
     outline: none;
@@ -34,11 +44,12 @@
     position: relative;
     @include background-image-orientation;
     .stars {
-      background-color: rgba(0,0,0,0.65);
+      background-color: rgba(0,0,0,0.5);
       width: 250px;
       border-radius: 5px;
       position: absolute;
-      font-size: 2em;
+      font-size: 28px;
+      height: 34px;
       color: gold;
       bottom: 10px;
       left: 10px; 
@@ -53,7 +64,7 @@
     }
 
     .add-a-review:hover {
-      color: salmon;
+      background-color: salmon;
     }
   }
 
@@ -94,7 +105,34 @@
       text-align: left;
       padding: 20px;
     }
+
   }
+
+  .product-reviews-holder {
+    padding: 20px;
+    margin: 0px auto;
+    text-align: center;
+      .product-review {
+        h3 {
+          padding: 10px 0px;
+        }
+
+        hr {
+          margin: 10px;
+        }
+
+        float: left;
+        border-radius: 10px;
+        box-shadow: $shadow;
+        width: 45%;
+        margin: 10px;
+        padding: 10px;
+
+        .review-stars {
+          color: salmon;
+        }
+      }
+    }
 
   background-color: rgba(255,255,255,0.95);
 }

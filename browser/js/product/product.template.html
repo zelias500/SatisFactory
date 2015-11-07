@@ -19,13 +19,18 @@
       <h4 class="product-price">{{ product.price | currency  }}</h4>
     </aside>
   </article>
-  <div>
+  <div class="product-reviews-holder">
     
     <ul>  
-      <div class="product-reviews" ng-repeat=" review in product.reviews">
-        <h3> {{ review.user }} </h3>
+      <li class="product-review" ng-repeat=" review in product.reviews">
+        <h3> {{ review.user.name }} </h3>
+        <div class="review-stars">
+          <span ng-repeat="i in review.numStars" class="glyphicon glyphicon-star">{{ review.numStars }}</span>
+        </div>
+        <hr>
         <p>{{review.content}}</p>
-      </div>
+      </li>
     </ul>
+    <div class="clearfix"></div>
   </div>
 </section>
