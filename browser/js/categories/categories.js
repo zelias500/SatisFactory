@@ -21,9 +21,9 @@ app.controller('CategoryCtrl', function($scope, $state, ProductFactory, category
 	})
 	$scope.category = category;
 	$scope.isLoggedIn = AuthService.isAuthenticated;
-	$scope.goToProduct = function(product){
-		$state.go('product', {id: product._id});
-	};
+	// $scope.goToProduct = function(product){
+	// 	$state.go('product', {id: product._id});
+	// };
 	$scope.addToCart = function(product, quantity){
 
 	}

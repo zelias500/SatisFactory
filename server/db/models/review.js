@@ -12,7 +12,7 @@ var schema = new Schema({
     },
     message: 'Content is invalid'
   }},
-  numStars: {type: Number, min: 1, max: 5}
+  numStars: {type: Number, min: 1, max: 5, default: 1}
 
 })
 
