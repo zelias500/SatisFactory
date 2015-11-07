@@ -5,5 +5,7 @@ app.controller('ProductCtrl', function ($scope, theProduct, UserFactory){
         UserFactory.addToWishlist()
    }
 
+   
+
 
 })
