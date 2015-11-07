@@ -14,7 +14,8 @@
       <hr>
     </header>
     <p class="product-description">{{ product.description }}</p><aside class="product-purchase-details">
-      <button class="btn add-to-cart"><span class="glyphicon glyphicon-plus"></span>Add Cart</button>
+      Quantity: <input type="number" ng-model="order.number" min='0'/>
+      <button class="btn add-to-cart" ng-click="addToOrder()"><span class="glyphicon glyphicon-plus"></span>Add To Cart</button>
       <button class=" btn add-to-wishlist" ng-click="addWishList()"><span class="glyphicon glyphicon-heart"></span>Add to Wishlist</button>
       <h4 class="product-price">{{ product.price | currency  }}</h4>
     </aside>

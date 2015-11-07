@@ -23,21 +23,25 @@ router.post("/", function(req, res, next){
     if (user) {
       user.orders.push(order._id)
       return user.save();
-    }
-    else {
-      res.status(201).json(order);
-    }
-    
+    }    
   }).then(function(){
-    res.status(201).json(order);
-  })
+    order.deepPopulate('items.product', function(err, order){
+            if (err) next(err);
+            else {
+              res.status(201).json(order);
+            }
+          })
+      })
   .then(null, next);
 })
 
 router.param("id", function(req, res, next, id){
   Order.findById(id)
   .then(function(order){
+  console.log("HELLOOOOO")
     req.order = order;
+    // console.log(order)
+    next()
     // req.order.items.populate('product').execPopulate()
     //   .then(next)
     // next();
@@ -50,15 +54,27 @@ router.get("/:id", function(req, res, next){
 })
 
 router.post('/:id/items', function(req, res, next) {
-  console.log(req.order);
-  req.order.addToOrder(req.body.price, req.body.productID, req.body.quantity).then(function(order){
-      res.status(201).json(order);
-  }).then(null, next);
+  // console.log('are we even hitting this route??')
+  req.order.addToOrder(req.body.price, req.body.product, req.body.quantity).then(function(order){
+      order.deepPopulate('items.product', function(err, order){
+        if (err) next(err);
+        else {
+          res.status(201).json(order);
+        }
+        // console.log('callback', order)
+      })
+  })
+  // .then(function(order) {
+  //   console.log('HELLO THERE', order)
+  //   res.status(201).json(order);
+  // })
+  .then(null, next);
 })
 
 router.put("/:id", function(req, res, next){
-  delete req.body._id;
-  _.extend(req.order, req.body);
+  // delete req.body._id;
+  req.order.items.splice(req.body.index, 1);
+  // _.extend(req.order, req.body);
   req.order.save().then(function(order){
     res.status(200).json(order)
   }).then(null, next);
