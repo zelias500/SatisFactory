@@ -27,5 +27,4 @@ app.controller('CategoryCtrl', function($scope, $state, ProductFactory, category
 	$scope.addToCart = function(product, quantity){
 
 	}
-
 })
