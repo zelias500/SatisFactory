@@ -1,17 +1,38 @@
+@mixin button-transition {
+  transition: all 0.25s;
+  -webkit-transition: all 0.25s;
+}
+
+
 #product {
   text-align: center;
   border-radius: 10px;
   padding: 0px 0px 20px 0px;
+  box-shadow: $dark-shadow;
+
+  button {
+    outline: none;
+    margin: 10px;
+    @include button-transition;
+    span {
+      margin-right: 10px;
+    }
+  }
+
+  button:hover {
+    box-shadow: $shadow;
+  }
+
+  button:active {
+    box-shadow: none;
+  }
+
   .product-img {
     height: 300px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     position: relative;
     @include background-image-orientation;
-    // background-repeat: no-repeat;
-    // background-origin: center;
-    // background-position: center;
-    // background-size: cover;
     .stars {
       background-color: rgba(0,0,0,0.65);
       width: 250px;
@@ -22,9 +43,22 @@
       bottom: 10px;
       left: 10px; 
     }
+
+    .add-a-review {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      margin-bottom: 0px;
+      @include button-transition;
+    }
+
+    .add-a-review:hover {
+      color: salmon;
+    }
   }
 
   .product-article {
+    position: relative;
     padding: 0px 20px;
 
     .product-header {
@@ -51,23 +85,6 @@
         color: salmon;
       }
 
-      button {
-        outline: none;
-        margin: 10px;
-        transition: all 0.25s;
-        -webkit-transition: all 0.25s;
-        span {
-          margin-right: 10px;
-        }
-      }
-
-      button:hover {
-        box-shadow: $shadow;
-      }
-
-      button:active {
-        box-shadow: none;
-      }
     }
 
     .product-description {

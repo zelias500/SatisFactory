@@ -15,7 +15,13 @@ var productSchema = new Schema({
   reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
 })
 
-productSchema.plugin(deepPopulate, {}); 
+productSchema.plugin(deepPopulate, {
+  populate: {
+    'reviews.user' : {
+      select: 'name'
+    }
+  }
+}); 
 
 function getPrice(num) {
   return (num/100).toFixed(2)

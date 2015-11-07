@@ -5,6 +5,7 @@
     <div class="stars">
         <span class="glyphicon glyphicon-star"></span>
     </div>
+    <button class="btn add-a-review"><span class="glyphicon glyphicon-pencil"></span> Add Review</button>
   </div>
   <article class=
   "product-article">
@@ -19,10 +20,10 @@
     </aside>
   </article>
   <div>
-    <!-- For reviews (when loaded) -->
+    
     <ul>  
       <div class="product-reviews" ng-repeat=" review in product.reviews">
-        <h3> {{ review.user.email }} </h3>
+        <h3> {{ review.user }} </h3>
         <p>{{review.content}}</p>
       </div>
     </ul>

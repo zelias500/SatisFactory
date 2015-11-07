@@ -41,8 +41,14 @@ router.get('/category', function(req, res, next) {
 router.param("id", function(req, res, next, id){
   Product.findById(id)
   .populate('reviews')
+  .deepPopulate('reviews.user')
   .exec()
   .then(function(product){
+    product.reviews = product.reviews.map(function(review){
+      if(!review.user.name){
+        return review.user.name = "Anonymous";
+      }
+    })
     req.product = product;
     next();
   })
