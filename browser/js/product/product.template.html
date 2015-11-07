@@ -1,26 +1,36 @@
-<section id="product">
-  <div class="product-img">
+<section id="product" class="container">
+  <div class="product-img" style="background-image: url('{{ product.photo }}')">
     <!-- For header image on product -->
-    <img ng-src="{{ theProduct.photo }}"/>
+    <!-- <img ng-src="{{ product.photo }}"/> -->
+    <div class="stars">
+        <span class="glyphicon glyphicon-star"></span>
+    </div>
+    <button class="btn add-a-review"><span class="glyphicon glyphicon-pencil"></span> Add Review</button>
   </div>
-  <article>
-    <header>
-      <h2>{{ theProduct.title }}</h2>
+  <article class=
+  "product-article">
+    <header class="product-header">
+      <h1>{{ product.title }}</h1>
+      <hr>
     </header>
-    <aside>
-      <button class="add-to-cart"></button>
-      <button class="add-to-wishlist"></button>
-      <span class="product-price">{{ theProduct.price | currency  }}</span>
+    <p class="product-description">{{ product.description }}</p><aside class="product-purchase-details">
+      <button class="btn add-to-cart"><span class="glyphicon glyphicon-plus"></span>Add Cart</button>
+      <button class=" btn add-to-wishlist" ng-click="addWishList()"><span class="glyphicon glyphicon-heart"></span>Add to Wishlist</button>
+      <h4 class="product-price">{{ product.price | currency  }}</h4>
     </aside>
-    <!-- For Title of product, and description -->
-    <p>{{ theProduct.description }}</p>
   </article>
-  <div>
-    <!-- For reviews (when loaded) -->
-    <ul>  
-      <div class="product-reviews" ng-repeat=" review in theProduct.reviews">
-        <h3> {{ review.user }} </h3>
-      </div>
+  <hr>
+  <div class="product-reviews-holder">
+    <ul>
+      <li class="product-review" ng-repeat=" review in product.reviews">
+        <h3> {{ review.user.name }} </h3>
+        <div class="review-stars">
+          <span ng-repeat="i in review.numStars" class="glyphicon glyphicon-star">{{ review.numStars }}</span>
+        </div>
+        <hr>
+        <p>{{review.content}}</p>
+      </li>
     </ul>
+    <div class="clearfix"></div>
   </div>
 </section>
