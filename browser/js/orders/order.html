@@ -1,6 +1,18 @@
 <div>
-	<p>{{order}}</p>
-	<div ng-repeat="item in order.items">
-		<p>{{item}}</p>
-	</div>
+	<!-- <p>{{order}}</p> -->
+	<ul>
+		<li ng-repeat="item in order.items">
+			<!-- <img src={{item.product.photo}} /> -->
+			<h2>{{item.product.title}}</h2><h2>Price: {{item.price | currency}}</h2><h2>Qty: {{item.quantity}}</h2>
+
+			 <button class="btn btn-danger" ng-click="removeFromOrder(item)"><span class="glyphicon glyphicon-thumbs-down"></span> Remove Item</button>
+		</li>
+	</ul>
+
+	<h1>TOTAL: {{total | currency}}</h1>
+	<button class="btn btn-success" ng-click='goToCheckout()'>Checkout</button>
+	<button class="btn btn-warning" ng-click='deleteOrder()'>Delete Order</button>
+
+
+
 </div>

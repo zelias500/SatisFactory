@@ -4,30 +4,45 @@ app.config(function($stateProvider){
 		templateUrl: '/js/orders/order.html',
 		controller: 'OrderCtrl',
 		resolve: {
-			theOrder: function(UserFactory, OrderFactory, AuthService){
-				if (AuthService.isAuthenticated()) {
-					UserFactory.getUserOrders(AuthService.getCurrentUser())
-						.then(function(orders) {
-							return orders.filter(function(i) {
-								return i.status === 'pending'
-							})[0]
-						})
-						.then(function(order) {
-							return OrderFactory.getOne(order._id)
-						})
-
+			theOrder: function(UserFactory, OrderFactory, AuthService, Session){
+				if (Session.currentOrder) {
+					return Session.currentOrder;
 				}
 				else {
-					// if (!!OrderFactory.isCurrentOrder()) {
-						return OrderFactory.isCurrentOrder()
-					// }
+					return {error: 'nothing here!'}
 				}
 			}
 		}
 	})
 })
 
-app.controller('OrderCtrl', function($scope, theOrder, OrderFactory) {
-	// $scope.order = theOrder;
-	$scope.order = OrderFactory.isCurrentOrder();
+app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session) {
+	$scope.order = theOrder;
+	
+	$scope.removeFromOrder = function(item){
+		var idx = $scope.order.items.indexOf(item);
+		$scope.order.items.splice(idx, 1);
+		$scope.total -= (item.quantity * item.price)
+		return OrderFactory.update($scope.order._id, {index: idx}).then(function(order){
+			console.log("UPDATED ORDER", order);
+			Session.currentOrder = order;
+		})
+	}
+
+	if ($scope.order.items) {
+		$scope.total = $scope.order.items.reduce(function (prev, curr, idx, array){
+		prev += (curr.quantity * curr.price)
+		return prev;
+	}, 0)
+
+	}
+
+	$scope.deleteOrder = function() {
+		return OrderFactory.delete($scope.order._id)
+			.then(function() {
+				delete Session.currentOrder;
+				delete $scope.order;
+				$scope.total = 0;
+			})
+	}
 })

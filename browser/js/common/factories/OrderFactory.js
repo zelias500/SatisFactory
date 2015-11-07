@@ -1,4 +1,4 @@
-app.factory('OrderFactory', function($http){
+app.factory('OrderFactory', function($http, Session){
   function toData(res) {
     return res.data;
   }
@@ -13,7 +13,7 @@ app.factory('OrderFactory', function($http){
       },
       getOne: function(id){
         return $http.get(baseURL +id).then(toData).then(function(order) {
-          console.log(order)
+          // console.log(order)
           theOrder = order;
           return theOrder;
         })
@@ -29,12 +29,14 @@ app.factory('OrderFactory', function($http){
       },
       update:function(id, orderData){
         return $http.put(baseURL+id, orderData).then(toData).then(function(order) {
-          theOrder = order;
-          return theOrder;
+          return order;
+        //   theOrder = order;
+        //   return theOrder;
         })
       },
       addOrderItem: function(id, itemData){
         return $http.post(baseURL+id+'/items', itemData).then(toData).then(function(order) {
+          console.log("THIS IS THE ORDER", order)
           theOrder = order;
           return theOrder;
         })
