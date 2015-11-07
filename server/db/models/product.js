@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 var Review = require('./review')
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
+
 
 
 var productSchema = new Schema({
@@ -13,6 +15,14 @@ var productSchema = new Schema({
   reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}]
 })
 
+productSchema.plugin(deepPopulate, {
+  populate: {
+    'reviews.user' : {
+      select: 'name'
+    }
+  }
+}); 
+
 function getPrice(num) {
   return (num/100).toFixed(2)
 }
@@ -22,15 +32,24 @@ function setPrice(num) {
 }
 
 productSchema.methods.averageStars = function() {
-  var aveStars, sum, numReviews;
+
+var aveStars = 0, sum = 0, numReviews=0;
   this.populate('reviews').execPopulate()
-    .then(function(product) {
+    .then(function(product) {    
+       if(product.reviews.length == 0){
+         aveStars = 1;
+       }
+       else{
         product.reviews.forEach(function(review) {
           numReviews++
-          sum += review.numStars 
-        })
-        return aveStars = sum / numReviews
+          sum += review.numStars
+        }) 
+       aveStars = sum / numReviews
+    }
+       return aveStars;
     })
+
+     
 }
 
 productSchema.methods.getAllReviews = function(){
@@ -46,4 +65,6 @@ productSchema.pre('save', function(next) {
 	}
 	next();
 })
+
+
 mongoose.model("Product", productSchema);

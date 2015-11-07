@@ -3,6 +3,8 @@ var router = express.Router();
 var mongoose = require('mongoose')
 var Product = mongoose.model('Product')
 var Category = mongoose.model('Category');
+var Review = mongoose.model('Review');
+var User = mongoose.model('User');
 var _ = require('lodash');
 
 router.get('/', function(req, res, next) {
@@ -38,7 +40,15 @@ router.get('/category', function(req, res, next) {
 
 router.param("id", function(req, res, next, id){
   Product.findById(id)
+  .populate('reviews')
+  .deepPopulate('reviews.user')
+  .exec()
   .then(function(product){
+    product.reviews = product.reviews.map(function(review){
+      if(!review.user.name){
+        return review.user.name = "Anonymous";
+      }
+    })
     req.product = product;
     next();
   })
@@ -52,13 +62,9 @@ router.get("/:id", function(req, res, next){
 router.get('/:id/reviews', function(req, res, next){
     if(req.product.reviews.length === 0){
       res.status(200).json("There are no Reviews")
+    } else {
+      res.status(200).json(req.product.reviews);
     }
-    else{
-    req.product.populate('reviews')
-    .then(function(product){
-        product.reviews.populate('user').exec();
-        res.status(200).json(product);
-    }).then(null, next)}
 })
 
 

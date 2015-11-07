@@ -19,10 +19,11 @@ body {
   width: 1200px;
   margin: 0 auto;
 }
-
+@import url(https://fonts.googleapis.com/css?family=Satisfy);
 @import 'directives/main';
 @import 'home/main';
 @import 'about/main';
 @import 'tutorial/main';
 @import 'login/main';
 @import 'categories/main';
+@import 'product/main'

@@ -3,12 +3,12 @@
         <h1>...satisfy your taste for {{category}}...</h1>
       </header>
       <div class="product" ng-repeat="item in items">
-        <div class="pic"> 
-          <img class='catimg' ng-src={{item.photo}} />
+        <div class="pic" style="background-image: url('{{ item.photo }}')"> 
+          <!-- <img class='catimg' ng-src={{item.photo}} /> -->
         </div>
         <div class="product-content">
           <header id='title'>
-            <h3><a ui-sref="product(product)">{{item.title}}</a></h3>
+            <h3><a ui-sref="product({ id: item._id})">{{item.title}}</a></h3>
           </header>
           <hr>
         <div id='description'>
@@ -22,8 +22,9 @@
           </form>
           <button ng-show="isLoggedIn()" ng-click="addToWishlist(item)">Add to Wishlist</button>
         </div>
-      </div>
+      </div>  
       <br />
+      <div class="clearfix"></div>
     </section>
 
 

@@ -1,11 +1,11 @@
 app.config(function ($stateProvider){
   $stateProvider.state('product', {
-    url: '/products/:productId',
-    templateUrl: 'product.template.html',
+    url: '/products/:id',
+    templateUrl: '/js/product/product.template.html',
     controller: 'ProductCtrl',
     resolve: {
       theProduct: function(ProductFactory, $stateParams){
-        return ProductFactory.getOne($stateParams.productId);
+        return ProductFactory.getOne($stateParams.id);
       }
     }
   })

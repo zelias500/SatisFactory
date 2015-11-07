@@ -4,7 +4,7 @@ app.factory('ProductFactory', function($http){
   }
 
   var baseURL = '/api/products/'
-   
+
   return {
     getAll: function(){
        return $http.get(baseURL).then(toData)
@@ -30,6 +30,7 @@ app.factory('ProductFactory', function($http){
     getAllReviews: function(id){
         return $http.get(baseURL+ id +"/reviews").then(toData)
     }
+
   }
 
 
