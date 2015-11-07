@@ -7,10 +7,11 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     position: relative;
-    background-repeat: no-repeat;
-    background-origin: center;
-    background-position: center;
-    background-size: cover;
+    @include background-image-orientation;
+    // background-repeat: no-repeat;
+    // background-origin: center;
+    // background-position: center;
+    // background-size: cover;
     .stars {
       background-color: rgba(0,0,0,0.65);
       width: 250px;

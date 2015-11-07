@@ -3,8 +3,8 @@
         <h1>...satisfy your taste for {{category}}...</h1>
       </header>
       <div class="product" ng-repeat="item in items">
-        <div class="pic"> 
-          <img class='catimg' ng-src={{item.photo}} />
+        <div class="pic" style="background-image: url('{{ item.photo }}')"> 
+          <!-- <img class='catimg' ng-src={{item.photo}} /> -->
         </div>
         <div class="product-content">
           <header id='title'>
