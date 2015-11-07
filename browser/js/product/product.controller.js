@@ -18,8 +18,9 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
     }
 
     $scope.addProductReview = function(){
-    	var user = AuthService.getCurrentUser();
-    	if(user && user.id){
+    	var currentuser = AuthService.getCurrentUser();
+    	console.log(currentuser);
+    	if(currentuser && currentuser._id){
 	    	$uibModal.open({
 	           animation: $scope.animationEnabled,
 	           templateUrl: "/js/product//product.review.template.html",
@@ -27,6 +28,9 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
 	           resolve: {
 	           	  product: function(){
 	           	  	  return theProduct
+	           	  },
+	           	  user : function(){
+	           	  	return currentuser;
 	           	  }
 	           }
 	    	})
@@ -40,7 +44,7 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
 	$scope.product.price = $scope.product.price / 100;
 
 
-   
+
 
 
 	$scope.addToOrder = function() {
@@ -83,10 +87,10 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
 })
 
 
-app.controller('ModalCtrl', function($scope,$uibModalInstance, ProductFactory, product){
+app.controller('ModalCtrl', function($scope,$uibModalInstance, ProductFactory, product, user){
 
 	$scope.ok = function(){
-        ProductFactory.createReview({product:product._id, content: $scope.review.content, numStars:$scope.review.stars })
+        ProductFactory.createReview({product:product._id, user: user._id, content: $scope.review.content, numStars:$scope.review.stars })
 		$uibModalInstance.close()
 	}
 	$scope.cancel = function(){
