@@ -8,6 +8,12 @@ var Order = mongoose.model('Order');
 var Review = mongoose.model('Review');
 var Product = mongoose.model('Product');
 
+router.get('/', function(req, res, next){
+	Review.find({}).then(function(reviews){
+       res.status(200).json(review)
+	}).then(null, next)
+})
+
 router.get('/:id', function(req, res, next){
 	Review.findById(req.params.id).exec().then(function(review){
        res.status(200).json(review)
