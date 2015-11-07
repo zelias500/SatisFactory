@@ -26,4 +26,8 @@ app.controller('LoginCtrl', function ($scope, AuthService, $state) {
 
     };
 
+    $scope.localSignup = function(signupInfo) {
+        
+    }
+
 });
