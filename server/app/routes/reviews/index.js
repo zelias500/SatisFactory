@@ -27,8 +27,14 @@ router.post('/', function(req, res, next){
 		theReview = review;
 		return User.findById(review.user)
 	}).then(function(user){
-		user.reviews.push(theReview._id);
-		return user.save()
+		if(user){
+			user.reviews.push(theReview._id);
+		   return user.save()
+		}
+		else{
+			return
+		}
+
 	})
 	.then(function(){
 		return Product.findById(theReview.product)
