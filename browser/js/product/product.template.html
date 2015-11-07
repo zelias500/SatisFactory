@@ -15,13 +15,13 @@
     </header>
     <p class="product-description">{{ product.description }}</p><aside class="product-purchase-details">
       <button class="btn add-to-cart"><span class="glyphicon glyphicon-plus"></span>Add Cart</button>
-      <button class=" btn add-to-wishlist"><span class="glyphicon glyphicon-heart"></span>Add to Wishlist</button>
+      <button class=" btn add-to-wishlist" ng-click="addWishList()"><span class="glyphicon glyphicon-heart"></span>Add to Wishlist</button>
       <h4 class="product-price">{{ product.price | currency  }}</h4>
     </aside>
   </article>
   <hr>
   <div class="product-reviews-holder">
-    <ul>  
+    <ul>
       <li class="product-review" ng-repeat=" review in product.reviews">
         <h3> {{ review.user.name }} </h3>
         <div class="review-stars">

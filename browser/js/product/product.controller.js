@@ -1,7 +1,9 @@
-app.controller('ProductCtrl', function ($scope, theProduct){
-    console.log(theProduct);
-    var product = theProduct;
+app.controller('ProductCtrl', function ($scope, theProduct, UserFactory){
+   var product = theProduct;
    $scope.product = product;
+   $scope.addWishList = function(){
+        UserFactory.addToWishlist()
+   }
 
    
 
