@@ -17,8 +17,13 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
                 { label: 'My Cart', state: 'order'},
                 { label: 'My Wishlist', state: 'wishlist'}
             ];
-
+            
             scope.user = null;
+
+            scope.$on(AUTH_EVENTS.loginSuccess, function(){
+                scope.user = AuthService.getCurrentUser();
+            })
+
 
             scope.isLoggedIn = function () {
                 return AuthService.isAuthenticated();
