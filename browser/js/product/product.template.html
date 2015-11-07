@@ -1,22 +1,22 @@
-<section id="product" class="panel-body">
-  <div class="product-img">
+<section id="product" class="container">
+  <div class="product-img" style="background-image: url('{{ product.photo }}')">
     <!-- For header image on product -->
-    <img ng-src="{{ product.photo }}"/>
+    <!-- <img ng-src="{{ product.photo }}"/> -->
     <div class="stars">
         <span class="glyphicon glyphicon-star"></span>
     </div>
   </div>
-  <article>
-    <header>
-      <h2>{{ product.title }}</h2>
+  <article class=
+  "product-article">
+    <header class="product-header">
+      <h1>{{ product.title }}</h1>
+      <hr>
     </header>
-    <aside>
+    <p class="product-description">{{ product.description }}</p><aside class="product-purchase-details">
       <button class="btn add-to-cart"><span class="glyphicon glyphicon-plus"></span>Add Cart</button>
       <button class=" btn add-to-wishlist"><span class="glyphicon glyphicon-heart"></span>Add to Wishlist</button>
-      <span class="product-price">{{ product.price | currency  }}</span>
+      <h4 class="product-price">{{ product.price | currency  }}</h4>
     </aside>
-    <!-- For Title of product, and description -->
-    <p>{{ product.description }}</p>
   </article>
   <div>
     <!-- For reviews (when loaded) -->

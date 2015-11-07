@@ -1,7 +1,82 @@
 #product {
   text-align: center;
+  border-radius: 10px;
+  padding: 0px 0px 20px 0px;
   .product-img {
-
+    height: 300px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+    background-repeat: no-repeat;
+    background-origin: center;
+    background-position: center;
+    background-size: cover;
+    .stars {
+      background-color: rgba(0,0,0,0.65);
+      width: 250px;
+      border-radius: 5px;
+      position: absolute;
+      font-size: 2em;
+      color: gold;
+      bottom: 10px;
+      left: 10px; 
+    }
   }
-  background-color: white;
+
+  .product-article {
+    padding: 0px 20px;
+
+    .product-header {
+      padding: 0px 10px 0px 10px;
+      h1 {
+        font-family: satisfy;
+      }
+    }
+
+    .product-purchase-details {
+      display: inline-block;
+      width: 33%;
+      border: 1px solid #C1B5B5;
+      border-radius: 10px;
+      padding: 10px 0px 10px 0px;
+
+      .add-to-cart {
+        color: #333;
+        background-color: salmon;
+      }
+
+      .add-to-wishlist {
+        background-color: #541954;
+        color: salmon;
+      }
+
+      button {
+        outline: none;
+        margin: 10px;
+        transition: all 0.25s;
+        -webkit-transition: all 0.25s;
+        span {
+          margin-right: 10px;
+        }
+      }
+
+      button:hover {
+        box-shadow: $shadow;
+      }
+
+      button:active {
+        box-shadow: none;
+      }
+    }
+
+    .product-description {
+      display: inline-block;
+      width: 66%;
+      font-size: 1.5em;
+      text-align: left;
+      padding: 20px;
+    }
+  }
+
+  background-color: rgba(255,255,255,0.95);
 }

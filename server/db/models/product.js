@@ -28,7 +28,7 @@ function setPrice(num) {
 productSchema.methods.averageStars = function() {
 
 var aveStars = 0, sum = 0, numReviews=0;
-  his.populate('reviews').execPopulate()
+  this.populate('reviews').execPopulate()
     .then(function(product) {    
        if(product.reviews.length == 0){
          aveStars = 1;
