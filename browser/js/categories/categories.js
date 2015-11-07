@@ -24,24 +24,5 @@ app.controller('CategoryCtrl', function($scope, $state, ProductFactory, category
 	$scope.goToProduct = function(product){
 		$state.go('product', {id: product._id});
 	};
-	$scope.addToOrder = function(item) {
-		var order = OrderFactory.isCurrentOrder()
-		if (!order) {
-			OrderFactory.create({items: [{price: item.price, product: item._id, quantity: 2}]})
-				.then(function(createdOrder) {
-					order = createdOrder
-					console.log("NEW ORDER CREATED", order)
-				})
-		}
-		else {
-			console.log('!!!!!')
-			OrderFactory.addOrderItem(order._id, {price: item.price, product: item._id, quantity: 2})
-				.then(function(createdOrder) {
-					order = createdOrder
-					console.log("ADDING TO ORDER", order)
-				}) 
-
-		}
-	}
 
 })
