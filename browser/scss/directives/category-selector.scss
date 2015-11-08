@@ -1,0 +1,50 @@
+#main {
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+}
+@mixin side-panel-tab {
+  writing-mode: vertical-lr;
+  -webkit-writing-mode: vertical-lr;
+  right: -50px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  box-shadow: 0px 0px 10px black;
+  position: absolute;
+  padding: 10px;
+  top: 10px;
+  width: 50px;
+  height: 150px;
+  font-family: satisfy;
+  font-size: 1.8em;
+}
+
+.side-panel {
+  position: fixed;
+  z-index: 200;
+  width: 350px;
+  height: auto;
+  left: -350px;
+  background-color: rgba(0, 0, 0, 0.75);
+  border-bottom-right-radius: 10px;
+  border-top-right-radius: 10px;
+  transition: transform 0.5s ease-in-out;
+  -webkit-transition: transform 0.5s ease-in-out;
+  box-shadow: 0px 5px 10px rgba(0,0,0,0.55);
+
+}
+
+#category-selector:after {
+  background-color: salmon;
+  content: "Categories";
+  @include side-panel-tab;
+}
+
+
+.side-panel:hover {
+  transform: translate(350px);
+}
+
+.side-panel:hover ~ #main {
+  filter: blur(10px);
+  -webkit-filter: blur(10px);
+}
