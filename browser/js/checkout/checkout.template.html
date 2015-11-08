@@ -1,0 +1,44 @@
+<section id="checkout">
+
+  <div id="checkout-shipping" class="checkout-panel">
+    <h2>Shipping</h2>
+    <form ng-submit="submitAddress()">
+      <label>To:</label>
+      <input type="text" ng-model="address.name"/>
+      <label>Line One</label>
+      <input type="text" ng-model="address.lineOne"/>
+      <label>Line Two</label>
+      <input type="text" ng-model="address.lineTwo"/>
+      <label>City</label>
+      <input type="text" ng-model="address.city"/>
+      <label>Zip Code</label>
+      <input type="text" ng-model="address.zip"/>
+      <label>State</label>
+      <input type="text" ng-model="address.state"/>
+      <input type="submit" value="Add Address"/>
+    </form>
+  </div>
+  <div id="checkout-billing" class="checkout-panel">
+    <h2>Payment</h2>
+    <form ng-hide="false">
+      <label>To:</label>
+      <input type="text" ng-model="billing.name"/>
+      <label>Line One</label>
+      <input type="text" ng-model="billing.lineOne"/>
+      <label>Line Two</label>
+      <input type="text" ng-model="billing.lineTwo"/>
+      <label>City</label>
+      <input type="text" ng-model="billing.city"/>
+      <label>Zip Code</label>
+      <input type="text" ng-model="billing.zip"/>
+      <label>State</label>
+      <input type="text" ng-model="address.state"/>
+      <input type="submit" value="Add Card"/>
+    </form>
+  </div>
+  <div id="checkout-summary" class="checkout-panel">
+    <h2>Summary</h2>
+    <p>Total Price: {{ totalPrice }}
+  </div>
+
+</section>

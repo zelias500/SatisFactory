@@ -1,5 +1,5 @@
 
-app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory, AuthService,$uibModal){
+app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory, AuthService,$uibModal, OrderFactory){
 
    var product = theProduct;
    $scope.product = product;
