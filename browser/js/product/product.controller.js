@@ -90,8 +90,13 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
 app.controller('ModalCtrl', function($scope,$uibModalInstance, ProductFactory, product, user){
 
 	$scope.ok = function(){
-        ProductFactory.createReview({product:product._id, user: user._id, content: $scope.review.content, numStars:$scope.review.stars })
-		$uibModalInstance.close()
+    ProductFactory.createReview({product:product._id, user: user._id, content: $scope.review.content, numStars:$scope.review.stars })
+    .then(function(data){
+      console.log(data);
+      $uibModalInstance.close()
+      $scope.$digest();
+    })
+		
 	}
 	$scope.cancel = function(){
 		$uibModalInstance.dismiss('cancel')
