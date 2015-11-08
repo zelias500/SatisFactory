@@ -10,4 +10,3 @@ app.config(function ($stateProvider){
     }
   })
 })
-

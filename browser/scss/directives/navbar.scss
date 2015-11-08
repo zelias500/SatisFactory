@@ -5,6 +5,10 @@ navbar {
   border-bottom: 1px solid black;
   box-shadow: 1px 1px 14px -3px black;
 
+  #nav {
+    background: white;
+  }
+
   .container {
     width: 91%;
     max-width: 1340px;
@@ -20,6 +24,10 @@ navbar {
   a {
     color: black;
     font-size: 16px;
+    border: 1px solid black;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 5px;
   }
 
   .nav > li > a {
@@ -29,11 +37,14 @@ navbar {
       color: darken(#f31214, 10%);
     }
     &:hover {
-      background: none;
+      background: black;
+      color: white;
       color: #f31214;
+      text-decoration: none;
     }
     &:focus {
-      background: none;
+      background: black;
+      color: white;
     }
   }
 
@@ -49,13 +60,18 @@ navbar {
     float: right;
     margin-top: 12px;
     span {
-      color: black;
+      color: white;
       font-size: 16px;
       margin-right: 5px;
     }
     a {
-      color: #f30046;
+      color: black;
       cursor: pointer;
+    }
+    a:hover {
+      color:red;
+      background: black;
+      text-decoration: none;
     }
   }
 
