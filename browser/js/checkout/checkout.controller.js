@@ -1,5 +1,4 @@
 app.controller("CheckoutCtrl", function($scope, theOrder,UserFactory,AuthService){
-  console.log("Inside the checkout controller:", theOrder);
   var order = theOrder;
 
   var totalPrice = function(){
@@ -17,4 +16,4 @@ app.controller("CheckoutCtrl", function($scope, theOrder,UserFactory,AuthService
       return UserFactory.addAddress(user, $scope.address)}
   }
 
-})
+})  
