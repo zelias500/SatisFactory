@@ -6,10 +6,14 @@ var mongoose = require('mongoose');
 var User = mongoose.model('User');
 var Order = mongoose.model('Order');
 var Review = mongoose.model('Review');
+var Wishlist = mongoose.model('Wishlist');
 var _ = require('lodash');
 
 var authorizeAccess = function(requestUser, targetUser){
-	return ((requestUser._id === targetUser._id) || (requestUser.isAdmin))
+	console.log("REQUESTED USER", requestUser)
+	console.log("TARGET USER", targetUser)
+	console.log(requestUser._id.equals(targetUser._id))
+	return ((requestUser._id.equals(targetUser._id)) || (requestUser.isAdmin))
 }
 
 router.get('/', function(req, res, next){
@@ -169,24 +173,52 @@ router.get('/:id/reviews', function(req, res, next){
 })
 
 router.get('/:id/wishlist', function(req, res, next) {
-    res.status(200).json(req.targetUser.wishlist)
+    // res.status(200).json(req.targetUser.wishlist)
+    req.targetUser.populate('wishlist').execPopulate().then(function(user){
+    	res.status(200).json(req.targetUser);
+    })
+})
+
+router.get('/:id/wishlist/:wishlistId', function(req, res, next) {
+	var x = _.findIndex(req.targetUser.wishlist, function(item){
+		return item._id == req.params.wishlistId
+	})
+
+	res.status(200).json(req.targetUser.wishlist[x]);
 })
 
 router.post('/:id/wishlist', function(req, res, next) {
     if (authorizeAccess(req.user, req.targetUser)){
-	    req.body.wishlistedBy = req.targetUser._id
-	    req.targetUser.wishlist.push(req.body)
-	    req.targetUser.save()
-	        .then(function(user) {
-	            res.status(201).json(user.wishlist)
-	        })    	
-    }
+	    // push a new wishlist with an items array of length 1 that has the starting item in it
+	    // console.log('here', req.body.name)
+
+	    var aWishlist = new Wishlist({
+	    	items: req.body.items,
+	    	wlName: req.body.wlName,
+	    	wishlistedBy: req.targetUser._id
+	    })
+
+	    aWishlist.save()
+	    	.then(function(theWishlist) {
+	    		res.status(201).json(theWishlist)
+	    	})
+	    	.then(null, next)
+	    }
     else {
     	res.status(403).end();
     }
 })
 
-router.put('/:id/wishlist', function(req, res, next) {
+router.post('/:id/wishlist/:wishlistId', function(req, res, next){
+	Wishlist.findById(req.params.wishlistId).then(function(wishlist){
+		wishlist.items.push(req.body);
+		return wishlist.save();
+	}).then(function(wishlist){
+		res.status(200).json(wishlist);
+	}).then(null, next)
+})
+
+router.put('/:id/wishlist/:wishlistId', function(req, res, next) {
     var x  = _.findIndex(req.targetUser.wishlist, function(i) {
         return i === req.body
     })

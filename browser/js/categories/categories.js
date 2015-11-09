@@ -43,5 +43,4 @@ app.controller('CategoryCtrl', function($scope, $state, ProductFactory, category
 
 		}
 	}
-
 })

@@ -18,6 +18,7 @@ app.config(function($stateProvider){
 
 app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session) {
 	$scope.order = theOrder;
+	console.log($scope.order)
 	
 	$scope.removeFromOrder = function(item){
 		var idx = $scope.order.items.indexOf(item);

@@ -22,6 +22,18 @@ var Billing = new Schema({
     cvc:  { type: String, required: true }
 })
 
+var lineItemSchema = new Schema({
+  price: {type:Number, required:true},
+  product: { type: Schema.Types.ObjectId, ref: 'Product', required:true},
+  quantity: {type:Number, required:true}
+})
+
+var wishlistSchema = new Schema({
+    items: [lineItemSchema],
+    wlName: {type: String, required: true},
+    wishlistedBy: {type: Schema.Types.ObjectId, ref: 'User'}
+})
+
 var schema = new Schema({
     name: String,
     isAdmin: {type: Boolean, default: false},
@@ -57,7 +69,7 @@ var schema = new Schema({
 
     shipping: {type: [Address], select: false},
 
-    wishlist: [{type: Schema.Types.ObjectId, ref: 'lineItemSchema'}],
+    wishlist: [{type: Schema.Types.ObjectId, ref: 'Wishlist'}],
 
     orders: [{type:Schema.Types.ObjectId, ref: 'Order'}]
 
@@ -113,6 +125,6 @@ schema.method('addShippingAddress', function(address){
     this.save();
 })
 
-
-
+mongoose.model('LineItem', lineItemSchema)
+mongoose.model('Wishlist', wishlistSchema)
 mongoose.model('User', schema);

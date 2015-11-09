@@ -64,7 +64,12 @@
         };
 
         this.getCurrentUser = function() {
-            return Session.user;
+            // console.log(Session.user);
+            return $http.get('/api/users/'+Session.user._id+'/wishlist').then(function(res){
+                console.log(res.data);
+                return res.data;
+            })
+            // return Session.user;
         }
 
         this.getLoggedInUser = function (fromServer) {
