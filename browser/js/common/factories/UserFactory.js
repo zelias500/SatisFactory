@@ -58,8 +58,8 @@ app.factory('UserFactory', function($http){
 			})
 		},
 
-		getWishlist: function(user, wishlistId){
-			return $http.get(baseURL+user._id+'/wishlist/'+ wishlistId).then(function(res){
+		getWishlist: function(userId, wishlistId){
+			return $http.get(baseURL+userId+'/wishlist/'+ wishlistId).then(function(res){
 				return toData(res)
 			})
 		},

@@ -3,7 +3,8 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var Review = require('./review');
 var Schema = mongoose.Schema;
-var validator = require('node-mongoose-validator')
+var validator = require('node-mongoose-validator');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 var Address = new Schema({
     name: {type: String, required: true },
@@ -33,6 +34,8 @@ var wishlistSchema = new Schema({
     wlName: {type: String, required: true},
     wishlistedBy: {type: Schema.Types.ObjectId, ref: 'User'}
 })
+
+wishlistSchema.plugin(deepPopulate, {});
 
 var schema = new Schema({
     name: String,
