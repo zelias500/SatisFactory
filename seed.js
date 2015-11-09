@@ -35,7 +35,8 @@ var seedUsers = function () {
         },
         {
             email: 'obama@gmail.com',
-            password: 'potus'
+            password: 'potus',
+            isAdmin: true
         },
         {
             email: 'someone@somewhere.com',
@@ -49,7 +50,7 @@ var seedUsers = function () {
 };
 
 var seedProducts = function() {
-    
+
     var products = [
         {
             title: "Buy a Ferrari",
@@ -58,14 +59,14 @@ var seedProducts = function() {
             quantity: 10,
             category: "Cars",
             photo: "/photos/ferrari.png"
-        }, 
+        },
         {
             title: "Buy a Porsche 911",
             description: "Indulge your need for speed by by a limited edition Porsche 911 at a discounted price.",
             price: 50000.00,
             quantity: 10,
             category: "Cars",
-            photo: "/photos/Porsche.jpeg"  
+            photo: "/photos/Porsche.jpeg"
         },
 
         {
@@ -74,7 +75,7 @@ var seedProducts = function() {
             price: 999.99,
             quantity: 100,
             category: "Food",
-            photo: "/photos/MaxBrenner.JPG" 
+            photo: "/photos/MaxBrenner.JPG"
         },
 
         {
@@ -83,7 +84,7 @@ var seedProducts = function() {
             price: 3.99,
             quantity: 10000,
             category: "Food",
-            photo: "/photos/hershey.jpg" 
+            photo: "/photos/hershey.jpg"
         },
 
         {
@@ -92,8 +93,8 @@ var seedProducts = function() {
             price: 500.00,
             quantity: 4,
             category: "Experiences",
-            photo: "/photos/grumpycat.png" 
-        },        
+            photo: "/photos/grumpycat.png"
+        },
         {
             title: "Dinner with Omri Bernstein",
             description: "A once in a lifetime experience, dinner with esteemed time traveller and software engineer, Omri Bernstein DFC.",
@@ -101,14 +102,14 @@ var seedProducts = function() {
             quantity: 2,
             category: "Experiences",
             photo: "/photos/omri_bernstein.jpg"
-        }, 
+        },
         {
             title: "Luxury vacation to the Seychelles",
             description: "Pure white sand, tropical sun and idyllic island life, an experience to really recharge miles away from the city.",
             price: 12000.00,
             quantity: 10,
             category: "Vacations",
-            photo: "/photos/Fishing.jpg"  
+            photo: "/photos/Fishing.jpg"
         },
 
         {
@@ -117,7 +118,7 @@ var seedProducts = function() {
             price: 15000.00,
             quantity: 20,
             category: "Vacations",
-            photo: "/photos/snowboarding.jpg"  
+            photo: "/photos/snowboarding.jpg"
         },
 
         {
@@ -126,7 +127,7 @@ var seedProducts = function() {
             price: 2000.00,
             quantity: 12,
             category: "Services",
-            photo: "/photos/Spa.jpg"  
+            photo: "/photos/Spa.jpg"
         },
 
         {
@@ -135,8 +136,8 @@ var seedProducts = function() {
             price: 10000.00,
             quantity: 15,
             category: "Services",
-            photo: "/photos/house.jpg"  
-        },        
+            photo: "/photos/house.jpg"
+        },
         {
             title: "Superbowl 2016 - VIP",
             description: "Your going to the superbowl...why settle for less. Satisfy your fan fever and watch the game from our exclusive private box.",
@@ -144,14 +145,14 @@ var seedProducts = function() {
             quantity: 1,
             category: "Sports",
             photo: "/photos/Superbowl.jpg"
-        }, 
+        },
         {
             title: "Pickup Basketball with the man himself...",
             description: "Want to satisfy your dream of meeting the worlds best basketball player...and try and beat him at his own game? This is for you.",
             price: 60.00,
             quantity: 20,
             category: "Sports",
-            photo: "/photos/LeBron.jpg" 
+            photo: "/photos/LeBron.jpg"
         },
 
         {
@@ -160,7 +161,7 @@ var seedProducts = function() {
             price: 100.00,
             quantity: 10,
             category: "Concerts",
-            photo: "/photos/Phish.jpg"  
+            photo: "/photos/Phish.jpg"
         },
 
         {
@@ -169,7 +170,7 @@ var seedProducts = function() {
             price: 150.00,
             quantity: 10,
             category: "Concerts",
-            photo: "/photos/jayz.jpg"  
+            photo: "/photos/jayz.jpg"
         }
 
     ]
@@ -187,7 +188,7 @@ var seedProducts = function() {
         return Product.createAsync(updateProduct);
     })
 
-    
+
 };
 
 var seedCategories = function(){
@@ -256,7 +257,7 @@ connectToDb.then(function (db) {
             process.kill(1);
 
         })
-            
+
     })
 
 
