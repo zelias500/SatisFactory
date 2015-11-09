@@ -31,7 +31,6 @@ app.factory('ProductFactory', function($http){
         return $http.get(baseURL+ id +"/reviews").then(toData)
     },
     createReview: function(data){
-        console.log("this is review", data)
       return $http.post('/api/reviews', data).then(toData)
     }
 

@@ -26,10 +26,9 @@ var orderSchema = new mongoose.Schema({
 
 })
 
-orderSchema.plugin(deepPopulate); 
+orderSchema.plugin(deepPopulate, {}); 
 
 orderSchema.methods.addToOrder = function(cost, id, amount) {
-  console.log("THIS IS THE ID", id)
   var checking = _.find(this.item, function (i) {
     return i.product.equals(id) && i.price === cost;
   });
@@ -39,7 +38,6 @@ orderSchema.methods.addToOrder = function(cost, id, amount) {
   else {
     this.items.push({price: cost, product: id, quantity: amount})
   }
-  console.log("HELLOSDFJIUFSDS", this.items)
   return this.save()
 }
 

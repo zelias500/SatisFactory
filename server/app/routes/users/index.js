@@ -10,14 +10,11 @@ var Wishlist = mongoose.model('Wishlist');
 var _ = require('lodash');
 
 var authorizeAccess = function(requestUser, targetUser){
-	console.log("REQUESTED USER", requestUser)
-	console.log("TARGET USER", targetUser)
-	console.log(requestUser._id.equals(targetUser._id))
-	return ((requestUser._id.equals(targetUser._id)) || (requestUser.isAdmin))
+	return requestUser._id.equals(targetUser._id) || requestUser.isAdmin
 }
 
 router.get('/', function(req, res, next){
-	User.find({}).then(function(users){ 
+	User.find({}).then(function(users){
 		res.status(200).json(users);
 	}).then(null,next);
 })
@@ -51,7 +48,7 @@ router.put("/:id", function(req, res, next){
 		_.extend(req.targetUser, req.body);
 		req.targetUser.save().then(function(user){
 			res.status(200).json(user);
-		}).then(null, next)		
+		}).then(null, next)
 	}
 	else {
 		res.status(403).end();
@@ -62,7 +59,7 @@ router.delete('/:id', function(req, res, next){
 	if (authorizeAccess(req.user, req.targetUser)){
 		req.targetUser.remove().then(function(){
 			res.status(204).end();
-		}).then(null, next);		
+		}).then(null, next);
 	}
 	else {
 		res.status(403).end();
@@ -72,7 +69,7 @@ router.delete('/:id', function(req, res, next){
 router.get('/:id/billing', function(req, res, next){
 	if (authorizeAccess(req.user, req.targetUser)){
 		User.findById(req.targetUser._id).select('billing').exec().then(function(user){
-			res.status(200).json(user.billing);	
+			res.status(200).json(user.billing);
 		})
 	}
 	else {
@@ -86,7 +83,7 @@ router.post('/:id/billing', function(req, res, next){
 			user.billing.push(req.body);
 			return user.save();
 		}).then(function(user){
-			res.status(201).json(req.targetUser.billing);
+			res.status(201).json(user.billing);
 		})
 	}
 	else {
@@ -101,12 +98,12 @@ router.put('/:id/billing', function(req, res, next){
 				return i = req.body;
 			})
 			user.billing.splice(bill, 1);
-				
+
 			return user.save()
 		})
 		.then(function(user){
 			res.status(200).json(user)
-		})		
+		})
 	}
 	else {
 		res.status(403).end();
@@ -116,7 +113,7 @@ router.put('/:id/billing', function(req, res, next){
 router.get('/:id/shipping', function(req, res, next){
 	if (authorizeAccess(req.user, req.targetUser)){
 		User.findById(req.targetUser._id).select('shipping').exec().then(function(user){
-			res.status(200).json(user.shipping);	
+			res.status(200).json(user.shipping);
 		});
 	}
 	else {
@@ -126,8 +123,11 @@ router.get('/:id/shipping', function(req, res, next){
 
 router.post('/:id/shipping', function(req, res, next){
 	if (authorizeAccess(req.user, req.targetUser)){
-		User.findById(req.targetUser._id).select('shipping').exec().then(function(user){
-			user.shipping.push(req.body);
+		User.findById(req.targetUser._id).then(function(user){
+
+			 console.log("the user is", user)
+			 user.shipping.push(req.body)
+			 console.log('add shipping', user)
 			return user.save()
 		}).then(function(user){
 			res.status(201).json(user.shipping);
@@ -145,7 +145,7 @@ router.put('/:id/shipping', function(req, res, next){
 				return i = req.body;
 			})
 			user.shipping.splice(address, 1);
-			return user.save()		
+			return user.save()
 		}).then(function(user){
 			res.status(200).json(user)
 		})
@@ -235,7 +235,7 @@ router.delete('/:id/wishlist', function(req, res, next) {
 	    req.targetUser.save()
 	        .then(function(user) {
 	            res.status(204).end()
-	        })		
+	        })
 	}
 	else {
 		res.status(403).end();

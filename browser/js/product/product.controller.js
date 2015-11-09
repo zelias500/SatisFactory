@@ -1,6 +1,4 @@
-
 app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory, AuthService,$uibModal, OrderFactory, $timeout){
-
    var product = theProduct;
    $scope.product = product;
 
@@ -13,7 +11,9 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
    	$scope.theUser = user;
    })
 
-
+   $scope.$on('reviewAdded', function(event, data){
+      $scope.product = data;
+   })
 
    $scope.addWishList = function(){
         if ($scope.theUser && $scope.theUser._id){
@@ -56,8 +56,8 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
     }
 
     $scope.addProductReview = function(){
-    	var user = AuthService.getCurrentUser();
-    	if(user && user.id){
+    	var currentuser = AuthService.getCurrentUser();
+    	if(currentuser && currentuser._id){
 	    	$uibModal.open({
 	           animation: $scope.animationEnabled,
 	           templateUrl: "/js/product//product.review.template.html",
@@ -65,6 +65,9 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
 	           resolve: {
 	           	  product: function(){
 	           	  	  return theProduct
+	           	  },
+	           	  user : function(){
+	           	  	return currentuser;
 	           	  }
 	           }
 	    	})
@@ -77,19 +80,13 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
 
 	$scope.product.price = $scope.product.price / 100;
 
-
 	$scope.addToOrder = function() {
-		// var currentOrder = OrderFactory.isCurrentOrder()
 		$scope.added = true;
 		$timeout(function () { $scope.added = false; }, 2000)
 		if (!Session.currentOrder) {
 			OrderFactory.create({items: [{price: $scope.product.price, product: $scope.product._id, quantity: $scope.order.number}]})
 				.then(function(createdOrder) {
-					// currentOrder = createdOrder
-					Session.currentOrder = createdOrder
-					// console.log("NEW ORDER CREATED", createdOrder);
-					// console.log('SESSION ORDER TEST', Session.currentOrder)
-					// console.log('FROM ORDER FACTORY:', OrderFactory.isCurrentOrder())
+					Session.currentOrder = createdOrder;
 				})
 		}
 		else {
@@ -105,30 +102,32 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
 
 
 		}
-
-		// else {
-		// 	console.log('!!!!!')
-		// 	OrderFactory.addOrderItem(order._id, {price: item.price, product: item._id, quantity: 2})
-		// 		.then(function(createdOrder) {
-		// 			console.log(createdOrder)
-		// 			order = createdOrder
-		// 			console.log("ADDING TO ORDER", order)
-		// 		})
-
-		// }
 	}
 })
 
 
-app.controller('ModalCtrl', function($scope,$uibModalInstance, ProductFactory, product){
+app.controller('ModalCtrl', function ($scope, $rootScope, $uibModalInstance, ProductFactory, product, user){
+
+  $scope.max = 5;
+
+  $scope.ratingStates = [{
+    stateOn: 'glyphicon-star', 
+    stateOff: 'glyphicon-star-empty'
+  }];
 
 	$scope.ok = function(){
-        ProductFactory.createReview({product:product._id, content: $scope.review.content, numStars:$scope.review.stars })
-		$uibModalInstance.close()
+    ProductFactory.createReview({product:product._id, user: user._id, content: $scope.review.content, numStars:$scope.review.stars })
+    .then(function(data){
+      $rootScope.$broadcast('reviewAdded', data);
+      $uibModalInstance.close()
+    })
+		
 	}
 	$scope.cancel = function(){
 		$uibModalInstance.dismiss('cancel')
 	}
+
+   
 
 
 })

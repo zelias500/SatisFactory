@@ -7,18 +7,18 @@ var validator = require('node-mongoose-validator')
 
 var Address = new Schema({
     name: {type: String, required: true },
-    lineOne: { type: String, required: true }, 
+    lineOne: { type: String, required: true },
     lineTwo: String,
-    city: { type: String, required: true }, 
-    zip: { type: Number, required: true }, 
+    city: { type: String, required: true },
+    zip: { type: Number, required: true },
     state: { type: String, required: true}
 })
 
 var Billing = new Schema({
     address: {type: Address },
-    number: { type: String, required: true }, 
-    exp_month: { type: Number, required: true }, 
-    exp_year: { type: Number, required: true }, 
+    number: { type: String, required: true },
+    exp_month: { type: Number, required: true },
+    exp_year: { type: Number, required: true },
     cvc:  { type: String, required: true }
 })
 
@@ -65,9 +65,8 @@ var schema = new Schema({
     },
     reviews: [{type: Schema.Types.ObjectId, ref: 'Review'}],
 
-    billing: {type: [Billing], select: false},
-
-    shipping: {type: [Address], select: false},
+    shipping: [Address],
+    billing: [Billing],
 
     wishlist: [{type: Schema.Types.ObjectId, ref: 'Wishlist'}],
 
@@ -116,7 +115,7 @@ schema.method('correctPassword', function (candidatePassword) {
 
 
 schema.method('addBillingOption', function(card){
-    this.billing.push(card); 
+    this.billing.push(card);
     this.save();
 })
 

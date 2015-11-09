@@ -16,7 +16,7 @@ app.config(function($stateProvider){
 	})
 })
 
-app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session) {
+app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session, $state) {
 	$scope.order = theOrder;
 	console.log($scope.order)
 	
@@ -46,4 +46,10 @@ app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session) {
 				$scope.total = 0;
 			})
 	}
+
+	$scope.goToCheckout = function(){
+		console.log("From the OrderCtrl: ", theOrder);
+		$state.go('checkout', {order: theOrder._id});
+	}
+
 })

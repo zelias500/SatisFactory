@@ -1,16 +1,20 @@
-<div class="modal-content">
+<div class="modal-content review-submission-holder">
         <div class="modal-header ng-scope">
-            <h3 class="modal-title">Create A Review</h3>
+            <h3 class="modal-title satisfy-font">Create A Review</h3>
         </div>
         <div class="modal-body ng-scope">
-          <form>
-          	<textarea name="review-content" ng-model="review.content"></textarea>
-          	<input ng-model="review.stars" type="number" min="1" max='5'/>
+          <form name="review" class="review-form">
+          <div class="review-stars-holder">
+            <uib-rating ng-model="review.stars" max="5" title="Select how many stars you would rate this.">
+            </uib-rating>
+          </div>
+            <textarea class="review-textarea" name="review-content" ng-model="review.content" placeholder="What do you think? Let other people know here!" ng-required=true></textarea>
           </form>
 
         </div>
         <div class="modal-footer ng-scope">
-            <button class="btn btn-primary" type="button" ng-click="ok()">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            <span ng-show="(review.$error.required && review.$dirty)" class="label label-danger">Satis-Factory needs to know if you were satisfied!</span>
+            <button type="submit" class="btn add-review-btn" type="button" ng-click="ok()" ng-disabled="review.$error.required">Submit Review</button>
+            <button class="btn cancel-review-btn" type="button" ng-click="cancel()">Cancel</button>
         </div>
 </div>

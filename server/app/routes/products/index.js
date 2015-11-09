@@ -25,7 +25,10 @@ router.post('/', function(req, res, next) {
 
 router.get('/category', function(req, res, next) {
   if (!Object.keys(req.query).length) {
-    Category.find({}).exec().then(function(categories){
+    Category.find({})
+    .populate('products', 'photo')
+    .exec()
+    .then(function(categories){
       res.status(201).json(categories)
     }).then(null, next)
   }
