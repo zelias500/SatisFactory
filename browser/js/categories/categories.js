@@ -6,22 +6,17 @@ app.config(function($stateProvider) {
 		resolve: {
 			categoryItems: function(ProductFactory, $stateParams) {
 				return ProductFactory.getAllByCategory($stateParams.category)
-			},
-			category: function($stateParams) {
-        // GTPT: can you not access stateParams from a controller?
-				return $stateParams.category
 			}
 		}
 	})
 })
 
-// GTPT: Mixed feelings about these being in the same file
-app.controller('CategoryCtrl', function($scope, $state, ProductFactory, categoryItems, category, AuthService, OrderFactory) {
+app.controller('CategoryCtrl', function($scope, $state, ProductFactory, categoryItems, AuthService, OrderFactory, $stateParams) {
 	$scope.items = categoryItems[0].products.map(function(i){
 		i.price = i.price/100; // GTPT: yayyy cents
 		return i;
 	})
-	$scope.category = category;
+	$scope.category = $stateParams.category;
 	$scope.isLoggedIn = AuthService.isAuthenticated;
 	$scope.goToProduct = function(product){
 		$state.go('product', {id: product._id});

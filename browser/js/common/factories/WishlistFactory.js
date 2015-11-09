@@ -11,8 +11,8 @@ app.factory('WishlistFactory', function($http) {
 			return $http.get(baseURL+user._id+'/wishlist/').then(toData)
 		},
 
-		getWishlist: function(user, wishlistId){
-			return $http.get(baseURL+user._id+'/wishlist/'+ wishlistId).then(toData)
+		getWishlist: function(userId, wishlistId){
+			return $http.get(baseURL+userId+'/wishlist/'+ wishlistId).then(toData)
 		},
 
 		createWishlist: function(user, data){

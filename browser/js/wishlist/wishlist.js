@@ -10,8 +10,8 @@ app.config(function($stateProvider){
 						return user
 					})
 			},
-			theWishlist: function($stateParams, UserFactory) {
-				return UserFactory.getWishlist($stateParams.userId, $stateParams.wishlistId).then(function(wishlist){
+			theWishlist: function($stateParams, WishlistFactory) {
+				return WishlistFactory.getWishlist($stateParams.userId, $stateParams.wishlistId).then(function(wishlist){
 					return wishlist;
 				})
 			}
