@@ -54,4 +54,4 @@ app.controller("CheckoutCtrl", function($scope, theOrder,UserFactory,AuthService
     }
   }
 
-})  
+})
