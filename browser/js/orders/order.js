@@ -8,9 +8,6 @@ app.config(function($stateProvider){
 				if (Session.currentOrder) {
 					return Session.currentOrder;
 				}
-				else {
-					return {error: 'nothing here!'}
-				}
 			}
 		}
 	})
@@ -19,6 +16,7 @@ app.config(function($stateProvider){
 app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session, $state) {
 	$scope.order = theOrder;
 	console.log($scope.order)
+	$scope.empty = true
 	
 	$scope.removeFromOrder = function(item){
 		var idx = $scope.order.items.indexOf(item);
@@ -32,10 +30,12 @@ app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session, $s
 
 	if ($scope.order.items) {
 		$scope.total = $scope.order.items.reduce(function (prev, curr, idx, array){
-		prev += (curr.quantity * curr.price)
-		return prev;
-	}, 0)
-
+			prev += (curr.quantity * curr.price)
+			return prev;
+		}, 0)
+		$scope.empty = false;
+	} else {
+		$scope.empty = true;
 	}
 
 	$scope.deleteOrder = function() {
@@ -47,9 +47,12 @@ app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session, $s
 			})
 	}
 
+
 	$scope.goToCheckout = function(){
-		console.log("From the OrderCtrl: ", theOrder);
-		$state.go('checkout', {order: theOrder._id});
+		if(theOrder.items.length){
+			console.log("From the OrderCtrl: ", theOrder);
+			$state.go('checkout', {order: theOrder._id});
+		} 
 	}
 
 })

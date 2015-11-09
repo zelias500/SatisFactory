@@ -1,38 +1,38 @@
-app.controller("CheckoutCtrl", function($scope, theOrder,UserFactory,AuthService){
+app.controller("CheckoutCtrl", function($scope, theOrder, UserFactory, AuthService){
   var order = theOrder;
-  var user = AuthService.getCurrentUser();
-
-  $scope.userShipping;
-
-  $scope.userBilling;
-
-  UserFactory.getAddresses(user)
-  .then(function(addresses){
-    $scope.userShipping = addresses;
+  var user = AuthService.getCurrentUser()
+  .then(function(user){
+    return user;
   })
-
-  UserFactory.getBillingOptions(user)
-  .then(function(billing){
-    $scope.userBilling = billing;
-  })
-
-
-  var totalPrice = function(){
-    var sum  = 0;
-    theOrder.items.forEach(function(){
-
+  .then(function(user){
+    UserFactory.getAddresses(user)
+    .then(function(addresses){
+      $scope.userShipping = addresses;
     })
+    return user;
+  })
+  .then(function(user){
+    UserFactory.getBillingOptions(user)
+    .then(function(billingDetails){
+      $scope.userBilling = billingDetails;
+    })
+  })
+
+  var calcTotalPrice = function(){
+      console.log(theOrder);
+      var sum = theOrder.items.reduce(function(sum, item){
+        return item.price * item.quantity;
+      }, 0)
+      return sum;
   }
+
+  $scope.totalPrice = calcTotalPrice();
+
 
   // Use shipping address as a billing address
 
   $scope.useShippingAddress = function(address){
-    $scope.billing.name = address.name;
-    $scope.billing.lineOne = address.lineOne;
-    $scope.billing.lineTwo = address.lineTwo;
-    $scope.billing.city = address.city;
-    $scope.billing.zip = address.zip;
-    $scope.billing.state = address.state;
+    $scope.billing.address = address;
   }
 
   $scope.submitAddress = function(){
