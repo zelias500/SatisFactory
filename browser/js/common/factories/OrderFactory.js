@@ -5,7 +5,7 @@ app.factory('OrderFactory', function($http, Session){
 
   var baseURL = '/api/orders/'
 
-  var theOrder;
+  var theOrder; // GTPT: this is a weird name, which order is it?
 
   return {
       getAll: function(){
@@ -30,6 +30,7 @@ app.factory('OrderFactory', function($http, Session){
       update:function(id, orderData){
         return $http.put(baseURL+id, orderData).then(toData).then(function(order) {
           return order;
+          // GTPT: why not cache here? or maybe _.merge orderData into theOrder
         //   theOrder = order;
         //   return theOrder;
         })
@@ -41,9 +42,10 @@ app.factory('OrderFactory', function($http, Session){
           return theOrder;
         })
       },
+      // GTPT: also weird name
       isCurrentOrder: function() {
         return theOrder;
       }
    }
 
-}) 
+})

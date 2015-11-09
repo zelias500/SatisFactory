@@ -40,7 +40,8 @@ app.config(function($stateProvider){
 		controller: 'AdminWishlistCtrl',
 		resolve: {
 			wishlistList: function(UserFactory, $stateParams){
-				
+       				// admin version of wishlist controller goes here
+
 			}
 		}
 	})
@@ -66,4 +67,7 @@ app.controller('WishlistsCtrl', function($scope, ourWishlists, AuthService, $sta
 		$state.go('wishlist', {userId: $scope.theUser._id, wishlistId: wishlistId})
 	}
 
+	$scope.user = AuthService.getCurrentUser;
+	// $scope.wishlists = UserFactory.getWishlists($scope.user)
 })
+

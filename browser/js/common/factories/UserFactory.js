@@ -11,6 +11,7 @@ app.factory('UserFactory', function($http){
 
 	return {
 		getOne: function(user){
+      // GTPT: .then(toData)
 			return getAUser(user).then(function(res){
 				return toData(res);
 			});
@@ -52,6 +53,7 @@ app.factory('UserFactory', function($http){
 			})
 		},
 
+    // GTPT: wishlistFactory?
 		getWishlists: function(user){
 			return $http.get(baseURL+user._id+'/wishlist/').then(function(res){
 				return toData(res)
