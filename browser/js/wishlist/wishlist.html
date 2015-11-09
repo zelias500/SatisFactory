@@ -1,10 +1,10 @@
-<h1>{{wishlister}}'s Wishlist</h1>
-<p>Link for your friends and family to buy you stuff!</p>
-	<ul>
+<h1 style="text-align: center">{{wishlister.email}}'s Wishlist</h1>
+<h2>Share This Link: {{theLink}}</h2>
+	<ul class='panel panel-default' style="text-align: center">
 		<li ng-repeat="item in wishlist.items">
 			<!-- <img src={{item.product.photo}} /> -->
 			<h2>{{item.product.title}}</h2><h2>Price: {{item.price | currency}}</h2><h2>Qty: {{item.quantity}}</h2>
 
-			 <button class="btn btn-success" ng-click="buyWishlistItem()"><span class="glyphicon glyphicon-thumbs-up"></span> Buy for {{wishlister}}</button>
+			 <button class="btn btn-success" ng-click="buyWishlistItem()"><span class="glyphicon glyphicon-thumbs-up"></span> Buy for {{wishlister.email}}</button>
 		</li>
 	</ul>

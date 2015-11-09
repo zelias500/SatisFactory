@@ -180,11 +180,14 @@ router.get('/:id/wishlist', function(req, res, next) {
 })
 
 router.get('/:id/wishlist/:wishlistId', function(req, res, next) {
-	var x = _.findIndex(req.targetUser.wishlist, function(item){
-		return item._id == req.params.wishlistId
+	// var x = _.findIndex(req.targetUser.wishlist, function(item){
+	// 	return item._id == req.params.wishlistId
+	// })
+	Wishlist.findById(req.params.wishlistId).deepPopulate('items.product')
+	.then(function(wishlist){
+		res.status(200).json(wishlist)
 	})
-
-	res.status(200).json(req.targetUser.wishlist[x]);
+	// res.status(200).json(req.targetUser.wishlist[x]);
 })
 
 router.post('/:id/wishlist', function(req, res, next) {
@@ -200,9 +203,13 @@ router.post('/:id/wishlist', function(req, res, next) {
 
 	    aWishlist.save()
 	    	.then(function(theWishlist) {
-	    		res.status(201).json(theWishlist)
+	    		req.user.wishlist.push(theWishlist._id)
+	    		req.user.save()
+	    	.then(function(user) {
+	    		res.status(201).json(user)
 	    	})
 	    	.then(null, next)
+	    })
 	    }
     else {
     	res.status(403).end();
