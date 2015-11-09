@@ -1,12 +1,13 @@
 
-app.factory('OrderFactory', function($http, Session){
+app.factory('OrderFactory', function($http, $cookies){
   function toData(res) {
     return res.data;
   }
 
   var baseURL = '/api/orders/'
 
-  var theOrder; // GTPT: this is a weird name, which order is it?
+  var storedOrder; 
+
 
   return {
       getAll: function(){
@@ -14,37 +15,50 @@ app.factory('OrderFactory', function($http, Session){
       },
       getOne: function(id){
         return $http.get(baseURL +id).then(toData).then(function(order) {
-          // console.log(order)
-          theOrder = order;
-          return theOrder;
+          if (!storedOrder) storedOrder = order;
+          console.log(storedOrder);
+          return storedOrder;
         })
+      },
+      getOneFromWishlist: function(id){
+        return $http.get(baseURL +id).then(toData)
       },
       create: function(orderData){
         return $http.post(baseURL, orderData).then(toData).then(function(order) {
-          theOrder = order;
-          return theOrder;
+          storedOrder = order;
+          return storedOrder;
         })
       },
+
+      createFromWishlist: function(orderData){
+        return $http.post(baseURL, orderData).then(toData)
+      },
+
       delete: function(id){
-         return $http.delete(baseURL+id).then(toData)
+         return $http.delete(baseURL+id).then(toData).then(function(){
+          $cookies.remove('order');
+         })
       },
       update:function(id, orderData){
         return $http.put(baseURL+id, orderData).then(toData).then(function(order) {
-          var update = _merge(theOrder, order)
-          update.save()
-          return update;
+          storedOrder = order;
+          return storedOrder;
         })
       },
       addOrderItem: function(id, itemData){
         return $http.post(baseURL+id+'/items', itemData).then(toData).then(function(order) {
           console.log("THIS IS THE ORDER", order)
-          theOrder = order;
-          return theOrder;
+          storedOrder = order;
+          return storedOrder;
         })
       },
-      // GTPT: also weird name
-      isCurrentOrder: function() {
-        return theOrder;
+      calculatePrice: function(){
+        return storedOrder.items.reduce(function(sum, item){
+          return item.price * item.quantity;
+        },0)
+      },
+      getCurrentOrder: function(){
+        return storedOrder;
       }
    }
 

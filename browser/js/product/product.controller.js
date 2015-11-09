@@ -1,17 +1,14 @@
-app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory, AuthService,$uibModal, OrderFactory, $timeout){
+app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory, AuthService,$uibModal, OrderFactory, $timeout, WishlistFactory, $cookies){
    var product = theProduct;
    $scope.product = product;
 
    $scope.wlAdded, $scope.notLoggedIn, $scope.added,$scope.creating = true;
 
+   console.log('USER', theUser.wishlist)
 
-   // $scope.theUser = AuthService.getCurrentUser();
 
-// GTPT: this should be a resolve maybe?
-   AuthService.getCurrentUser().then(function(user){
-    // GTPT: why is everything theWhatever
-   	$scope.theUser = user;
-   })
+   console.log("COOKIES", $cookies.getAll())
+   if (theUser) $scope.user = theUser;
 
    // GTPT: where's the review logic?
    $scope.$on('reviewAdded', function(event, data){
@@ -19,29 +16,24 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
    })
 
    $scope.addWishList = function(){
-        if ($scope.theUser && $scope.theUser._id){
-        	console.log($scope.creating)
+   	console.log("HI", $scope.user)
+        if ($scope.user){
 	        if ($scope.creating){
-	        	console.log("THIS IS OUR USER", $scope.theUser)
-	        	UserFactory.createWishlist($scope.theUser, {
+	        	WishlistFactory.createWishlist($scope.user, {
 	        		items: {price: product.price, product: product._id, quantity: $scope.order.number},
 	        		wlName: $scope.newWishlistName
-	        	}).then(function(wl){
-	        		console.log(wl);
 	        	})
 	        }
 	        else {
-            // GTPT: also wishlistFactory should deal with this if
-	        	UserFactory.addToWishlist($scope.theUser, $scope.wlName._id, {
+	        	WishlistFactory.addToWishlist($scope.user, $scope.wlName._id, {
 	        		price: product.price,
 	        		quantity: $scope.order.number,
 	        		product: product._id
-	        	}).then(function(wl){
-	        		console.log(wl);
 	        	})
 	        }
             $scope.wlAdded = true;
-            // GTPT: wut
+
+            // beauty in the eye of the beholder
 	        $timeout(function () { $scope.wlAdded = false; }, 2000)
 
         }
@@ -51,7 +43,6 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
     }
 
     $scope.newWishlist = function(wlName) {
-    	console.log(wlName)
     	if (!wlName){
     		$scope.creating = true;
     	}
@@ -88,27 +79,17 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
 
 	$scope.addToOrder = function() {
 		$scope.added = true;
-    // GTPT: wut
 		$timeout(function () { $scope.added = false; }, 2000)
-		if (!Session.currentOrder) {
+		if (!$cookies.get('order')) {
 			OrderFactory.create({items: [{price: $scope.product.price, product: $scope.product._id, quantity: $scope.order.number}]})
 				.then(function(createdOrder) {
-					Session.currentOrder = createdOrder;
+					$cookies.put('order', createdOrder._id);
 				})
 		}
 		else {
-      // GTPT: also here
-			console.log('session order', Session.currentOrder)
-			OrderFactory.addOrderItem(Session.currentOrder._id, {
+			OrderFactory.addOrderItem($cookies.get('order'), {
 				price: $scope.product.price, product: $scope.product._id, quantity: $scope.order.number
 			})
-			.then(function(order){
-				// currentOrder = order;
-				Session.currentOrder = order;
-				console.log('SESSION ORDER FROM PREEXISTING', Session.currentOrder)
-			})
-
-
 		}
 	}
 })

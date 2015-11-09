@@ -18,7 +18,10 @@
 
 <h1>SIGN UP</h1>
 <form id='signup-form' name="signupForm" ng-submit='signupForm.$valid && localSignup(signup)'>
-
+    <div class="form-group">
+        <label for="email">Name</label>
+        <input type="text" ng-model="signup.name" class="form-control" id="signup-email" placeholder="Enter name">
+    </div>
     <div class="form-group">
         <label for="email">Email address</label>
         <input type="text" ng-model="signup.email" class="form-control" id="signup-email" placeholder="Enter email">
@@ -28,5 +31,4 @@
         <input type="password" ng-model="signup.password" class="form-control" id="signup-password" placeholder="Password">
     </div>
     <button type='submit' class='btn btn-default'>Sign up</button>
-
 </form>

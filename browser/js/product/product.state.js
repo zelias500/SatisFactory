@@ -6,6 +6,10 @@ app.config(function ($stateProvider){
     resolve: {
       theProduct: function(ProductFactory, $stateParams){
         return ProductFactory.getOne($stateParams.id);
+      },
+      theUser: function(AuthService){
+        // if (!AuthService.getCurrentUser()) return;
+        return AuthService.getLoggedInUser();
       }
     }
   })

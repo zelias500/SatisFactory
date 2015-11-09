@@ -80,6 +80,13 @@ router.put("/:id", function(req, res, next){
   }).then(null, next);
 })
 
+router.put("/:id/checkout", function(req, res, next){
+  _.extend(req.order, req.body)
+  req.order.save().then(function(order){
+    res.status(200).json(order)
+  }).then(null, next);
+})
+
 router.delete("/:id", function(req, res, next){
   req.order.remove()
   .then(function(){

@@ -8,7 +8,7 @@ app.config(function ($stateProvider) {
 
 });
 
-app.controller('LoginCtrl', function ($scope, AuthService, $state) {
+app.controller('LoginCtrl', function ($scope, AuthService, UserFactory, $state) {
 
     $scope.login = {};
     $scope.error = null;
@@ -27,6 +27,14 @@ app.controller('LoginCtrl', function ($scope, AuthService, $state) {
     };
 
     $scope.localSignup = function(signupInfo) {
+        // signupinfo {name: name, email: email, password: password}
+        UserFactory.create(signupInfo).then(function(user){
+            return AuthService.login({email: signupInfo.email, password:signupInfo.password})
+        }).then(function(){
+            $state.go('home');
+        }).catch(function(){
+            $scope.error = 'Invalid signup'
+        })
 
     }
 
