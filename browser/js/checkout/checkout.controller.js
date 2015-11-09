@@ -36,6 +36,7 @@ app.controller("CheckoutCtrl", function($scope, theOrder, UserFactory, AuthServi
   }
 
   $scope.submitAddress = function(){
+    // GTPT: could you get here without being logged in?
       if(user && user._id){
         // console.log("user in checkout", user)
         UserFactory.addAddress(user, $scope.address)

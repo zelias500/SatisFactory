@@ -29,6 +29,7 @@ app.config(function($stateProvider){
 				return UserFactory.getWishlists(AuthService.getCurrentUser())
 					.then(function(theWishlists) {
 						console.log('BEFORE POPULATING', theWishlists)
+            // GTPT: you can do this on the front end?
 						theWishlists.populate('wishlist').execPopulate()
 					})
 					.then(function(wishlistInfo) {
@@ -45,6 +46,7 @@ app.config(function($stateProvider){
 		controller: 'AdminWishlistCtrl',
 		resolve: {
 			wishlistList: function(UserFactory, $stateParams){
+        // GTPT: hmmmmmm
 				// UserFactory.getWishlists($stateParams.userid)
 				// 	.then(function(theWishlists) {
 				// 		console.log('BEFORE POPULATING', theWishlists)
@@ -54,7 +56,7 @@ app.config(function($stateProvider){
 				// 		console.log('AFTER', wishlistInfo)
 				// 		return wishlistInfo
 				// 	})
-				
+
 			}
 		}
 	})
