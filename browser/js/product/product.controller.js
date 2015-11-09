@@ -66,8 +66,7 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
         // GTPT: this feels a bit like a factory thing
 	    	$uibModal.open({
 	           animation: $scope.animationEnabled,
-             // GTPT: double slash?
-	           templateUrl: "/js/product//product.review.template.html",
+	           templateUrl: "/js/product/product.review.template.html",
 	           controller: "ModalCtrl",
 	           resolve: {
 	           	  product: function(){
