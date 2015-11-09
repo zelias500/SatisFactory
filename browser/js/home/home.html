@@ -1,5 +1,11 @@
 <section id="home">
-    <!-- <fullstack-logo></fullstack-logo>
-    <rando-greeting></rando-greeting> -->
+  <uib-carousel interval="interval" no-wrap="false" class="full-screen">
+    <uib-slide ng-repeat="slide in slideContent" class="full-screen">
+      <div class="home-carousel-image" style="background-image: url('{{ slide.image.photo }}')" >
+        <h1>Let us satisfy your taste for <a ng-click="goToCategory(slide.category)">{{ slide.category }}</a></h1>
+      </div>
+    </uib-slide>
+  </uib-carousel>
+
     
 </section>

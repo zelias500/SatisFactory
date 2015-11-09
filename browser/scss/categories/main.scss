@@ -3,21 +3,8 @@
   src: url('./fonts/Satisfy/Satisfy-Regular.ttf');
 }
 
-$dark-shadow: 0px 5px 10px rgba(0,0,0,0.95);
-
-$shadow: 0px 5px 10px rgba(0, 0, 0, 0.55);
-
-@mixin background-image-orientation {
-  background-image: url('photos/Fishing.jpg');
-  background-repeat: no-repeat;
-  background-origin: center;
-  background-position: center;
-  background-size: cover;
-}
-
 body {
   background-image: url('/backgrounds/wood_2.png');
-  width: 100vw;
 }
 
 nav {
@@ -35,12 +22,15 @@ nav {
   border: 1px solid white;
   border-radius: 10px;
   font-family: satisfy;
+  font-size: 1.4em;
   outline: none;
   background-color: grey;
   transition: all 0.25s;
   -webkit-transition: all 0.25s;
   width: 150px;
   text-align: center;
+  margin: 5px;
+  cursor: pointer;
 
 }
 
@@ -48,7 +38,12 @@ nav {
   color: white;
   border-color: salmon;
   background-color: black;
+}
 
+.toolbar-button:active {
+  border-color: grey;
+  background-color: salmon;
+  color: black;
 }
 
 input[type='text'] {
@@ -76,22 +71,6 @@ label {
   font-family: satisfy;
 }
 
-#search {
-  position: fixed;
-  z-index: 100;
-  top: 100px;
-  height: 400px;
-  width: 300px;
-  left: -250px;
-  background-color: rgba(0, 0, 0, 0.75);
-  border-bottom-right-radius: 10px;
-  border-top-right-radius: 10px;
-  transition: transform 0.5s ease-in-out;
-  -webkit-transition: transform 0.5s ease-in-out;
-  box-shadow: $dark-shadow;
-
-}
-
 .catimg {
   width: 300px;
   height: 100%;
@@ -100,42 +79,11 @@ label {
 }
 
 
-#promote {
-  z-index: 0;
-  top: 80px;
-  width: 100vw;
-  height: 100vh;
-  background-color: grey;
-  @include background-image-orientation;
-  transition: all 0.25s ease-in-out;
-  -webkit-transition: all 0.5s ease-in-out; 
-   h1 {
-    position: relative;
-    top: 250px;
-    left: 300px;
-    font-family: satisfy;
-    font-size: 3em;
-    color: white;
-   }
-}
-
 #tools {
   display: inline-block;
   margin-left: 100px;
 }
 
-#search:hover {
-  transform: translate(250px)
-}
-
-#search:hover ~ #promote {
-  filter: blur(10px);
-  -webkit-filter: blur(10px);
-}
-
-#search:hover ~ #product-holder {
-  -webkit-filter: blur(10px);
-}
 
 .internal-holder {
   padding: 20px;
@@ -158,6 +106,7 @@ label {
   -webkit-transition: all 0.5 ease-in-out;
   header {
     h1 {
+      color: white;
       font-family: satisfy;
     }
   }

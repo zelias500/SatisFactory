@@ -15,9 +15,11 @@ body {
 }
 
 #main {
-  padding-top: 60px;
+  padding-top: 0px;
   width: 1200px;
   margin: 0 auto;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
 }
 @import url(https://fonts.googleapis.com/css?family=Satisfy);
 @import 'directives/main';
@@ -26,4 +28,5 @@ body {
 @import 'tutorial/main';
 @import 'login/main';
 @import 'categories/main';
-@import 'product/main'
+@import 'product/main';
+@import 'checkout/main';

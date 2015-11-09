@@ -19,7 +19,6 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
 
     $scope.addProductReview = function(){
     	var currentuser = AuthService.getCurrentUser();
-    	console.log(currentuser);
     	if(currentuser && currentuser._id){
 	    	$uibModal.open({
 	           animation: $scope.animationEnabled,
@@ -94,7 +93,6 @@ app.controller('ModalCtrl', function($scope,$uibModalInstance, ProductFactory, p
     .then(function(data){
       console.log(data);
       $uibModalInstance.close()
-      $scope.$digest();
     })
 		
 	}
