@@ -9,7 +9,7 @@ var Review = mongoose.model('Review');
 var _ = require('lodash');
 
 var authorizeAccess = function(requestUser, targetUser){
-	return ((requestUser._id === targetUser._id) || (requestUser.isAdmin))
+	return (requestUser._id.toString() == targetUser._id.toString()) || (requestUser.isAdmin)
 }
 
 router.get('/', function(req, res, next){
@@ -78,7 +78,7 @@ router.get('/:id/billing', function(req, res, next){
 
 router.post('/:id/billing', function(req, res, next){
 	if (authorizeAccess(req.user, req.targetUser)){
-		User.findById(req.targetUser._id).select('billing').exec().then(function(user){
+		User.findById(req.targetUser._id).select('shipping').exec().then(function(user){
 			user.billing.push(req.body);
 			return user.save();
 		}).then(function(user){
@@ -121,8 +121,10 @@ router.get('/:id/shipping', function(req, res, next){
 })
 
 router.post('/:id/shipping', function(req, res, next){
+			console.log("USER:", req.user)
+			console.log("USER IS AUTHORIZED:", authorizeAccess(req.user, req.targetUser))
 	if (authorizeAccess(req.user, req.targetUser)){
-		User.findById(req.targetUser._id).select('shipping').exec().then(function(user){
+		User.findById(req.targetUser._id).select('shipping').then(function(user){
 			user.shipping.push(req.body);
 			return user.save()
 		}).then(function(user){

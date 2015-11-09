@@ -4,11 +4,86 @@
   clear: both;
 }
 
-@mixin button-transition {
-  transition: all 0.25s;
-  -webkit-transition: all 0.25s;
+
+$inset-input-shadow: 0px 0px 10px rbga(0, 0, 0, 0.65) inset;
+
+@mixin input-focus-shading {
+  background-color: #FFCCC6;
+  box-shadow: $inset-input-shadow;
 }
 
+.satisfy-font {
+  font-family: satisfy;
+  color: #541954;
+}
+
+.review-submission-holder {
+  .review-form {
+    text-align: center;
+    .review-textarea {
+      width: 90%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #C1B5B5;
+      outline: none;
+      @include button-transition;
+    }
+
+    .review-textarea:focus {
+      @include input-focus-shading;
+    }
+    .review-stars-holder {
+      display: block;
+      width: 90%;
+      .review-stars-label {
+        display: inline-block;
+        color: salmon;
+        font-size: 1.25em;
+      }
+
+      .review-stars-input {
+        display: inline-block;
+        padding: 10px;
+        border-radius: 10px;
+        width: 100px;
+        outline: none;
+        border: 1px solid #C1B5B5;
+        @include button-transition;
+      }
+
+      .review-stars-input:focus {
+        @include input-focus-shading;
+      }
+    }
+  }
+
+  .add-review-btn {
+    background-color: #541954;
+    color: salmon;
+    @include button-transition; 
+  }
+
+  .cancel-review-btn {
+    background-color: salmon;
+    @include button-transition;
+  }
+
+  .add-review-btn:hover {
+    box-shadow: $shadow;  
+  }
+
+  .cancel-review-btn:hover {
+    box-shadow: $shadow;
+  }
+
+  .add-review-btn:active {
+    box-shadow: none;
+  }
+
+  .cancel-review-btn:active {
+    box-shadow: none;
+  }
+}
 
 #product {
   text-align: center;
@@ -121,7 +196,8 @@
           margin: 10px;
         }
 
-        float: left;
+        display: inline-block;
+        vertical-align: top;
         border-radius: 10px;
         box-shadow: $shadow;
         width: 45%;

@@ -1,8 +1,12 @@
 
-app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory, AuthService,$uibModal){
+app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory, AuthService,$uibModal, OrderFactory){
 
    var product = theProduct;
    $scope.product = product;
+
+   $scope.$on('reviewAdded', function(event, data){
+      $scope.product = data;
+   })
 
 
    $scope.addWishList = function(){
@@ -19,7 +23,6 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
 
     $scope.addProductReview = function(){
     	var currentuser = AuthService.getCurrentUser();
-    	console.log(currentuser);
     	if(currentuser && currentuser._id){
 	    	$uibModal.open({
 	           animation: $scope.animationEnabled,
@@ -87,15 +90,28 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
 })
 
 
-app.controller('ModalCtrl', function($scope,$uibModalInstance, ProductFactory, product, user){
+app.controller('ModalCtrl', function ($scope, $rootScope, $uibModalInstance, ProductFactory, product, user){
+
+  $scope.max = 5;
+
+  $scope.ratingStates = [{
+    stateOn: 'glyphicon-star', 
+    stateOff: 'glyphicon-star-empty'
+  }];
 
 	$scope.ok = function(){
-        ProductFactory.createReview({product:product._id, user: user._id, content: $scope.review.content, numStars:$scope.review.stars })
-		$uibModalInstance.close()
+    ProductFactory.createReview({product:product._id, user: user._id, content: $scope.review.content, numStars:$scope.review.stars })
+    .then(function(data){
+      $rootScope.$broadcast('reviewAdded', data);
+      $uibModalInstance.close()
+    })
+		
 	}
 	$scope.cancel = function(){
 		$uibModalInstance.dismiss('cancel')
 	}
+
+   
 
 
 })

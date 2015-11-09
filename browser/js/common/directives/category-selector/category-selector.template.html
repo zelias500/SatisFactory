@@ -1,0 +1,10 @@
+<section>
+  <div class="side-panel-internal">
+    <header>
+      <h3>...choose a category</h3>
+    </header>
+    <ul>
+      <li class="toolbar-button" ng-repeat="category in categories" ng-click="goToCategory(category.name)">{{ category.name }}</li>
+    </ul>
+  </div>
+</section>
