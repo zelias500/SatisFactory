@@ -5,15 +5,16 @@
         <div class="modal-body ng-scope">
           <form name="review" class="review-form">
           <div class="review-stars-holder">
-            <label class="review-stars-label satisfy-font" for="review-stars">Star Rating:</label>
-          	<input class="review-stars-input" ng-model="review.stars" type="number" name="review-stars"min="1" max='5'/>
+            <uib-rating ng-model="review.stars" max="5">
+            </uib-rating>
           </div>
-            <textarea class="review-textarea" name="review-content" ng-model="review.content" placeholder="What do you think? Let other people know here!"></textarea>
+            <textarea class="review-textarea" name="review-content" ng-model="review.content" placeholder="What do you think? Let other people know here!" ng-required=true></textarea>
           </form>
 
         </div>
         <div class="modal-footer ng-scope">
-            <button class="btn add-review-btn" type="button" ng-click="ok()">Submit Review</button>
+            <span ng-show="(review.$error.required && review.$dirty)" class="label label-danger">Satis-Factory needs to know if you were satisfied!</span>
+            <button type="submit" class="btn add-review-btn" type="button" ng-click="ok()" ng-disabled="review.$error.required">Submit Review</button>
             <button class="btn cancel-review-btn" type="button" ng-click="cancel()">Cancel</button>
         </div>
 </div>

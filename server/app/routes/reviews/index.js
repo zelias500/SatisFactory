@@ -31,10 +31,6 @@ router.post('/', function(req, res, next){
 			user.reviews.push(theReview._id);
 		   return user.save()
 		}
-		else{
-			return
-		}
-
 	})
 	.then(function(){
 		return Product.findById(theReview.product)
@@ -43,11 +39,26 @@ router.post('/', function(req, res, next){
 		product.reviews.push(theReview);
 		return product.save();
 	})
-	.then(function(){
-		res.sendStatus(201);
+	.then(function(product){
+	  return Product.findById(product._id)
+	  .populate('reviews')
+	  .deepPopulate('reviews.user')
+	  .exec()
+	  .then(function(product){
+	    product.reviews = product.reviews.map(function(review){
+	      if(!review.user.name){
+	        return review.user.name = "Anonymous";
+	       };
+      });
+	    return product;
+    });
+	})
+	.then(function(product){
+		res.status(201).json(product);	
 	})
 	.then(null, next);
 })
+
 
 router.put('/:id', function(req, res, next){
 	Review.findById(req.params.id).exec().then(function(review){
