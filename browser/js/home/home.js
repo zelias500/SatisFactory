@@ -19,7 +19,7 @@ app.controller("HomeCtrl", function ($scope, theCategories, $state){
     return Math.floor(Math.random() * products.length);
   }
 
-  $scope.interval = 2000;
+  $scope.interval = 6000;
 
   $scope.slideContent = [];
 
