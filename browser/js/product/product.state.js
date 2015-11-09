@@ -8,8 +8,8 @@ app.config(function ($stateProvider){
         return ProductFactory.getOne($stateParams.id);
       },
       theUser: function(AuthService){
-        if (AuthService.getCurrentUser()) return;
-        return AuthService.getCurrentUser();
+        // if (!AuthService.getCurrentUser()) return;
+        return AuthService.getLoggedInUser();
       }
     }
   })

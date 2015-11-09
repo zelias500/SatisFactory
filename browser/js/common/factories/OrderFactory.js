@@ -20,12 +20,20 @@ app.factory('OrderFactory', function($http, $cookies){
           return storedOrder;
         })
       },
+      getOneFromWishlist: function(id){
+        return $http.get(baseURL +id).then(toData)
+      },
       create: function(orderData){
         return $http.post(baseURL, orderData).then(toData).then(function(order) {
           storedOrder = order;
           return storedOrder;
         })
       },
+
+      createFromWishlist: function(orderData){
+        return $http.post(baseURL, orderData).then(toData)
+      },
+
       delete: function(id){
          return $http.delete(baseURL+id).then(toData).then(function(){
           $cookies.remove('order');

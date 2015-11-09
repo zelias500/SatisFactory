@@ -21,9 +21,9 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             scope.user = null;
 
             scope.$on(AUTH_EVENTS.loginSuccess, function(){
-                scope.user = AuthService.getCurrentUser();
+                // scope.user = AuthService.getCurrentUser();
+                setUser();
             })
-
 
             scope.isLoggedIn = function () {
                 return AuthService.isAuthenticated();
@@ -35,7 +35,7 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
                 });
             };
 
-            var setUser = function () {
+            function setUser () {
                 AuthService.getLoggedInUser().then(function (user) {
                     scope.user = user;
                 });

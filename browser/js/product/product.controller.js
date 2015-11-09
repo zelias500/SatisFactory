@@ -4,9 +4,11 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
 
    $scope.wlAdded, $scope.notLoggedIn, $scope.added,$scope.creating = true;
 
+   console.log('USER', theUser.wishlist)
+
 
    console.log("COOKIES", $cookies.getAll())
-   if(theUser) $scope.user = theUser;
+   if (theUser) $scope.user = theUser;
 
    // GTPT: where's the review logic?
    $scope.$on('reviewAdded', function(event, data){
@@ -14,6 +16,7 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
    })
 
    $scope.addWishList = function(){
+   	console.log("HI", $scope.user)
         if ($scope.user){
 	        if ($scope.creating){
 	        	WishlistFactory.createWishlist($scope.user, {

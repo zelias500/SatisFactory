@@ -10,10 +10,10 @@
             <li><a ui-sref="order">My Cart <span class="glyphicon glyphicon-shopping-cart"></span></a></li>
         </ul>
         
-        <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
+        <button ng-show="!user" ui-sref="login" class="btn login-button">Login/Signup</button>
         <div ng-show="user" class="welcome">
             <span><a ui-sref="wishlists(user)">My Wishlists  </a>  </span>
-            <span><a ui-sref='user(user)'>Welcome, {{ user.email }}!</a></span>
+            <span><a ui-sref='user(user)'>Welcome, {{ user.name || user.email }}!</a></span>
             <a ng-click="logout()">Logout</a>
         </div>
     </div>

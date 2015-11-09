@@ -8,14 +8,6 @@ app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFact
     $scope.userBilling = currentUser.billingDetails;
   }
 
-  // var calcTotalPrice = function(){
-  //     console.log(theOrder);
-  //     var sum = theOrder.items.reduce(function(sum, item){
-  //       return item.price * item.quantity;
-  //     }, 0)
-  //     return sum;
-  // }
-
   $scope.totalPrice = OrderFactory.calculatePrice();
 
   $scope.useShippingAddress = function(address){
@@ -42,7 +34,6 @@ app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFact
   }
 
   $scope.purchase = function(){
-    
     console.log('click')
      OrderFactory.update(order._id, {status: "shipping"}).then(function(order){
       console.log(order);

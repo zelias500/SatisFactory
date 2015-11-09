@@ -5,8 +5,21 @@ app.config(function ($stateProvider) {
     controller: "CheckoutCtrl",
     resolve: {
       theOrder: function($stateParams, OrderFactory){
-        console.log("Resolved object:", $stateParams.order)
-        return OrderFactory.getOne($stateParams.order);
+        if (OrderFactory.getCurrentOrder()._id == $stateParams._id){
+          return OrderFactory.getOne($stateParams.order); 
+        }
+        else {
+          try {    
+                return OrderFactory.getOneFromWishlist($stateParams.order);
+              }
+          catch(e) {
+            console.error(e)
+          }
+        }
+        // check if current order id is the same as the cached order
+        // if it is , whatever
+        // if it's not, call get from wishlist
+        // console.log("Resolved object:", $stateParams.order)       
       },
       currentUser: function(AuthService, UserFactory){
         if (!AuthService.getCurrentUser) return;

@@ -16,7 +16,7 @@
     <p class="product-description">{{ product.description }}</p><aside class="product-purchase-details">
       Quantity: <input type="number" ng-model="order.number" min='0'/>
       <h4 class="product-price">{{ product.price | currency  }}</h4>
-      <select class="wishlist" ng-model="wlName" ng-change="newWishlist(wlName)" ng-options="wishlist.wlName for wishlist in theUser.wishlist track by wishlist._id">
+      <select class="wishlist" ng-model="wlName" ng-change="newWishlist(wlName)" ng-options="wishlist.wlName for wishlist in user.wishlist track by wishlist._id">
 <!--         <option selected="true" value="" style="display:none">Select a Wishlist</option>
  -->        <option type="text" value='' >Create A New Wishlist!</option>
         <!-- <option type="text" ng-repeat="wishlist in theUser.wishlist">{{wishlist.wlName}}</option> -->
