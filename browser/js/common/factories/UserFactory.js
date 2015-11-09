@@ -77,10 +77,8 @@ app.factory('UserFactory', function($http){
 		},
 
 		getAddresses: function(user) {
-			return getAUser(user).then(function(res){
+			return $http.get(baseURL + user._id + "/shipping").then(function(res){
 				return toData(res);
-			}).then(function(user){
-				return user.shipping;
 			})
 		},
 
@@ -103,10 +101,8 @@ app.factory('UserFactory', function($http){
 		},
 
 		getBillingOptions: function(user) {
-			return getAUser(user).then(function(res){
+			return $http.get(baseURL + user._id + "/billing").then(function(res){
 				return toData(res);
-			}).then(function(user){
-				return user.billing;
 			})
 		},
 		addBillingOption: function(user, data) {

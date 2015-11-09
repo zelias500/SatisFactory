@@ -78,11 +78,11 @@ router.get('/:id/billing', function(req, res, next){
 
 router.post('/:id/billing', function(req, res, next){
 	if (authorizeAccess(req.user, req.targetUser)){
-		User.findById(req.targetUser._id).select('shipping').exec().then(function(user){
+		User.findById(req.targetUser._id).select('billing').exec().then(function(user){
 			user.billing.push(req.body);
 			return user.save();
 		}).then(function(user){
-			res.status(201).json(req.targetUser.billing);
+			res.status(201).json(user.billing);
 		})
 	}
 	else {

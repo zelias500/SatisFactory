@@ -1,11 +1,16 @@
 #checkout {
   background-color: white;
+  color: black;
   width: 75%;
   height: 700px;
 
   .checkout-panel {
     position: inline-block;
     width: 30%;
+
+    .checkoutField {
+      color: white;
+    }
   }
 
 }
