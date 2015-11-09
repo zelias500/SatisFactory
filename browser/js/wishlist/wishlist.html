@@ -5,6 +5,6 @@
 			<!-- <img src={{item.product.photo}} /> -->
 			<h2>{{item.product.title}}</h2><h2>Price: {{item.price | currency}}</h2><h2>Qty: {{item.quantity}}</h2>
 
-			 <button class="btn btn-success" ng-click="buyWishlistItem()"><span class="glyphicon glyphicon-thumbs-up"></span> Buy for {{wishlister.email}}</button>
+			 <button class="btn btn-success" ng-click="buyWishlistItem(item)"><span class="glyphicon glyphicon-thumbs-up"></span> Buy for {{wishlister.email}}</button>
 		</li>
 	</ul>

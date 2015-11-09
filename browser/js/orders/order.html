@@ -10,10 +10,9 @@
 	</ul>
 
 	<h1>TOTAL: {{total | currency}}</h1>
-	<span ng-show="empty" class="label label-danger">Hmmm, looks like your cart is empty!</span>
+	<span ng-show="order.items.length == 0" class="label label-danger">Hmmm, looks like your cart is empty!</span>
 	<button class="btn btn-success" ng-click='goToCheckout()' ng-disabled="empty">Checkout</button>
 	<button class="btn btn-warning" ng-click='deleteOrder()'>Delete Order</button>
-
 
 
 </div>

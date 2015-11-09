@@ -1,35 +1,22 @@
-app.controller("CheckoutCtrl", function($scope, theOrder, UserFactory, AuthService){
+app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFactory, $state){
   $scope.items = theOrder.items;
   var order = theOrder;
-  var user = AuthService.getCurrentUser()
-  .then(function(user){
-    return user;
-  })
-  .then(function(user){
-    UserFactory.getAddresses(user)
-    .then(function(addresses){
-      $scope.userShipping = addresses;
-    })
-    return user;
-  })
-  .then(function(user){
-    UserFactory.getBillingOptions(user)
-    .then(function(billingDetails){
-      $scope.userBilling = billingDetails;
-    })
-  })
 
-  var calcTotalPrice = function(){
-      console.log(theOrder);
-      var sum = theOrder.items.reduce(function(sum, item){
-        return item.price * item.quantity;
-      }, 0)
-      return sum;
+  if (currentUser){
+    $scope.user = currentUser;
+    $scope.userShipping = currentUser.addresses;
+    $scope.userBilling = currentUser.billingDetails;
   }
 
-  $scope.totalPrice = calcTotalPrice();
+  // var calcTotalPrice = function(){
+  //     console.log(theOrder);
+  //     var sum = theOrder.items.reduce(function(sum, item){
+  //       return item.price * item.quantity;
+  //     }, 0)
+  //     return sum;
+  // }
 
-
+  $scope.totalPrice = OrderFactory.calculatePrice();
 
   $scope.useShippingAddress = function(address){
     $scope.billing.address = address;
@@ -37,9 +24,8 @@ app.controller("CheckoutCtrl", function($scope, theOrder, UserFactory, AuthServi
 
   $scope.submitAddress = function(){
     // GTPT: could you get here without being logged in?
-      if(user && user._id){
-        // console.log("user in checkout", user)
-        UserFactory.addAddress(user, $scope.address)
+      if($scope.user){
+        UserFactory.addAddress($scope.user, $scope.address)
         .then(function(data){
           $scope.userShipping = data;
         })
@@ -47,8 +33,8 @@ app.controller("CheckoutCtrl", function($scope, theOrder, UserFactory, AuthServi
   }
 
   $scope.submitBilling = function(){
-    if(user && user._id){
-      UserFactory.addBillingOption(user, $scope.billing)
+    if($scope.user){
+      UserFactory.addBillingOption($scope.user, $scope.billing)
       .then(function(data){
         $scope.userBilling = data;
       })
@@ -56,7 +42,12 @@ app.controller("CheckoutCtrl", function($scope, theOrder, UserFactory, AuthServi
   }
 
   $scope.purchase = function(){
-     OrderFactory.update(theOrder._id, {status: "shipping"})
+    
+    console.log('click')
+     OrderFactory.update(order._id, {status: "shipping"}).then(function(order){
+      console.log(order);
+      $state.go('home')
+     })
   }
 
 })

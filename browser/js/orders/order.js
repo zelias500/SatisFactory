@@ -4,12 +4,11 @@ app.config(function($stateProvider){
 		templateUrl: '/js/orders/order.html',
 		controller: 'OrderCtrl',
 		resolve: {
-			theOrder: function(UserFactory, OrderFactory, AuthService, Session){
-				if (Session.currentOrder) {
-					return Session.currentOrder;
+			theOrder: function(UserFactory, OrderFactory, AuthService, $cookies){
+				if ($cookies.get('order')) {
+					return OrderFactory.getOne($cookies.get('order'));
 				}
 				else {
-          // GTPT: why not find it? or isn't there one?
 					return {error: 'nothing here!'}
 				}
 			}
@@ -17,47 +16,41 @@ app.config(function($stateProvider){
 	})
 })
 
-app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session, $state) {
+app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session, $state, $cookies) {
+	console.log($cookies.getAll())
 	$scope.order = theOrder;
 	console.log($scope.order)
 	$scope.empty = true
+
 	$scope.removeFromOrder = function(item){
-		var idx = $scope.order.items.indexOf(item);
-		$scope.order.items.splice(idx, 1);
-    // GTPT: this might get annoying
-		$scope.total -= (item.quantity * item.price)
-		return OrderFactory.update($scope.order._id, {index: idx}).then(function(order){
-			console.log("UPDATED ORDER", order);
-			Session.currentOrder = order;
+		var idx = _.findIndex(OrderFactory.getCurrentOrder().items, function(i){
+			return i._id == item._id;
+		})
+		$scope.order.items.splice(idx, 1)
+		return OrderFactory.update(OrderFactory.getCurrentOrder()._id, {index: idx}).then(function(order){
+			console.log('UPDATED', order)
+			$scope.total = OrderFactory.calculatePrice();
 		})
 	}
 
 	if ($scope.order.items) {
-    // GTPT: could somone change the price with angular wizardry?
-    // GTPT: yay reduce!
-		$scope.total = $scope.order.items.reduce(function (prev, curr, idx, array){
-			prev += (curr.quantity * curr.price)
-			return prev;
-		}, 0)
+		$scope.total = OrderFactory.calculatePrice();
 		$scope.empty = false;
 	} else {
 		$scope.empty = true;
 	}
 
+
 	$scope.deleteOrder = function() {
-		return OrderFactory.delete($scope.order._id)
-			.then(function() {
-				delete Session.currentOrder;
-				delete $scope.order;
-				$scope.total = 0;
-			})
+		return OrderFactory.delete($scope.order._id).then(function(){
+			$state.go('home')
+		});
 	}
 
-
 	$scope.goToCheckout = function(){
-		if(theOrder.items.length){
-			console.log("From the OrderCtrl: ", theOrder);
-			$state.go('checkout', {order: theOrder._id});
+		if($scope.order.items.length){
+			console.log("From the OrderCtrl: ", $scope.order);
+			$state.go('checkout', {order: $scope.order._id});
 		} 
 	}
 

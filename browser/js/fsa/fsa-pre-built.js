@@ -65,6 +65,7 @@
 
         this.getCurrentUser = function() {
             // console.log(Session.user);
+            if (!Session.user) return;
             return $http.get('/api/users/'+Session.user._id+'/wishlist').then(function(res){
                 console.log(res.data);
                 return res.data;
