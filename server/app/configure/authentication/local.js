@@ -43,9 +43,9 @@ module.exports = function (app) {
             req.logIn(user, function (loginErr) {
                 if (loginErr) return next(loginErr);
                 // We respond with a response object that has user with _id and email.
-                res.status(200).send({
-                    user: _.omit(user.toJSON(), ['password', 'salt'])
-                });
+                        res.status(200).send({
+                            user: _.omit(user.toJSON(), ['password', 'salt'])
+                        });
             });
 
         };

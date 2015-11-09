@@ -52,20 +52,30 @@ app.factory('UserFactory', function($http){
 			})
 		},
 
-		getWishlist: function(user){
-			return $http.get(baseURL+user._id+'/wishlist').then(function(res){
+		getWishlists: function(user){
+			return $http.get(baseURL+user._id+'/wishlist/').then(function(res){
 				return toData(res)
 			})
 		},
 
-		addToWishlist: function(user, data){
+		getWishlist: function(user, wishlistId){
+			return $http.get(baseURL+user._id+'/wishlist/'+ wishlistId).then(function(res){
+				return toData(res)
+			})
+		},
+
+		createWishlist: function(user, data){
 			return $http.post(baseURL+user._id+'/wishlist', data).then(function(res){
 				return toData(res)
 			})
 		},
 
-		updateWishlist: function(user, data){
-			return $http.put(baseURL+user._id+'/wishlist', data).then(function(res){
+		addToWishlist: function(user, wishlistId, data){
+			return $http.post(baseURL+user._id+'/wishlist/'+wishlistId, data).then(toData);
+		},
+
+		updateWishlist: function(user, wishlistId, data){
+			return $http.put(baseURL+user._id+'/wishlist/'+wishlistId, data).then(function(res){
 				return toData(res)
 			})
 		},
