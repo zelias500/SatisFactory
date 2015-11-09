@@ -1,4 +1,4 @@
-app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory, AuthService,$uibModal, OrderFactory, $timeout){
+app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory, AuthService,$uibModal, OrderFactory, $timeout, WishlistFactory){
    var product = theProduct;
    $scope.product = product;
 
@@ -23,7 +23,7 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
         	console.log($scope.creating)
 	        if ($scope.creating){
 	        	console.log("THIS IS OUR USER", $scope.theUser)
-	        	UserFactory.createWishlist($scope.theUser, {
+	        	WishlistFactory.createWishlist($scope.theUser, {
 	        		items: {price: product.price, product: product._id, quantity: $scope.order.number},
 	        		wlName: $scope.newWishlistName
 	        	}).then(function(wl){
@@ -32,7 +32,7 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
 	        }
 	        else {
             // GTPT: also wishlistFactory should deal with this if
-	        	UserFactory.addToWishlist($scope.theUser, $scope.wlName._id, {
+	        	WishlistFactory.addToWishlist($scope.theUser, $scope.wlName._id, {
 	        		price: product.price,
 	        		quantity: $scope.order.number,
 	        		product: product._id

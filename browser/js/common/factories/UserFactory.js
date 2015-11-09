@@ -11,122 +11,58 @@ app.factory('UserFactory', function($http){
 
 	return {
 		getOne: function(user){
-      // GTPT: .then(toData)
-			return getAUser(user).then(function(res){
-				return toData(res);
-			});
+			return getAUser(user).then(toData);
 		},
 
 		getAll: function() {
-			return $http.get(baseURL).then(function(res){
-				return toData(res);
-			})
+			return $http.get(baseURL).then(toData);
 		},
 
 		create: function(userData){
-			return $http.post(baseURL, userData).then(function(res){
-				return toData(res);
-			})
+			return $http.post(baseURL, userData).then(toData);
 		},
 
 		delete: function(user){
-			return $http.delete(baseURL+user._id).then(function(res){
-				return toData(res);
-			})
+			return $http.delete(baseURL+user._id).then(toData);
 		},
 
 		getOneByEmail: function(email){
-			return $http.get(baseURL+'email?email='+email).then(function(res){
-				return toData(res);
-			})
+			return $http.get(baseURL+'email?email='+email).then(toData);
 		},
 
 		getUserOrders: function(user){
-			return $http.get(baseURL+user._id+'/orders').then(function(res){
-				return toData(res)
-			})
+			return $http.get(baseURL+user._id+'/orders').then(toData)
 		},
 
 		getUserReviews: function(user){
-			return $http.get(baseURL+user._id+'/reviews').then(function(res){
-				return toData(res)
-			})
-		},
-
-    // GTPT: wishlistFactory?
-		getWishlists: function(user){
-			return $http.get(baseURL+user._id+'/wishlist/').then(function(res){
-				return toData(res)
-			})
-		},
-
-		getWishlist: function(user, wishlistId){
-			return $http.get(baseURL+user._id+'/wishlist/'+ wishlistId).then(function(res){
-				return toData(res)
-			})
-		},
-
-		createWishlist: function(user, data){
-			return $http.post(baseURL+user._id+'/wishlist', data).then(function(res){
-				return toData(res)
-			})
-		},
-
-		addToWishlist: function(user, wishlistId, data){
-			return $http.post(baseURL+user._id+'/wishlist/'+wishlistId, data).then(toData);
-		},
-
-		updateWishlist: function(user, wishlistId, data){
-			return $http.put(baseURL+user._id+'/wishlist/'+wishlistId, data).then(function(res){
-				return toData(res)
-			})
-		},
-
-		deleteWishlist: function(user){
-			return $http.delete(baseURL+user._id+'/wishlist').then(function(res){
-				return toData(res)
-			})
+			return $http.get(baseURL+user._id+'/reviews').then(toData)
 		},
 
 		getAddresses: function(user) {
-			return $http.get(baseURL + user._id + "/shipping").then(function(res){
-				return toData(res);
-			})
+			return $http.get(baseURL + user._id + "/shipping").then(toData);
 		},
 
 		addAddress: function(user, data) {
-			return $http.post(baseURL+user._id+'/shipping', data).then(function(res){
-				return toData(res);
-			})
+			return $http.post(baseURL+user._id+'/shipping', data).then(toData);
 		},
 
 		deleteAddress: function(user, data) {
-			return $http.put(baseURL+user._id+'/shipping', data).then(function(res){
-				return toData(res);
-			})
+			return $http.put(baseURL+user._id+'/shipping', data).then(toData);
 		},
 
 		changeUserSetting: function(user, data){
-			return $http.put(baseURL+user._id, data).then(function(res){
-				return toData(res);
-			})
+			return $http.put(baseURL+user._id, data).then(toData);
 		},
 
 		getBillingOptions: function(user) {
-			return $http.get(baseURL + user._id + "/billing").then(function(res){
-				return toData(res);
-			})
+			return $http.get(baseURL + user._id + "/billing").then(toData);
 		},
 		addBillingOption: function(user, data) {
-			return $http.post(baseURL+user._id+'/billing', data).then(function(res){
-				return toData(res);
-			})
+			return $http.post(baseURL+user._id+'/billing', data).then(toData);
 		},
 
 		deleteBillingOption: function(user, data) {
-			return $http.put(baseURL+user._id+'/billing', data).then(function(res){
-				return toData(res);
-			})
+			return $http.put(baseURL+user._id+'/billing', data).then(toData);
 		}
 	}
-})
+});

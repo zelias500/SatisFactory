@@ -10,8 +10,8 @@ app.config(function($stateProvider){
 						return user
 					})
 			},
-			theWishlist: function($stateParams, UserFactory) {
-				return UserFactory.getWishlist({_id: $stateParams.id}, $stateParams.wishlistId)
+			theWishlist: function($stateParams, UserFactory, WishlistFactory) {
+				return WishlistFactory.getWishlist({_id: $stateParams.id}, $stateParams.wishlistId)
 					.then(function(wishlist) {
 						return wishlist;
 					})
@@ -25,8 +25,10 @@ app.config(function($stateProvider){
 		templateUrl: '/js/wishlist/wishlists.html',
 		controller: 'WishlistsCtrl',
 		resolve: {
-			wishlistList: function(UserFactory, AuthService){
-				return UserFactory.getWishlists(AuthService.getCurrentUser())
+			wishlistList: function(AuthService, WishlistFactory){
+				console.log("LDSFKJ", AuthService.getCurrentUser())
+
+				return WishlistFactory.getWishlists(AuthService.getCurrentUser())
 					.then(function(theWishlists) {
 						console.log('BEFORE POPULATING', theWishlists)
             // GTPT: you can do this on the front end?
