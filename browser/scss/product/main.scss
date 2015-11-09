@@ -96,6 +96,11 @@
         color: salmon;
       }
 
+      .new-playlist input {
+        color: #000;
+        background-color: #fff;
+      }
+
     }
 
     .product-description {
@@ -105,6 +110,19 @@
       text-align: left;
       padding: 20px;
     }
+
+    select.wishlist {
+      margin: 10px;
+      width: 80%;
+    }
+
+   .blink_me {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {  
+  50% { opacity: 0.0; }
+}
 
   }
 

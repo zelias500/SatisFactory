@@ -5,7 +5,7 @@
     <div class="stars">
         <span class="glyphicon glyphicon-star"></span>
     </div>
-    <button class="btn add-a-review"><span class="glyphicon glyphicon-pencil"></span> Add Review</button>
+    <button class="btn add-a-review" ui-sref="review({ product: product._id })"><span class="glyphicon glyphicon-pencil"></span> Add Review</button>
   </div>
   <article class=
   "product-article">
@@ -15,9 +15,20 @@
     </header>
     <p class="product-description">{{ product.description }}</p><aside class="product-purchase-details">
       Quantity: <input type="number" ng-model="order.number" min='0'/>
-      <button class="btn add-to-cart" ng-click="addToOrder()"><span class="glyphicon glyphicon-plus"></span>Add To Cart</button>
-      <button class=" btn add-to-wishlist" ng-click="addWishList()"><span class="glyphicon glyphicon-heart"></span>Add to Wishlist</button>
       <h4 class="product-price">{{ product.price | currency  }}</h4>
+      <select class="wishlist" ng-model="wlName" ng-change="newWishlist(wlName)" ng-options="wishlist.wlName for wishlist in theUser.wishlist track by wishlist._id">
+<!--         <option selected="true" value="" style="display:none">Select a Wishlist</option>
+ -->        <option type="text" value='' >Create A New Wishlist!</option>
+        <!-- <option type="text" ng-repeat="wishlist in theUser.wishlist">{{wishlist.wlName}}</option> -->
+      </select>
+      <!-- <h2>{{creating}}</h2>
+      <h2>{{wlName}}</h2> -->
+      <span class="btn new-playlist" ng-hide="wlName"> Create New Wishlist: <input ng-model="newWishlistName" type="text"/> </span>
+      <button class="btn add-to-wishlist" ng-disabled="!order.number"ng-click="addWishList()"><span class="glyphicon glyphicon-heart"></span>Add to Wishlist</button>
+      <p ng-show="notLoggedIn">Please sign up or login to create a wishlist.</p>
+      <p ng-show="wlAdded" class="blink_me">{{order.number}} items were added to your wishlist!</p>
+      <button class="btn add-to-cart" ng-click="addToOrder()"><span class="glyphicon glyphicon-plus"></span>Add To Cart</button>
+      <p ng-show="added" class="blink_me">{{order.number}} items were added to your cart!</p>
     </aside>
   </article>
   <hr>

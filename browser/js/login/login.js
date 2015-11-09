@@ -14,6 +14,7 @@ app.controller('LoginCtrl', function ($scope, AuthService, $state) {
     $scope.error = null;
 
     $scope.sendLogin = function (loginInfo) {
+        console.log(loginInfo);
 
         $scope.error = null;
 
@@ -24,5 +25,9 @@ app.controller('LoginCtrl', function ($scope, AuthService, $state) {
         });
 
     };
+
+    $scope.localSignup = function(signupInfo) {
+
+    }
 
 });

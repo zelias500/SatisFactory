@@ -1,0 +1,10 @@
+<h1>{{wishlister}}'s Wishlist</h1>
+<p>Link for your friends and family to buy you stuff!</p>
+	<ul>
+		<li ng-repeat="item in wishlist.items">
+			<!-- <img src={{item.product.photo}} /> -->
+			<h2>{{item.product.title}}</h2><h2>Price: {{item.price | currency}}</h2><h2>Qty: {{item.quantity}}</h2>
+
+			 <button class="btn btn-success" ng-click="buyWishlistItem()"><span class="glyphicon glyphicon-thumbs-up"></span> Buy for {{wishlister}}</button>
+		</li>
+	</ul>

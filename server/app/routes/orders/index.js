@@ -38,7 +38,6 @@ router.post("/", function(req, res, next){
 router.param("id", function(req, res, next, id){
   Order.findById(id)
   .then(function(order){
-  console.log("HELLOOOOO")
     req.order = order;
     // console.log(order)
     next()
