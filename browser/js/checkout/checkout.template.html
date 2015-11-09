@@ -1,69 +1,88 @@
-<section id="checkout">
+<div id="checkout">
+  <section id="checkout-options" class="checkout-panel">
 
-  <div id="checkout-shipping" class="checkout-panel">
-    <h2>Shipping</h2>
-    <form ng-submit="submitAddress()">
-      <label>To:</label>
-      <input class="checkoutField" type="text" ng-model="address.name"/>
-      <label>Line One</label>
-      <input class="checkoutField" type="text" ng-model="address.lineOne"/>
-      <label>Line Two</label>
-      <input class="checkoutField" type="text" ng-model="address.lineTwo"/>
-      <label>City</label>
-      <input class="checkoutField" type="text" ng-model="address.city"/>
-      <label>Zip Code</label>
-      <input class="checkoutField" type="text" ng-model="address.zip"/>
-      <label>State</label>
-      <input class="checkoutField" type="text" ng-model="address.state"/>
-      <input type="submit" value="Add Address"/>
-    </form>
-    <div class="user-shipping-addresses">
-      <section ng-repeat="address in userShipping" class="user-address">
-        {{ address.name }}
-        <label>Use shipping address for billing:</label>
-        <input type="checkbox" ng-click="useShippingAddress(address)"/>
-        
-      </section>
-    </div>
-  </div>
-  <div id="checkout-billing" class="checkout-panel">
-    <h2>Payment</h2>
-    <form ng-hide="false" ng-submit="submitBilling()">
-      <label>To:</label>
-      <input class="checkoutField" type="text" ng-model="billing.address.name"/>
-      <label>Line One</label>
-      <input class="checkoutField" type="text" ng-model="billing.address.lineOne"/>
-      <label>Line Two</label>
-      <input class="checkoutField" type="text" ng-model="billing.address.lineTwo"/>
-      <label>City</label>
-      <input class="checkoutField" type="text" ng-model="billing.address.city"/>
-      <label>Zip Code</label>
-      <input class="checkoutField" type="text" ng-model="billing.address.zip"/>
-      <label>State</label>
-      <input class="checkoutField" type="text" ng-model="billing.address.state"/>
-      <input type="submit" value="Add Card"/>
-      <label>Credit Card Number:</label>
-      <input ng-model="billing.number" type="text"/>
-      <label>Expiry Month:</label>
-      <input ng-model="billing.exp_month"type="number"/>
-      <label>Expiry Year:</label>
-      <input ng-model="billing.exp_year"/>
-      <label>CVC:</label>
-      <input ng-model="billing.cvc"></input>
-      <input type="submit">
-      <div class="user-shipping-addresses">
-        <section ng-repeat="card in userBilling" class="user-address">
-          {{ card }}
+    <div id="checkout-shipping">
+      <h2>Shipping</h2>
+      <form ng-submit="submitAddress()">
+        <label class="checkout-field-label">To:</label>
+        <input type="text" ng-model="address.name"/>
+        <label class="checkout-field-label">Line One</label>
+        <input type="text" ng-model="address.lineOne"/>
+        <label class="checkout-field-label">Line Two</label>
+        <input type="text" ng-model="address.lineTwo"/>
+        <label class="checkout-field-label">City</label>
+        <input type="text" ng-model="address.city"/>
+        <label class="checkout-field-label">Zip Code</label>
+        <input type="text" ng-model="address.zip"/>
+        <label class="checkout-field-label">State</label>
+        <input type="text" ng-model="address.state"/>
+        <input type="submit" value="Add Address"/>
+      </form>
+      <div class="user-checkout-options">
+        <section ng-repeat="address in userShipping" class="user-address">
+          <p>{{ address.name }}</p>
+          <p>{{address.lineOne}}</p>
+          <p>{{address.lineTwo}}</p>
+          <p>{{address.city}}</p>
+          <p>{{address.zip}}</p>
+          <p>{{addreses.state}}</p>
           <label>Use shipping address for billing:</label>
-          <input type="checkbox" ng-click="useShippingAddress(address)"/>
+          <button class="btn" ng-click="useShippingAddress(address)">Use this address</button>
+
         </section>
+      </div>
     </div>
-
-    </form>
-  </div>
-  <div id="checkout-summary" class="checkout-panel">
+    <div id="checkout-billing">
+      <h2>Payment</h2>
+          <form ng-hide="false" ng-submit="submitBilling()">
+            <label class="checkout-field-label">To:</label>
+            <input type="text" ng-model="billing.address.name"/>
+            <label class="checkout-field-label">Line One</label>
+            <input type="text" ng-model="billing.address.lineOne"/>
+            <label class="checkout-field-label">Line Two</label>
+            <input type="text" ng-model="billing.address.lineTwo"/>
+            <label class="checkout-field-label">City</label>
+            <input type="text" ng-model="billing.address.city"/>
+            <label class="checkout-field-label">Zip Code</label>
+            <input type="text" ng-model="billing.address.zip"/>
+            <label class="checkout-field-label">State</label>
+            <input type="text" ng-model="billing.address.state"/>
+            <input type="submit" value="Add Card"/>
+            <label class="checkout-field-label">Credit Card Number:</label>
+            <input ng-model="billing.number" type="text"/>
+            <label class="checkout-field-label">Expiry Month:</label>
+            <input ng-model="billing.exp_month"type="number"/>
+            <label class="checkout-field-label">Expiry Year:</label>
+            <input ng-model="billing.exp_year"/>
+            <label class="checkout-field-label">CVC:</label>
+            <input ng-model="billing.cvc"/>
+            <input type="submit"/>
+          </form>
+          <div class="user-checkout-options">
+            <section ng-repeat="card in userBilling" class="user-address">
+              <p>{{ card }}</p>
+              <label class="checkout-field-label">Use shipping address for billing:</label>
+              <button class="btn" ng-click="useShippingAddress(address)">Use this card</button>
+            </section>
+          </div>
+  </section>
+  <section id="checkout-summary" class="checkout-panel">
     <h2>Summary</h2>
-    <p>Total Price: {{ totalPrice }}
-  </div>
-
-</section>
+    <div class="order-summary">
+       <ul>
+          <li ng-repeat="item in items">
+            <div class="item-pic">
+              {{item.product.photo}}
+            </div>
+            <div class="item-details">
+             <p> {{item.product.title}}</p>
+             <p>  Price: {{item.price}}</p>
+             <p> Quantity: {{item.quantity}}</p>
+            </div>
+          </li>
+       </ul>
+    </div>
+    <p>Total Price: {{ totalPrice | currency }}</p>
+    <button ng-click="purchase">Confirm Order</button>
+  </section>
+</div>
