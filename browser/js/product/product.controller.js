@@ -26,7 +26,7 @@ app.controller('ProductCtrl', function ($scope, Session, theProduct, UserFactory
     	if(currentuser && currentuser._id){
 	    	$uibModal.open({
 	           animation: $scope.animationEnabled,
-	           templateUrl: "/js/product//product.review.template.html",
+	           templateUrl: "/js/product/product.review.template.html",
 	           controller: "ModalCtrl",
 	           resolve: {
 	           	  product: function(){
