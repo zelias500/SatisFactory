@@ -1,3 +1,4 @@
+
 app.factory('OrderFactory', function($http, Session){
   function toData(res) {
     return res.data;
@@ -29,10 +30,9 @@ app.factory('OrderFactory', function($http, Session){
       },
       update:function(id, orderData){
         return $http.put(baseURL+id, orderData).then(toData).then(function(order) {
-          return order;
-          // GTPT: why not cache here? or maybe _.merge orderData into theOrder
-        //   theOrder = order;
-        //   return theOrder;
+          var update = _merge(theOrder, order)
+          update.save()
+          return update;
         })
       },
       addOrderItem: function(id, itemData){

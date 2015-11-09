@@ -1,4 +1,5 @@
 app.controller("CheckoutCtrl", function($scope, theOrder, UserFactory, AuthService){
+  $scope.items = theOrder.items;
   var order = theOrder;
   var user = AuthService.getCurrentUser()
   .then(function(user){
@@ -29,7 +30,6 @@ app.controller("CheckoutCtrl", function($scope, theOrder, UserFactory, AuthServi
   $scope.totalPrice = calcTotalPrice();
 
 
-  // Use shipping address as a billing address
 
   $scope.useShippingAddress = function(address){
     $scope.billing.address = address;
@@ -53,6 +53,10 @@ app.controller("CheckoutCtrl", function($scope, theOrder, UserFactory, AuthServi
         $scope.userBilling = data;
       })
     }
+  }
+
+  $scope.purchase = function(){
+     OrderFactory.update(theOrder._id, {status: "shipping"})
   }
 
 })
