@@ -19,6 +19,7 @@ app.controller("CheckoutCtrl", function($scope, theOrder,UserFactory,AuthService
 
   var totalPrice = function(){
     var sum  = 0;
+    // GTPT: how about reduce?
     theOrder.items.forEach(function(){
 
     })
@@ -27,6 +28,7 @@ app.controller("CheckoutCtrl", function($scope, theOrder,UserFactory,AuthService
   // Use shipping address as a billing address
 
   $scope.useShippingAddress = function(address){
+    // GTPT: maybe angular copy address --> $scope.billing?
     $scope.billing.name = address.name;
     $scope.billing.lineOne = address.lineOne;
     $scope.billing.lineTwo = address.lineTwo;
@@ -36,6 +38,7 @@ app.controller("CheckoutCtrl", function($scope, theOrder,UserFactory,AuthService
   }
 
   $scope.submitAddress = function(){
+    // GTPT: could you get here without being logged in?
       if(user && user._id){
         // console.log("user in checkout", user)
         UserFactory.addAddress(user, $scope.address)
