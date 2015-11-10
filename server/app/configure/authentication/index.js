@@ -9,9 +9,9 @@ var UserModel = mongoose.model('User');
 
 var ENABLED_AUTH_STRATEGIES = [
     'local',
-    // 'twitter',
+    'twitter',
     // 'facebook',
-    // 'google'
+    'google'
 ];
 
 module.exports = function (app) {
@@ -46,7 +46,7 @@ module.exports = function (app) {
     // This is used by the browser application (Angular) to determine if a user is
     // logged in already.
     app.get('/session', function (req, res) {
-        // console.log(req.user, "sadfasdfasdf")
+        console.log(req.user, "sadfasdfasdf")
         if (req.user) {
             req.user.populate('wishlist').execPopulate().then(function(user){
                 res.send({ user: _.omit(req.user.toJSON(), ['salt', 'password']) });                

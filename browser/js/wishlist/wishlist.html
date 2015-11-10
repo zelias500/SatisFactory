@@ -1,4 +1,4 @@
-<h1 style="text-align: center">{{wishlister.email}}'s Wishlist</h1>
+<h1 style="text-align: center">{{wishlister.name || wishlister.email}}'s Wishlist</h1>
 <h2>Share This Link: {{theLink}}</h2>
 	<ul class='panel panel-default' style="text-align: center">
 		<li ng-repeat="item in wishlist.items">
