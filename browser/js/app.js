@@ -8,6 +8,15 @@ app.config(function ($urlRouterProvider, $locationProvider) {
     $urlRouterProvider.otherwise('/');
 });
 
+app.run(function(OrderFactory, $cookies) {
+    if ($cookies.get('order')) {
+        return OrderFactory.getOne($cookies.get("order"))
+        // .then(function(order) {
+        //     console.log("THIS IS OUR ORDER", order);
+        // });
+    }
+})
+
 // This app.run is for controlling access to specific states.
 app.run(function ($rootScope, AuthService, $state) {
 

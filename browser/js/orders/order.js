@@ -17,9 +17,7 @@ app.config(function($stateProvider){
 })
 
 app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session, $state, $cookies) {
-	console.log($cookies.getAll())
 	$scope.order = theOrder;
-	console.log($scope.order)
 	$scope.empty = true
 
 	$scope.removeFromOrder = function(item){

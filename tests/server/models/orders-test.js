@@ -45,7 +45,7 @@ xdescribe('Order model', function () {
                var product = new Product({
                     title: "Some cool thing",
                     description: 'Some cool stuff',
-                    price: 12.99, // GTPT: in cents
+                    price: 12.99,
                     quantity: 10,
                     category: ["Tag1"]
                   })

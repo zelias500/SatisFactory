@@ -37,11 +37,16 @@ xdescribe('Product model', function () {
                     category: ["Tag1"]
                   })
 
-                // GTPT: promises plz
-                  product.save(function (err, savedproduct){
-                    expect(err.message).to.equal('Product validation failed');
-                    done();
-                  })
+                  product.save()
+                    .then(function(product) {
+                      expect(err.message).to.equal('Product validation failed')
+                    })
+                    .then(null, next)
+
+                  // product.save(function (err, savedproduct){
+                  //   expect(err.message).to.equal('Product validation failed');
+                  //   done();
+                  // })
 
             });
 
