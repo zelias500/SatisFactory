@@ -18,6 +18,10 @@ app.controller('AdminCtrl', function($scope, products, orders, users, UserFactor
    }
 
 
+   console.log($scope.status);
+
+   $scope.orderStatus = [{ name: "pending"}, {name: "shipping"}, {name:"completed"}, {name: "cancelled"}];
+
    // $scope.editProduct = function(product){
 
 			// console.log($scope.product)

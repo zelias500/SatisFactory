@@ -7,6 +7,7 @@ var _ = require('lodash');
 
 router.get("/", function(req, res, next){
   Order.find({})
+  .deepPopulate('items.product')
   .then(function(orders){
     res.status(200).json(orders);
   })

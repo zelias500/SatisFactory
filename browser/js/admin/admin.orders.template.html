@@ -1,5 +1,22 @@
 <div class="admin-orders">
+ <select ng-model="orderState">
+  <option value="" selected="selected">All</option>
+  <option value="pending">pending</option>
+  <option value="shipping">shipping</option>
+  <option value="completed">completed</option>
+  <option value="cancelled">cancelled</option>
+ </select>
+ <p>{{ $scope.orderState }}</p>
    <ul>
-     <li ng-repeat="order in orders">{{order}}</li>
+    
+     <li ng-repeat="order in orders | filter: orderState">
+     <p>{{ order.orderDate}}</p>
+     <p>{{order.status}}</p>
+     <p>Items</p>
+     <p ng-repeat="item in order.items">
+      <span class="warning">{{ item }}</span>
+     </p>
+      </li>
    </ul>
+
 </div>
