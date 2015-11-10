@@ -35,7 +35,10 @@ app.controller("AdminProductModalCtrl", function ($scope, $rootScope, $uibModalI
     ProductFactory.updateOne($scope.productToUpdate._id,
     {
       title: $scope.productToUpdate.title,
-      description: $scope.productToUpdate.description
+      price: $scope.productToUpdate.price,
+      description: $scope.productToUpdate.description,
+      photo: $scope.productToUpdate.photo,
+      quantity: $scope.productToUpdate.quantity,
 
     })
     .then(function(data){

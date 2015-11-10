@@ -72,6 +72,7 @@ router.post('/:id/items', function(req, res, next) {
   .then(null, next);
 })
 
+
 router.put("/:id", function(req, res, next){
   // delete req.body._id;
   req.order.items.splice(req.body.index, 1);
@@ -79,6 +80,14 @@ router.put("/:id", function(req, res, next){
   req.order.save().then(function(order){
     res.status(200).json(order)
   }).then(null, next);
+})
+
+router.put("/:id/status", function(req, res, next){
+  req.order.status = req.body.status;
+  req.order.save().then(function(order){
+    res.status(201).json(order);
+  })
+  .then(null, next);
 })
 
 router.put("/:id/checkout", function(req, res, next){

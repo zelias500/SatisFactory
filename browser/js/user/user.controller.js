@@ -1,1 +1,3 @@
-user.controller.js
+app.controller('UserCtrl', function ($scope){
+
+})

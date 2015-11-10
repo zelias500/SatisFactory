@@ -45,6 +45,16 @@ app.factory('OrderFactory', function($http, $cookies){
           return storedOrder;
         })
       },
+
+      updateStatus: function(id, statusObj){
+        return $http.put(baseURL + id + "/status", statusObj)
+        .then(toData)
+        .then(function(data){
+          storedOrder = data;
+          return storedOrder
+        })
+      },
+
       addOrderItem: function(id, itemData){
         return $http.post(baseURL+id+'/items', itemData).then(toData).then(function(order) {
           console.log("THIS IS THE ORDER", order)
