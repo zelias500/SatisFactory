@@ -11,6 +11,8 @@
      <li ng-repeat="order in orders | filter: orderState">
      <p>{{ order.orderDate}}</p>
      <p>{{order.status}}</p>
+     <p>{{ order.shipTo }}</p>
+     <p>{{ order.billWith }}</p>
      <p>Items</p>
      <div ng-repeat="item in order.items">
       <p>{{ item.product.title }} </p>
