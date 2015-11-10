@@ -91,8 +91,10 @@ router.put("/:id/status", function(req, res, next){
 })
 
 router.put("/:id/checkout", function(req, res, next){
+  console.log("REQ BODY:", req.body);
   _.extend(req.order, req.body)
   req.order.save().then(function(order){
+    console.log("ORDER:", order);
     res.status(200).json(order)
   }).then(null, next);
 })
