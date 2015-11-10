@@ -8,7 +8,7 @@
      <p>shipping{{user.shipping}}</p>
      <p>reviews{{user.reviews}}</p>
      <p>isAdmin {{user.isAdmin}}</p>
-      Admin<input ng-click="toAdmin(user, user.isAdmin)" type="checkbox"></input>
+      <input ng-click="toAdmin(user, user.isAdmin)" type="checkbox" ng-checked="user.isAdmin"></input>
       <button ng-click="removeUser(user)">Delete User</button>
       </li>
    </ul>

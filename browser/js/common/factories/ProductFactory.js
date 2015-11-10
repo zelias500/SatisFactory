@@ -7,7 +7,15 @@ app.factory('ProductFactory', function($http){
 
   return {
     getAll: function(){
-       return $http.get(baseURL).then(toData)
+       return $http.get(baseURL).then(function(res){
+          return res.data
+       }).then(function(products){
+           var getproducts = products.map(function(ele){
+               ele.category = ele.category.name
+               return ele
+           })
+           return getproducts
+       })
     },
     getOne: function(id){
       return $http.get(baseURL+ id).then(toData)

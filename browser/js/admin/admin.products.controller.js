@@ -24,31 +24,3 @@ app.controller('AdminProductsCtrl', function ($scope, ProductFactory, $uibModal)
   }
 })
 
-
-
-app.controller("AdminProductModalCtrl", function ($scope, $rootScope, $uibModalInstance, ProductFactory, productToEdit){
-
-  $scope.productToUpdate = productToEdit;
-
-  $scope.ok = function(){
-
-    ProductFactory.updateOne($scope.productToUpdate._id,
-    {
-      title: $scope.productToUpdate.title,
-      description: $scope.productToUpdate.description
-
-    })
-    .then(function(data){
-      // GTPT: maybe a socket might be better?
-      // GTPT: or product.reviews.push or something
-      console.log(data);
-      $uibModalInstance.close()
-    })
-
-  }
-  
-  $scope.cancel = function(){
-    $uibModalInstance.dismiss('cancel')
-  }
-
-})

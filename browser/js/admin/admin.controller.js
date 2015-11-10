@@ -1,7 +1,8 @@
-app.controller('AdminCtrl', function($scope, products, orders, users, UserFactory, ProductFactory){
+app.controller('AdminCtrl', function($rootScope, $scope, products, orders, users, UserFactory, ProductFactory){
    $scope.users = users;
    $scope.orders = orders;
    $scope.products = products;
+   $rootScope.updateproduct = {};
 
    $scope.toAdmin = function(id, isadmin){
       UserFactory.changeUserSetting(id,{isAdmin: !isadmin}).then(function(user){
@@ -16,5 +17,4 @@ app.controller('AdminCtrl', function($scope, products, orders, users, UserFactor
        _.pullAt($scope.users, userindex)
    	})
    }
-
 })
