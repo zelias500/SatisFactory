@@ -58,8 +58,7 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
     }
 
     $scope.addProductReview = function(){
-    	if($scope.user){
-        // GTPT: this feels a bit like a factory thing
+    	if($scope.user){ 
 	    	$uibModal.open({
 	           animation: $scope.animationEnabled,
 	           templateUrl: "/js/product/product.review.template.html",
@@ -99,32 +98,4 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
 	}
 })
 
-// GTPT: this file seems too long for a controller file
-// GTPT: this probably should go into a file with review in the filename so I can use command + t
-app.controller('ModalCtrl', function ($scope, $rootScope, $uibModalInstance, ProductFactory, product, user){
 
-  $scope.max = 5;
-
-  $scope.ratingStates = [{
-    stateOn: 'glyphicon-star',
-    stateOff: 'glyphicon-star-empty'
-  }];
-
-	$scope.ok = function(){
-    ProductFactory.createReview({product:product._id, user: user._id, content: $scope.review.content, numStars:$scope.review.stars })
-    .then(function(data){
-      // GTPT: maybe a socket might be better?
-      // GTPT: or product.reviews.push or something
-      $rootScope.$broadcast('reviewAdded', data);
-      $uibModalInstance.close()
-    })
-
-	}
-	$scope.cancel = function(){
-		$uibModalInstance.dismiss('cancel')
-	}
-
-
-
-
-})
