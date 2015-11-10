@@ -21,8 +21,7 @@ app.config(function($stateProvider){
   })
   .state('admin.products',{
   	url:'/products',
-  	templateUrl:'/js/admin/admin.products.template.html',
-  	controller:"AdminProductCtrl"
+  	templateUrl:'/js/admin/admin.products.template.html'
   })
   .state('admin.orders',{
   	url:'/orders',

@@ -2,13 +2,20 @@
    <ul>
       <li ng-repeat="product in products">
       <form ng-submit="editProduct(product)">
-		     <p contenteditable ng-model="product.title">{{product.title}}</p>
-		     <input ng-model="updateproduct.description" value="{{product.description}}"/>
-		     <input ng-model="updateproduct.price" value="{{product.price}}"/>
-		     <input ng-model="updateproduct.category" value="{{product.category}}"/>
-		     <p>photo{{product.photo}}</p>
-		     <input ng-model="updateproduct.quantity" value="{{product.quantity}}"/>
+		     Title: <input ng-model="product.title" />
+		     <br/>
+		     Descriptoin: <input ng-model="product.description"/>
+		     <br/>
+		     Price: <input ng-model="product.price"/>
+		     <br/>
+		     Category: <input ng-model="product.category"/>
+		     <br/>
+		     Photo: <p>photo{{product.photo}}</p>
+		     <br/>
+		     Quantity: <input ng-model="product.quantity"/>
+		     <br/>
 		     <button type="submit">save</button>
+		     <br/>
 	    </form>
       </li>
    </ul>
