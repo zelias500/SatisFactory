@@ -41,7 +41,7 @@ app.controller("AdminProductModalCtrl", function ($scope, $rootScope, $uibModalI
     .then(function(data){
       // GTPT: maybe a socket might be better?
       // GTPT: or product.reviews.push or something
-      $rootScope.$broadcast('reviewAdded', data);
+      console.log(data);
       $uibModalInstance.close()
     })
 

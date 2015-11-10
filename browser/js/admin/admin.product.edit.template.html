@@ -4,9 +4,13 @@
     </div>
     <div class="modal-body ng-scope">
       <form name="editItem" class="edit-product-form">
+      <label>Product Title</label>
       <input ng-model="productToUpdate.title"></input>
-      </div>
-        <textarea class="review-textarea" name="productToUpdate-description" ng-model="productToUpdate.description" placeholder="What do you think? Let other people know here!" ng-required=true></textarea>
+      <input>Product Description</input>
+      <textarea class="review-textarea" name="productToUpdate-description" ng-model="productToUpdate.description" placeholder="What do you think? Let other people know here!" ng-required=true></textarea>
+      <label>Quantity</label>
+      <input ng-model="productToUpdate.quantity"></input>
+
       </form>
 
     </div>
