@@ -42,7 +42,7 @@ var schema = new Schema({
     isAdmin: {type: Boolean, default: false},
     email: {
         type: String,
-        unique: true,
+        sparse: true,
         validate: validator.$isEmail({msg: "Invalid Email"})
     },
     password: {

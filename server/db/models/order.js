@@ -48,11 +48,6 @@ lineItemSchema.methods.isInStock = function(){
     .then(function(item){
         return item.product.quantity > self.quantity      
     })
-
 }
-
-
-
-
 
 mongoose.model("Order", orderSchema);

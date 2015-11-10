@@ -4,10 +4,6 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
 
    $scope.wlAdded, $scope.notLoggedIn, $scope.added,$scope.creating = true;
 
-   console.log('USER', theUser.wishlist)
-
-
-   console.log("COOKIES", $cookies.getAll())
    if (theUser) $scope.user = theUser;
 
    // GTPT: where's the review logic?
@@ -16,13 +12,23 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
    })
 
    $scope.addWishList = function(){
-   	console.log("HI", $scope.user)
         if ($scope.user){
 	        if ($scope.creating){
-	        	WishlistFactory.createWishlist($scope.user, {
+	        	if(!$scope.newWishlistName) {
+	        		console.log('Please enter a wishlist name');
+	        		$scope.needName = true;
+			        $timeout(function () { $scope.needName = false; }, 2000)
+
+	        		return;
+	        	}
+	        	else {
+	        		$scope.needName = false;
+		        	WishlistFactory.createWishlist($scope.user, {
 	        		items: {price: product.price, product: product._id, quantity: $scope.order.number},
 	        		wlName: $scope.newWishlistName
 	        	})
+
+	        	}
 	        }
 	        else {
 	        	WishlistFactory.addToWishlist($scope.user, $scope.wlName._id, {

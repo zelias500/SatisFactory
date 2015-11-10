@@ -51,15 +51,16 @@ app.config(function($stateProvider){
 app.controller('WishlistCtrl', function($scope, UserFactory, wishlistPerson, theWishlist, $location, OrderFactory, $state) {
 	$scope.theLink = $location.absUrl();
 	$scope.wishlister = wishlistPerson;
-	// console.log($scope.wishlister)
+
 	$scope.wishlist = theWishlist
 	console.log($scope.wishlist)
 	$scope.buyWishlistItem = function(item){
 		// OrderFactory.create(item)
 		// console.log(item);
 		OrderFactory.createFromWishlist({items: {price: item.price, quantity: item.quantity, product: item.product._id}}).then(function(order){
-			console.log("HERROOO", order._id);
-			$state.go('checkout', {order: order._id})		
+
+			console.log("HERROOO", order);
+			$state.go('checkout', {order: order._id});	
 		})
 	}
 })

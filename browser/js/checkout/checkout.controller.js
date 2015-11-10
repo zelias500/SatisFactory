@@ -44,7 +44,7 @@ app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFact
       status: "shipping"})
      .then(function(order){
       console.log(order);
-      $state.go('home')
+      $state.go('confirmation')
      })
   }
 

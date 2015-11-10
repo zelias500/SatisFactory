@@ -1,5 +1,5 @@
 
-app.factory('OrderFactory', function($http, $cookies){
+app.factory('OrderFactory', function($http, $cookies, AuthService){
   function toData(res) {
     return res.data;
   }
@@ -16,7 +16,6 @@ app.factory('OrderFactory', function($http, $cookies){
       getOne: function(id){
         return $http.get(baseURL +id).then(toData).then(function(order) {
           if (!storedOrder) storedOrder = order;
-          console.log(storedOrder);
           return storedOrder;
         })
       },
@@ -65,14 +64,13 @@ app.factory('OrderFactory', function($http, $cookies){
 
       addOrderItem: function(id, itemData){
         return $http.post(baseURL+id+'/items', itemData).then(toData).then(function(order) {
-          console.log("THIS IS THE ORDER", order)
           storedOrder = order;
           return storedOrder;
         })
       },
       calculatePrice: function(){
         return storedOrder.items.reduce(function(sum, item){
-          return item.price * item.quantity;
+          return sum + (item.price * item.quantity);
         },0)
       },
       getCurrentOrder: function(){

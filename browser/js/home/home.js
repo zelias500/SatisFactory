@@ -33,5 +33,4 @@ app.controller("HomeCtrl", function ($scope, theCategories, $state){
       category: cat.name
     });
   })
-  console.log($scope.slideContent);
 })
