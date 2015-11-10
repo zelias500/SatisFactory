@@ -37,7 +37,7 @@ app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFact
     console.log('click')
      OrderFactory.update(order._id, {status: "shipping"}).then(function(order){
       console.log(order);
-      $state.go('home')
+      $state.go('confirmation')
      })
   }
 
