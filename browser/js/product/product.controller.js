@@ -52,8 +52,7 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
     }
 
     $scope.addProductReview = function(){
-    	var currentuser = AuthService.getCurrentUser();
-    	if(currentuser && currentuser._id){
+    	if($scope.user){
         // GTPT: this feels a bit like a factory thing
 	    	$uibModal.open({
 	           animation: $scope.animationEnabled,
@@ -64,7 +63,7 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
 	           	  	  return theProduct
 	           	  },
 	           	  user : function(){
-	           	  	return currentuser;
+	           	  	return $scope.user;
 	           	  }
 	           }
 	    	})

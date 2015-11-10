@@ -6,7 +6,6 @@
   <option value="completed">completed</option>
   <option value="cancelled">cancelled</option>
  </select>
- <p>{{ $scope.orderState }}</p>
    <ul>
     
      <li ng-repeat="order in orders | filter: orderState">

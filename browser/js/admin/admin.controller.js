@@ -17,29 +17,4 @@ app.controller('AdminCtrl', function($scope, products, orders, users, UserFactor
    	})
    }
 
-
-   console.log($scope.status);
-
-   $scope.orderStatus = [{ name: "pending"}, {name: "shipping"}, {name:"completed"}, {name: "cancelled"}];
-
-   // $scope.editProduct = function(product){
-
-			// console.log($scope.product)
-   //    ProductFactory.updateOne(product._id, $scope.product).then(function(updateProduct){
-   //    	  console.log(updateProduct)
-   //    })
-   // }
-
-})
-
-app.controller('AdminProductCtrl', function($scope,ProductFactory){
-   console.log($scope.product)
-   $scope.editProduct = function(product){
-
-			console.log($scope.product)
-      ProductFactory.updateOne(product._id, $scope.product).then(function(updateProduct){
-      	  console.log(updateProduct)
-      })
-   }
-
 })
