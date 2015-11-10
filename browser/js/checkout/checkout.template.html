@@ -19,7 +19,7 @@
         <input type="submit" value="Add Address"/>
       </form>
       <div class="user-checkout-options">
-        <section ng-repeat="address in userShipping" class="user-address">
+        <section ng-repeat="address in userShippingAddresses" class="user-address">
           <p>{{ address.name }}</p>
           <p>{{address.lineOne}}</p>
           <p>{{address.lineTwo}}</p>
@@ -59,7 +59,7 @@
             <input type="submit"/>
           </form>
           <div class="user-checkout-options">
-            <section ng-repeat="card in userBilling" class="user-address">
+            <section ng-repeat="card in userBillingDetails" class="user-address">
               <p>{{ card }}</p>
               <label class="checkout-field-label">Use shipping address for billing:</label>
               <button class="btn" ng-click="useShippingAddress(address)">Use this card</button>
@@ -82,7 +82,30 @@
           </li>
        </ul>
     </div>
+    <div class="order-address">
+      <h3>Shipping Details</h3>
+      <p>{{ orderAddress.name }}</p>
+      <p>{{ orderAddress.lineOne }}</p>
+      <p>{{ orderAddress.lineTwo }}</p>
+      <p>{{ orderAddress.city }}</p>
+      <p>{{ orderAddress.zip }}</p>
+      <p>{{ orderAddress.state }}</p>
+
+    </div>
+
+    <div class="billing-details">
+      <h3>Billing Details</h3>
+      <p>{{ billingOption.address.name }}</p>
+      <p>{{ billingOption.address.lineOne }}</p>
+      <p>{{ billingOption.address.lineTwo }}</p>
+      <p>{{ billingOption.address.city }}</p>
+      <p>{{ billingOption.address.zip }}</p>
+      <p>{{ billingOption.address.state }}</p>
+      <p>{{ billingOption.number }}</p>
+      <p><span>{{ billingOption.exp_month }}</span><span> / </span><span>{{ billingOption.exp_year}}</span></p>
+
+    </div>
     <p>Total Price: {{ totalPrice | currency }}</p>
-    <button ng-click="purchase">Confirm Order</button>
+    <button ng-click="purchase()">Confirm Order</button>
   </section>
 </div>

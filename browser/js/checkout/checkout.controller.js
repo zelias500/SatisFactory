@@ -4,14 +4,18 @@ app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFact
 
   if (currentUser){
     $scope.user = currentUser;
-    $scope.userShipping = currentUser.addresses;
-    $scope.userBilling = currentUser.billingDetails;
+    $scope.userShippingAddresses = currentUser.addresses;
+    $scope.userBillingDetails = currentUser.billingDetails;
   }
+
+  $scope.billingOption = $scope.userBillingDetails[0];
+
+  $scope.orderAddress = $scope.userShippingAddresses[0];
 
   $scope.totalPrice = OrderFactory.calculatePrice();
 
-  $scope.useShippingAddress = function(address){
-    $scope.billing.address = address;
+  $scope.useAsShippingAddress = function(address){
+    $scope.userShipping = address;
   }
 
   $scope.submitAddress = function(){
@@ -34,8 +38,11 @@ app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFact
   }
 
   $scope.purchase = function(){
-    console.log('click')
-     OrderFactory.update(order._id, {status: "shipping"}).then(function(order){
+     OrderFactory.orderCheckout(order._id, {
+      shipTo: $scope.orderAddress,
+      billWith: $scope.billingOption,
+      status: "shipping"})
+     .then(function(order){
       console.log(order);
       $state.go('home')
      })
