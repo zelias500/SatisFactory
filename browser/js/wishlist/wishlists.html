@@ -1,4 +1,4 @@
-<h1 style='text-align:center'>{{theUser.email}}'s Wishlists</h1>
+<h1 style='text-align:center'>{{theUser.name || theUser.email}}'s Wishlists</h1>
 <div class='panel panel-default' style='text-align:center' ng-repeat='wishlist in wishlists'>
 	<h2>{{wishlist.wlName}}</h2>
 	<button class='btn btn-default' ng-click='goToWishlist(wishlist._id)'>Go To Wishlist</button>
