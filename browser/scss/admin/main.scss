@@ -36,5 +36,34 @@
     }
 
   }
-
 }
+
+
+.product-update-submission-holder {
+    .edit-product-form {
+      padding: 30px;
+
+      label {
+        color: #541954;
+      }
+      .modify-product-field {
+        margin: 5px auto;
+        width: 90%;
+        padding: 5px;
+        border-radius: 5px;
+        background-color: grey;
+        color: white;
+        font-family: Helvetica;
+      }
+
+      .modify-product-field:focus {
+        background-color: salmon;
+        color: black;
+      }
+
+      .review-textarea {
+        width: 90%;
+        height: 250px;
+      }
+    }
+  }
