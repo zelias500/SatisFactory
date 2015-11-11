@@ -42,8 +42,7 @@ app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFact
       billWith: $scope.billingOption,
       status: "shipping"})
      .then(function(order){
-      console.log(order);
-      $state.go('confirmation')
+      $state.go('confirmation', {cId: order._id})
      })
   }
 

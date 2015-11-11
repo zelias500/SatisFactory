@@ -37,7 +37,7 @@ router.param("id", function(req, res, next, id){
 	}).then(null, next)
 })
 
-router.get('/:id', function(req,res,next){
+router.get('/:id', function(req,res){
 	res.status(200).json(req.targetUser)
 })
 
@@ -65,7 +65,7 @@ router.delete('/:id', function(req, res, next){
 	}
 })
 
-router.get('/:id/billing', function(req, res, next){
+router.get('/:id/billing', function(req, res){
 	if (authorizeAccess(req.user, req.targetUser)){
 		User.findById(req.targetUser._id).select('billing').exec().then(function(user){
     	delete user.billing.cvc;
@@ -81,7 +81,7 @@ router.get('/:id/billing', function(req, res, next){
 	}
 })
 
-router.post('/:id/billing', function(req, res, next){
+router.post('/:id/billing', function(req, res){
 	if (authorizeAccess(req.user, req.targetUser)){
 		User.findById(req.targetUser._id).select('billing').exec().then(function(user){
 			user.billing.push(req.body);
@@ -95,7 +95,7 @@ router.post('/:id/billing', function(req, res, next){
 	}
 })
 
-router.put('/:id/billing', function(req, res, next){
+router.put('/:id/billing', function(req, res){
 	if (authorizeAccess(req.user, req.targetUser)){
 		User.findById(req.targetUser._id).select('billing').exec().then(function(user){
 			var bill = _.findIndex(user.billing, function(i){
@@ -114,7 +114,7 @@ router.put('/:id/billing', function(req, res, next){
 	}
 })
 
-router.get('/:id/shipping', function(req, res, next){
+router.get('/:id/shipping', function(req, res){
 	if (authorizeAccess(req.user, req.targetUser)){
 		User.findById(req.targetUser._id).select('shipping').exec().then(function(user){
 			res.status(200).json(user.shipping);
@@ -125,7 +125,7 @@ router.get('/:id/shipping', function(req, res, next){
 	}
 })
 
-router.post('/:id/shipping', function(req, res, next){
+router.post('/:id/shipping', function(req, res){
 	if (authorizeAccess(req.user, req.targetUser)){
 		User.findById(req.targetUser._id).then(function(user){
 
@@ -142,7 +142,7 @@ router.post('/:id/shipping', function(req, res, next){
 	}
 })
 
-router.put('/:id/shipping', function(req, res, next){
+router.put('/:id/shipping', function(req, res){
 	if (authorizeAccess(req.user, req.targetUser)){
 		User.findById(req.targetUser._id).select('shipping').exec().then(function(user){
 			var address = _.findIndex(user.shipping, function(i){
@@ -176,45 +176,34 @@ router.get('/:id/reviews', function(req, res, next){
 	}).then(null, next)
 })
 
-router.get('/:id/wishlist', function(req, res, next) {
+router.get('/:id/wishlist', function(req, res) {
     // res.status(200).json(req.targetUser.wishlist)
     req.targetUser.populate('wishlist').execPopulate().then(function(user){
     	res.status(200).json(req.targetUser);
     })
 })
 
-router.get('/:id/wishlist/:wishlistId', function(req, res, next) {
-	// var x = _.findIndex(req.targetUser.wishlist, function(item){
-	// 	return item._id == req.params.wishlistId
-	// })
+router.get('/:id/wishlist/:wishlistId', function(req, res) {
 	Wishlist.findById(req.params.wishlistId).deepPopulate('items.product')
 	.then(function(wishlist){
 		res.status(200).json(wishlist)
 	})
-	// res.status(200).json(req.targetUser.wishlist[x]);
 })
 
 router.post('/:id/wishlist', function(req, res, next) {
-    if (authorizeAccess(req.user, req.targetUser)){
-	    // push a new wishlist with an items array of length 1 that has the starting item in it
-	    // console.log('here', req.body.name)
-
-	   	var aWishlist = new Wishlist({
+    if (authorizeAccess(req.user, req.targetUser)) {
+    	var aWishlist = new Wishlist({
 	    	items: req.body.items,
 	    	wlName: req.body.wlName,
-	    	wishlistedBy: req.targetUser._id
-	    })
-
-	    aWishlist.save()
+	    	wishlistedBy: req.targetUser._id})
+    	aWishlist.save()
 	    	.then(function(theWishlist) {
 	    		req.user.wishlist.push(theWishlist._id)
 	    		req.user.save()
 	    	.then(function(user) {
 	    		res.status(201).json(user)
 	    	})
-	    	.then(null, next)
-	    })
-	    }
+	    	.then(null, next)})}
     else {
     	res.status(403).end();
     }
@@ -229,8 +218,8 @@ router.post('/:id/wishlist/:wishlistId', function(req, res, next){
 	}).then(null, next)
 })
 
-router.put('/:id/wishlist/:wishlistId', function(req, res, next) {
-    var x  = _.findIndex(req.targetUser.wishlist, function(i) {
+router.put('/:id/wishlist/:wishlistId', function(req, res) {
+    var x = _.findIndex(req.targetUser.wishlist, function(i) {
         return i === req.body
     })
     req.targetUser.wishlist.splice(x, 1)
@@ -240,12 +229,10 @@ router.put('/:id/wishlist/:wishlistId', function(req, res, next) {
         })
 })
 
-router.delete('/:id/wishlist', function(req, res, next) {
-	if (authorizeAccess(req.user, req.targetUser)){delete req.targetUser.wishlist
-	    req.targetUser.save()
-	        .then(function(user) {
-	            res.status(204).end()
-	        })
+router.delete('/:id/wishlist', function(req, res) {
+	if (authorizeAccess(req.user, req.targetUser)){delete req.targetUser.wishlist;
+		req.targetUser.save().then(function(user) {
+	        	res.status(204).end()})
 	}
 	else {
 		res.status(403).end();

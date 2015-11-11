@@ -2,7 +2,7 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
    var product = theProduct;
    $scope.product = product;
 
-   $scope.wlAdded, $scope.notLoggedIn, $scope.added,$scope.creating = true;
+   $scope.wlAdded, $scope.notLoggedIn, $scope.added, $scope.creating = true;
 
    if (theUser) $scope.user = theUser;
 
@@ -13,12 +13,10 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
 
    $scope.addWishList = function(){
         if ($scope.user){
-	        if ($scope.creating){
+        	if ($scope.creating){
 	        	if(!$scope.newWishlistName) {
-	        		console.log('Please enter a wishlist name');
 	        		$scope.needName = true;
-			        $timeout(function () { $scope.needName = false; }, 2000)
-
+	        		$timeout(function () { $scope.needName = false; }, 2000)
 	        		return;
 	        	}
 	        	else {
@@ -27,10 +25,8 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
 	        		items: {price: product.price, product: product._id, quantity: $scope.order.number},
 	        		wlName: $scope.newWishlistName
 	        	})
-
-	        	}
-	        }
-	        else {
+	        	}}
+	        	else {
 	        	WishlistFactory.addToWishlist($scope.user, $scope.wlName._id, {
 	        		price: product.price,
 	        		quantity: $scope.order.number,
@@ -38,9 +34,7 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
 	        	})
 	        }
             $scope.wlAdded = true;
-
-            // beauty in the eye of the beholder
-	        $timeout(function () { $scope.wlAdded = false; }, 2000)
+            $timeout(function () { $scope.wlAdded = false; }, 2000)
 
         }
         else{
@@ -60,20 +54,20 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
     $scope.addProductReview = function(){
     	if($scope.user){ 
 	    	$uibModal.open({
-	           animation: $scope.animationEnabled,
-	           templateUrl: "/js/product/product.review.template.html",
-	           controller: "ModalCtrl",
-	           resolve: {
-	           	  product: function(){
-	           	  	  return theProduct
-	           	  },
-	           	  user : function(){
+	    		animation: $scope.animationEnabled,
+	    		templateUrl: "/js/product/product.review.template.html",
+	    		controller: "ModalCtrl",
+	    		resolve: {
+	    			product: function(){
+	    				return theProduct
+	    			},
+	    			user : function(){
 	           	  	return $scope.user;
 	           	  }
-	           }
+	           	}
 	    	})
-	    }else{
-    		console.log("Please sign in");
+	    }
+	    else {
         	return "Please sign up or login to create a review.";
     	}
     };
@@ -89,8 +83,8 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
 				.then(function(createdOrder) {
 					$cookies.put('order', createdOrder._id);
 				})
-		}
-		else {
+			}
+				else {
 			OrderFactory.addOrderItem($cookies.get('order'), {
 				price: $scope.product.price, product: $scope.product._id, quantity: $scope.order.number
 			})

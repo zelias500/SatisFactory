@@ -10,7 +10,7 @@ var Product = mongoose.model('Product');
 
 router.get('/', function(req, res, next){
 	Review.find({}).then(function(reviews){
-       res.status(200).json(review)
+       res.status(200).json(reviews)
 	}).then(null, next)
 })
 
@@ -29,7 +29,7 @@ router.post('/', function(req, res, next){
 	}).then(function(user){
 		if(user){
 			user.reviews.push(theReview._id);
-		   return user.save()
+			return user.save()
 		}
 	})
 	.then(function(){
@@ -40,17 +40,17 @@ router.post('/', function(req, res, next){
 		return product.save();
 	})
 	.then(function(product){
-	  return Product.findById(product._id)
-	  .populate('reviews')
-	  .deepPopulate('reviews.user')
-	  .exec()
-	  .then(function(product){
-	    product.reviews = product.reviews.map(function(review){
-	      if(!review.user.name){
-	        return review.user.name = "Anonymous";
-	       };
+		return Product.findById(product._id)
+		.populate('reviews')
+		.deepPopulate('reviews.user')
+		.exec()
+		.then(function(product){
+			product.reviews = product.reviews.map(function(review){
+				if(!review.user.name){
+					return review.user.name == "Anonymous";
+				};
       });
-	    return product;
+			return product;
     });
 	})
 	.then(function(product){
@@ -62,8 +62,8 @@ router.post('/', function(req, res, next){
 
 router.put('/:id', function(req, res, next){
 	Review.findById(req.params.id).exec().then(function(review){
-	     _.extend(review, req.body);
-	    review.save();
+		_.extend(review, req.body);
+		review.save();
        res.status(200).json(review)
 	}).then(null, next)
 
