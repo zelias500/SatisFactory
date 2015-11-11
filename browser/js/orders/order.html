@@ -1,15 +1,20 @@
-<div>
+<h1 class='cart-heading'>Your Cart</h1>
+<div class="one-order container">
 	<!-- <p>{{order}}</p> -->
-	<ul>
-		<li ng-repeat="item in order.items">
-			<!-- <img src={{item.product.photo}} /> -->
-			<h2>{{item.product.title}}</h2><h2>Price: {{item.price | currency}}</h2><h2>Qty: {{item.quantity}}</h2>
+
+	<ul class="list-group" >
+		<div style="text-align: center">
+		<li class="list-group-item" id="sell" ng-repeat="item in order.items">
+			<img class="thumbnail" src={{item.product.photo}} />
+			<h2 class="list-text">{{item.product.title}}</h2><h2 >Price: {{item.price | currency}}</h2><h2>Qty: {{item.quantity}}</h2>
 
 			 <button class="btn btn-danger" ng-click="removeFromOrder(item)"><span class="glyphicon glyphicon-thumbs-down"></span> Remove Item</button>
 		</li>
+	</div>
 	</ul>
+	<div class="clearfix"></div>
 
-	<h1>TOTAL: {{total | currency}}</h1>
+	<h1 class="cart-heading">TOTAL: {{total | currency}}</h1>
 	<span ng-show="order.items.length == 0" class="label label-danger">Hmmm, looks like your cart is empty!</span>
 	<button class="btn btn-success" ng-click='goToCheckout()' ng-disabled="empty">Checkout</button>
 	<button class="btn btn-warning" ng-click='deleteOrder()'>Delete Order</button>
