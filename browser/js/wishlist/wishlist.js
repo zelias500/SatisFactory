@@ -55,8 +55,9 @@ app.controller('WishlistCtrl', function($scope, UserFactory, wishlistPerson, the
 	$scope.wishlist = theWishlist
 	$scope.buyWishlistItem = function(item){
 		// OrderFactory.create(item)
-		// console.log(item);
+		console.log(item);
 		OrderFactory.createFromWishlist({items: {price: item.price, quantity: item.quantity, product: item.product._id}}).then(function(order){
+			console.log(order._id)
 			$state.go('checkout', {order: order._id});	
 		})
 	}
