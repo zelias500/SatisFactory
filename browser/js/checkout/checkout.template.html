@@ -2,21 +2,24 @@
   <section id="checkout-options" class="checkout-panel">
 
     <div id="checkout-shipping">
-      <h2>Shipping</h2>
-      <form ng-submit="submitAddress()">
-        <label class="checkout-field-label">To:</label>
-        <input type="text" ng-model="address.name"/>
-        <label class="checkout-field-label">Line One</label>
-        <input type="text" ng-model="address.lineOne"/>
-        <label class="checkout-field-label">Line Two</label>
-        <input type="text" ng-model="address.lineTwo"/>
-        <label class="checkout-field-label">City</label>
-        <input type="text" ng-model="address.city"/>
-        <label class="checkout-field-label">Zip Code</label>
-        <input type="text" ng-model="address.zip"/>
-        <label class="checkout-field-label">State</label>
-        <input type="text" ng-model="address.state"/>
-        <input type="submit" value="Add Address"/>
+      <div class="checkout-heading"><h3>SHIPPING</h3></div>
+        <div class="checkout-subheading"><h4>Shipping Address</h4></div>
+        <button class="btn" ng-click="showform()">Add New Address</button>
+      <form  ng-show="showme"ng-submit="submitAddress()">
+          <label class="checkout-field-label">Name</label>
+          <input type="text" ng-model="address.name"/>
+          <label class="checkout-field-label">Address Line 1</label>
+          <input type="text" ng-model="address.lineOne"/>
+          <label class="checkout-field-label">Address Line 2</label>
+          <input type="text" ng-model="address.lineTwo"/>
+          <label class="checkout-field-label">City</label>
+          <input type="text" ng-model="address.city"/>
+          <label class="checkout-field-label">Zip Code</label>
+          <input type="text" ng-model="address.zip"/>
+          <label class="checkout-field-label">State</label>
+          <input type="text" ng-model="address.state"/>
+          </br>
+          <input type="submit" value="Confirm"/>
       </form>
       <div class="user-checkout-options">
         <section ng-repeat="address in userShippingAddresses" class="user-address">
@@ -27,36 +30,44 @@
           <p>{{address.zip}}</p>
           <p>{{addreses.state}}</p>
           <label>Use shipping address for billing:</label>
-          <button class="btn" ng-click="useShippingAddress(address)">Use this address</button>
+          <button class="btn" ng-click="useAsShippingAddress(address)">Use this address</button>
 
         </section>
       </div>
     </div>
     <div id="checkout-billing">
-      <h2>Payment</h2>
+       <div class="checkout-heading"><h3>PAYMENT</h3></div>
+          <div class="checkout-subheading"><h4>Billing Address</h4></div>
+      <form ng-submit="submitAddress()">
           <form ng-hide="false" ng-submit="submitBilling()">
+            <label class="ship">
+            Use Shipping Address as Billing:
+            <input ng-click="useShipping()" type="checkbox">
+            </label>
             <label class="checkout-field-label">To:</label>
-            <input type="text" ng-model="billing.address.name"/>
+            <input id="checkout-input" type="text" ng-model="billing.address.name"/>
             <label class="checkout-field-label">Line One</label>
             <input type="text" ng-model="billing.address.lineOne"/>
             <label class="checkout-field-label">Line Two</label>
-            <input type="text" ng-model="billing.address.lineTwo"/>
+            <input  type="text" ng-model="billing.address.lineTwo"/>
             <label class="checkout-field-label">City</label>
-            <input type="text" ng-model="billing.address.city"/>
+            <input  type="text" ng-model="billing.address.city"/>
             <label class="checkout-field-label">Zip Code</label>
-            <input type="text" ng-model="billing.address.zip"/>
+            <input  type="text" ng-model="billing.address.zip"/>
             <label class="checkout-field-label">State</label>
-            <input type="text" ng-model="billing.address.state"/>
+            <input  type="text" ng-model="billing.address.state"/>
+            <div class="checkout-subheading"><h4>Credit Card</h4></div>
+      <form ng-submit="submitAddress()">
             <input type="submit" value="Add Card"/>
             <label class="checkout-field-label">Credit Card Number:</label>
-            <input ng-model="billing.number" type="text"/>
+            <input  ng-model="billing.number" type="text"/>
             <label class="checkout-field-label">Expiry Month:</label>
-            <input ng-model="billing.exp_month"type="number"/>
+            <input  ng-model="billing.exp_month" type="text"/>
             <label class="checkout-field-label">Expiry Year:</label>
-            <input ng-model="billing.exp_year"/>
+            <input  type="text" ng-model="billing.exp_year"/>
             <label class="checkout-field-label">CVC:</label>
-            <input ng-model="billing.cvc"/>
-            <input type="submit"/>
+            <input type="text" ng-model="billing.cvc"/>
+            <input type="submit" ng-click="submitPayment()"value="Confirm Payment Info">
           </form>
           <div class="user-checkout-options">
             <section ng-repeat="card in userBillingDetails" class="user-address">
@@ -67,12 +78,12 @@
           </div>
   </section>
   <section id="checkout-summary" class="checkout-panel">
-    <h2>Summary</h2>
+     <div class="checkout-heading"><h3>ORDER SUMMARY</h3></div>
     <div class="order-summary">
        <ul>
           <li ng-repeat="item in items">
             <div class="item-pic">
-              {{item.product.photo}}
+              <img ng-src="{{item.product.photo}}"</img>
             </div>
             <div class="item-details">
              <p> {{item.product.title}}</p>
@@ -83,8 +94,9 @@
        </ul>
     </div>
     <div class="order-address">
-      <h3>Shipping Details</h3>
-      <p>{{ orderAddress.name }}</p>
+      <div class="checkout-heading"><h2>Shipping Details</h2></div>
+      <div class="checkout-subheading"><h4>Shipping Address</h4></div>
+      <p>Name:{{ orderAddress.name }}</p>
       <p>{{ orderAddress.lineOne }}</p>
       <p>{{ orderAddress.lineTwo }}</p>
       <p>{{ orderAddress.city }}</p>
@@ -94,15 +106,20 @@
     </div>
 
     <div class="billing-details">
-      <h3>Billing Details</h3>
-      <p>{{ billingOption.address.name }}</p>
+      <div class="checkout-heading"><h2>Billing Details</h2></div>
+      <div class="checkout-subheading"><h4>Billing Address</h4></div>
+      <p>Name:{{ billingOption.address.name }}</p>
       <p>{{ billingOption.address.lineOne }}</p>
       <p>{{ billingOption.address.lineTwo }}</p>
       <p>{{ billingOption.address.city }}</p>
       <p>{{ billingOption.address.zip }}</p>
       <p>{{ billingOption.address.state }}</p>
+      <div class="checkout-subheading"><h4>Billing Card</h4></div>
       <p>{{ billingOption.number }}</p>
-      <p><span>{{ billingOption.exp_month }}</span><span> / </span><span>{{ billingOption.exp_year}}</span></p>
+      <p>
+      <span>{{ billingOption.exp_month }}</span>
+      <span>{{ billingOption.exp_year}}</span>
+      </p>
 
     </div>
     <p>Total Price: {{ totalPrice | currency }}</p>

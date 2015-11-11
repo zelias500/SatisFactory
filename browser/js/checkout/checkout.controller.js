@@ -1,4 +1,4 @@
-app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFactory, $state){
+app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFactory, $state,UserFactory){
   $scope.items = theOrder.items;
   var order = theOrder;
 
@@ -8,14 +8,22 @@ app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFact
     $scope.userBillingDetails = currentUser.billingDetails;
   }
 
-  $scope.billingOption = $scope.userBillingDetails[0];
+  $scope.billingOption = $scope.userBillingDetails[0] || {};
 
   $scope.orderAddress = $scope.userShippingAddresses[0];
 
   $scope.totalPrice = OrderFactory.calculatePrice();
+  $scope.billing = {};
 
   $scope.useAsShippingAddress = function(address){
     $scope.userShipping = address;
+    $scope.orderAddress = address;
+    $scope.billing.address  = address;
+  }
+
+  $scope.useShipping = function(){
+    console.log($scope.billing.address)
+    $scope.billing.address = $scope.address
   }
 
   $scope.submitAddress = function(){
@@ -36,6 +44,11 @@ app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFact
     }
   }
 
+  $scope.submitPayment = function(){
+    $scope.billingOption.address = $scope.billing.address;
+    $scope.billingOption = $scope.billing;
+  }
+
   $scope.purchase = function(){
      OrderFactory.orderCheckout(order._id, {
       shipTo: $scope.orderAddress,
@@ -45,6 +58,10 @@ app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFact
       console.log(order);
       $state.go('confirmation')
      })
+  }
+  $scope.showme = false;
+  $scope.showform = function(){
+     $scope.showme = ! $scope.showme
   }
 
 })
