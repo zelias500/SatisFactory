@@ -16,23 +16,38 @@ router.get("/", function(req, res, next){
 
 router.post("/", function(req, res, next){
   var order;
+  console.log("REQBODY", req.body)
   Order.create(req.body.order)
   .then(function(createdOrder){
+    console.log('THIS IS MY ORDER', createdOrder)
     order = createdOrder;
-    return User.findById(req.body.user._id)
-  }).then(function(user){
-    if (user) {
-      user.orders.push(order._id)
-      return user.save();
-    }    
-  }).then(function(){
-    order.deepPopulate('items.product', function(err, order){
-            if (err) next(err);
-            else {
-              res.status(201).json(order);
-            }
-          })
+    if (req.body.user) {
+      return User.findById(req.body.user._id)
+        .then(function(user) {
+          if (user) {
+            user.orders.push(order._id)
+            return user.save()
+              .then(function() {
+                order.deepPopulate('items.product', function(err, order) {
+                  if (err) next (err);
+                  else {
+                    res.status(201).json(order);
+                  }
+                })
+              })
+          }
+        })
+    }
+    else {
+      order.deepPopulate('items.product', function(err, order) {
+        if (err) next(err);
+        else {
+          console.log("HAHAHAH", order)
+          res.status(201).json(order);
+        }
       })
+    }
+  })
   .then(null, next);
 })
 
