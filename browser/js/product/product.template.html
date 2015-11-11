@@ -39,9 +39,8 @@
     <ul>
       <li class="product-review" ng-repeat=" review in product.reviews">
         <h3> {{ review.user.name }} </h3>
-        <div class="review-stars">
-          <span ng-repeat="i in review.numStars" class="glyphicon glyphicon-star">{{ review.numStars }}</span>
-        </div>
+        <uib-rating readonly="true" ng-model="review.numStars">
+        </uib-rating>
         <hr>
         <p>{{review.content}}</p>
       </li>
