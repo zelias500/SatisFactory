@@ -80,11 +80,12 @@
   <section id="checkout-summary" class="checkout-panel">
      <div class="checkout-heading"><h3>ORDER SUMMARY</h3></div>
     <div class="order-summary">
-       <ul>
+       <ul class='checkout-list'>
           <li ng-repeat="item in items">
-            <div class="item-pic">
+            <div class="item-pic thumbnail">
               <img ng-src="{{item.product.photo}}"</img>
             </div>
+            <br />
             <div class="item-details">
              <p> {{item.product.title}}</p>
              <p>  Price: {{item.price}}</p>
@@ -102,6 +103,7 @@
       <p>{{ orderAddress.city }}</p>
       <p>{{ orderAddress.zip }}</p>
       <p>{{ orderAddress.state }}</p>
+
 
     </div>
 
