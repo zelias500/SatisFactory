@@ -1,4 +1,4 @@
-app.controller("ViewUserCtrl", function ($scope, user, orders, products){
+app.controller("ViewUserCtrl", function ($scope, user, orders, products, $state){
 
   user.orders = user.orders.map(function(order){
      var mappedOrder = _.uniq(orders, {_id: order})[0];
@@ -24,7 +24,7 @@ app.controller("ViewUserCtrl", function ($scope, user, orders, products){
   $scope.orders = orders;
 
   $scope.goToProduct = function(item){
-    $state.go('product', { _id: item._id})
+    $state.go('product', { id: item._id })
   };
 
   console.log("USER:", user);

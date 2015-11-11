@@ -28,7 +28,7 @@
             <p><strong>Ordered:</strong> {{ order.orderDate }}</p>
             <p><strong>Subtotal:</strong> {{ order.subtotal | currency}}</p>
             <div class="order-item" ng-repeat="item in order.items">
-              <a ui-sref="goToProduct(item)">{{ item.product.title }}</a>
+              <a ng-click="goToProduct(item)">{{ item.product.title }}</a>
               <hr>
               <p><strong>Quantity:</strong> {{ item.quantity }}</p>
               <p><strong>Unit Price:</strong> {{ item.price | currency }}</p>
