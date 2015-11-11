@@ -45,7 +45,6 @@
       }
     }
   }
-
 }
 
 #category-selector:after {
@@ -72,4 +71,18 @@
 .side-panel:hover ~ #main {
   filter: blur(10px);
   -webkit-filter: blur(10px);
+}
+
+input {
+  font-family: satisfy;
+  font-size: 18px;
+}
+
+.search-results {
+  color: white;
+  font-family: satisfy;
+  font-size: 18px;
+  text-decoration: underline;
+  margin-top: 5px;
+  cursor: pointer;
 }

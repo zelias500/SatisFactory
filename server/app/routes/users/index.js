@@ -7,7 +7,6 @@ var User = mongoose.model('User');
 var Order = mongoose.model('Order');
 var Review = mongoose.model('Review');
 var Wishlist = mongoose.model('Wishlist');
-var _ = require('lodash');
 
 var authorizeAccess = function(requestUser, targetUser){
 	return requestUser._id.equals(targetUser._id) || requestUser.isAdmin
@@ -100,7 +99,7 @@ router.put('/:id/billing', function(req, res, next){
 	if (authorizeAccess(req.user, req.targetUser)){
 		User.findById(req.targetUser._id).select('billing').exec().then(function(user){
 			var bill = _.findIndex(user.billing, function(i){
-				return i = req.body;
+				return i === req.body;
 			})
 			user.billing.splice(bill, 1);
 
@@ -147,7 +146,7 @@ router.put('/:id/shipping', function(req, res, next){
 	if (authorizeAccess(req.user, req.targetUser)){
 		User.findById(req.targetUser._id).select('shipping').exec().then(function(user){
 			var address = _.findIndex(user.shipping, function(i){
-				return i = req.body;
+				return i === req.body;
 			})
 			user.shipping.splice(address, 1);
 			return user.save()
@@ -200,7 +199,7 @@ router.post('/:id/wishlist', function(req, res, next) {
 	    // push a new wishlist with an items array of length 1 that has the starting item in it
 	    // console.log('here', req.body.name)
 
-	    var aWishlist = new Wishlist({
+	   	var aWishlist = new Wishlist({
 	    	items: req.body.items,
 	    	wlName: req.body.wlName,
 	    	wishlistedBy: req.targetUser._id
@@ -242,8 +241,7 @@ router.put('/:id/wishlist/:wishlistId', function(req, res, next) {
 })
 
 router.delete('/:id/wishlist', function(req, res, next) {
-	if (authorizeAccess(req.user, req.targetUser)){
-	    delete req.targetUser.wishlist
+	if (authorizeAccess(req.user, req.targetUser)){delete req.targetUser.wishlist
 	    req.targetUser.save()
 	        .then(function(user) {
 	            res.status(204).end()
