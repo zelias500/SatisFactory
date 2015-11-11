@@ -68,6 +68,11 @@ router.delete('/:id', function(req, res, next){
 router.get('/:id/billing', function(req, res, next){
 	if (authorizeAccess(req.user, req.targetUser)){
 		User.findById(req.targetUser._id).select('billing').exec().then(function(user){
+    	delete user.billing.cvc;
+    	user.billing = user.billing.map(function(option){
+    	 option.number = "XXXX-XXXX-XXXX-" + option.number.slice(-4);
+    	 return option;
+    	});
 			res.status(200).json(user.billing);
 		})
 	}

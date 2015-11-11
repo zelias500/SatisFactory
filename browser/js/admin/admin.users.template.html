@@ -1,0 +1,15 @@
+<div class="admin-users">
+   <ul>
+     <li ng-repeat="user in users">
+     <p>email{{ user.email}}</p>
+     <p>orders{{user.orders}}</p>
+     <p>wishlit{{user.wishlist}}</p>
+     <p>billing{{user.billing}}</p>
+     <p>shipping{{user.shipping}}</p>
+     <p>reviews{{user.reviews}}</p>
+     <p>isAdmin {{user.isAdmin}}</p>
+      <input ng-click="toAdmin(user, user.isAdmin)" type="checkbox" ng-checked="user.isAdmin"></input>
+      <button ng-click="removeUser(user)">Delete User</button>
+      </li>
+   </ul>
+</div>

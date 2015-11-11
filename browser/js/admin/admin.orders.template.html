@@ -1,0 +1,40 @@
+<div class="admin-orders">
+ <select ng-model="orderState">
+  <option value="" selected="selected">All</option>
+  <option value="pending">pending</option>
+  <option value="shipping">shipping</option>
+  <option value="completed">completed</option>
+  <option value="cancelled">cancelled</option>
+ </select>
+   <ul>
+    
+     <li ng-repeat="order in orders | filter: orderState">
+     <p>{{ order.orderDate}}</p>
+     <p>{{order.status}}</p>
+     <div>
+      <h4>Shipping Details</h4>
+      <p>{{ order.shipTo.name }}</p>
+      <p>{{ order.shipTo.lineOne }}</p>
+     </div>
+     <div>
+      <h4>Billing Details</h4>
+      <p>{{ order.billWith.address }}</p>
+      <p>{{ order.billWith.number }}</p>
+     </div>
+     <p>Items</p>
+     <div ng-repeat="item in order.items">
+      <p>{{ item.product.title }} </p>
+      <p>{{ item.price }}</p>
+      <label>Set Pending</label>
+      <button ng-hide="order.status === 'pending'" ng-click="setStatus(order, 'pending')">Pending</button>
+      <button ng-hide="order.status === 'shipping'" ng-click="setStatus(order, 'shipping')">Shipping</button>
+      <button ng-hide="order.status === 'cancelled'" ng-click="setStatus(order, 'cancelled')">Cancelled</button>
+      <button ng-hide="order.status === 'completed'" ng-click="setStatus(order, 'completed')">Completed</button>
+
+     </div>
+      
+     </p>
+      </li>
+   </ul>
+
+</div>

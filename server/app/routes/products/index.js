@@ -9,6 +9,7 @@ var _ = require('lodash');
 
 router.get('/', function(req, res, next) {
   Product.find({})
+    .populate('category')
     .then(function(products) {
       res.status(200).json(products)
     })
@@ -44,6 +45,7 @@ router.get('/category', function(req, res, next) {
 router.param("id", function(req, res, next, id){
   Product.findById(id)
   .populate('reviews')
+  .populate('category')
   .deepPopulate('reviews.user')
   .exec()
   .then(function(product){
