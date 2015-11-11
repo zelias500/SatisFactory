@@ -16,7 +16,7 @@ app.config(function($stateProvider){
 	})
 })
 
-app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session, $state, $cookies) {
+app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session, $state) {
 	$scope.order = theOrder;
 	$scope.empty = true
 

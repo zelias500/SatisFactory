@@ -4,6 +4,13 @@ var Review = require('./review')
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 
+function getPrice(num) {
+  return (num/100).toFixed(2)
+}
+
+function setPrice(num) {
+  return num * 100
+}
 
 var productSchema = new Schema({
   title: { type: String, required: true, unique: true},
@@ -23,13 +30,6 @@ productSchema.plugin(deepPopulate, {
   }
 }); 
 
-function getPrice(num) {
-  return (num/100).toFixed(2)
-}
-
-function setPrice(num) {
-  return num * 100
-}
 
 productSchema.methods.averageStars = function() {
 

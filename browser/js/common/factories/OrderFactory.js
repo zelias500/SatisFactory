@@ -1,5 +1,5 @@
 
-app.factory('OrderFactory', function($http, $cookies, AuthService){
+app.factory('OrderFactory', function($http, $cookies){
   function toData(res) {
     return res.data;
   }
