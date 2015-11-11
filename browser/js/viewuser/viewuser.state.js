@@ -9,6 +9,9 @@ app.config(function ($stateProvider){
       },
       orders: function(OrderFactory) {
         return OrderFactory.getAll();
+      },
+      products: function(ProductFactory) {
+        return ProductFactory.getAll();
       }
     }
   })

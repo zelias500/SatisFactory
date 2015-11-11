@@ -1,16 +1,20 @@
 <div class="admin-orders">
  <select ng-model="orderState">
-  <option value="" selected="selected">All</option>
+  <option value="" selected="selected" class="form-control">All</option>
   <option value="pending">pending</option>
   <option value="shipping">shipping</option>
   <option value="completed">completed</option>
   <option value="cancelled">cancelled</option>
  </select>
-   <ul>
+    <ul class="admin-orders-list">
     
-     <li ng-repeat="order in orders | filter: orderState">
-     <p>{{ order.orderDate}}</p>
-     <p>{{order.status}}</p>
+    <li ng-repeat="order in orders | filter: orderState">
+     <p><strong>Date Ordered: </strong> {{ order.orderDate}}</p>
+     <p><strong>Order Status: </strong>{{order.status}}</p>
+      <button class="btn btn-default" ng-hide="order.status === 'pending'" ng-click="setStatus(order, 'pending')">Pending</button>
+        <button  class="btn btn-default" ng-hide="order.status === 'shipping'" ng-click="setStatus(order, 'shipping')">Shipping</button>
+        <button  class="btn btn-default" ng-hide="order.status === 'cancelled'" ng-click="setStatus(order, 'cancelled')">Cancelled</button>
+        <button class="btn btn-default" ng-hide="order.status === 'completed'" ng-click="setStatus(order, 'completed')">Completed</button>
      <div>
       <h4>Shipping Details</h4>
       <p>{{ order.shipTo.name }}</p>
@@ -22,19 +26,12 @@
       <p>{{ order.billWith.number }}</p>
      </div>
      <p>Items</p>
-     <div ng-repeat="item in order.items">
-      <p>{{ item.product.title }} </p>
-      <p>{{ item.price }}</p>
-      <label>Set Pending</label>
-      <button ng-hide="order.status === 'pending'" ng-click="setStatus(order, 'pending')">Pending</button>
-      <button ng-hide="order.status === 'shipping'" ng-click="setStatus(order, 'shipping')">Shipping</button>
-      <button ng-hide="order.status === 'cancelled'" ng-click="setStatus(order, 'cancelled')">Cancelled</button>
-      <button ng-hide="order.status === 'completed'" ng-click="setStatus(order, 'completed')">Completed</button>
-
+     <div class="order-item" ng-repeat="item in order.items">
+          <p>{{ item.product.title }} </p>
+          <p>{{ item.price }}</p>
      </div>
-      
-     </p>
-      </li>
-   </ul>
+
+    </li>
+  </ul>
 
 </div>

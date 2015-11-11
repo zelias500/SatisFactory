@@ -1,28 +1,27 @@
-#admin-holder{
-	background-color: white;
-  padding: 40px;
-  margin: 30px auto;
+#viewuser-holder {
+  background-color: white;
+  margin: 20px auto;
+  padding: 20px;
   border-radius: 10px;
   box-shadow: $dark-shadow;
 
-  .admin-button-holder {
-    text-align: center;
-    margin: 10px auto;
+
+  header {
     padding: 10px;
+    margin: 0px auto;
   }
 
-  .admin-orders {
-    background-color: white;
+  .viewuser-orders {
     padding: 20px;
-    .admin-orders-list {
-      padding: 20px;
+
+    ul {
       list-style-type: none;
 
       li {
         box-shadow: $shadow;
         border-radius: 10px;
         padding: 10px;
-        margin: 20px;
+
         .order-item {
           display: inline-block;
           padding: 10px;
@@ -32,7 +31,6 @@
         }
 
       }
-
     }
 
   }

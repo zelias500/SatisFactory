@@ -1,13 +1,69 @@
 <div id="viewuser-holder">
   <section>
     <header>
-      <h2>Hello!</h2>
+      <h2 class="satisfy-font">Hello {{user.email}}! Your orders are below...</h2>
     </header>
     <div>
-      <h3>Orders</h3>
-      <ul>
-        <li ng-repeat="order in user.orders"></li>
-      </ul>
+      <section class="viewuser-orders">
+        <h4>Pending Orders</h4>
+        <hr>
+        <ul>
+          <li ng-repeat="order in user.orders | filter: {status: 'pending'}">
+           <p><strong>Ordered:</strong> {{ order.orderDate }}</p>
+            <p><strong>Subtotal:</strong> {{ order.subtotal | currency}}</p>
+            <div class="order-item" ng-repeat="item in order.items">
+              <p>{{ item.product.title }}</p>
+              <hr>
+              <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+              <p><strong>Unit Price:</strong> {{ item.price | currency }}</p>
+            </div>
+          </li>
+        </ul>
+      </section>
+      <section class="viewuser-orders">
+        <h4>Shipped/Processing Orders</h4>
+        <hr>
+        <ul>
+          <li ng-repeat="order in user.orders | filter: {status: 'shipping'}">
+            <p><strong>Ordered:</strong> {{ order.orderDate }}</p>
+            <p><strong>Subtotal:</strong> {{ order.subtotal | currency}}</p>
+            <div class="order-item" ng-repeat="item in order.items">
+              <a ui-sref="goToProduct(item)">{{ item.product.title }}</a>
+              <hr>
+              <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+              <p><strong>Unit Price:</strong> {{ item.price | currency }}</p>
+            </div>
+          </li>
+        </ul>
+      </section>
+      <section class="viewuser-orders">
+        <h4>Completed Orders</h4>
+        <hr>
+        <li ng-repeat="order in user.orders | filter: {status: 'completed'}">
+          <p><strong>Ordered:</strong> {{ order.orderDate }}</p>
+            <p><strong>Subtotal:</strong> {{ order.subtotal | currency}}</p>
+          <div class="order-item" ng-repeat="item in order.items">
+            <p>{{ item.product.title }}</p>
+            <hr>
+            <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+            <p><strong>Unit Price:</strong> {{ item.price | currency }}</p>
+          </div>
+        </li>
+      </section>
+      <section class="viewuser-orders">
+        <h4>Cancelled Orders</h4>
+        <hr>
+        <li ng-repeat="order in user.orders | filter: {status: 'cancelled'}">
+          <p><strong>Ordered:</strong> {{ order.orderDate }}</p>
+          <p><strong>Subtotal:</strong> {{ order.subtotal | currency}}</p>
+          <div class="order-item" ng-repeat="item in order.items">
+            <[>{{ item.product.title }}</p>
+            <hr>
+            <p><strong>Quantity:</strong> {{ item.quantity }}</p>
+            <p><strong>Unit Price:</strong> {{ item.price | currency }}</p>
+          </div>
+        </li>
+      </section>
     </div>
   </section>
 
