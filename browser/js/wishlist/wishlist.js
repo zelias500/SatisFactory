@@ -32,19 +32,19 @@ app.config(function($stateProvider){
 				return AuthService.getCurrentUser();
 			}
 		}
-	}),
-
-	$stateProvider.state('adminWishlistsView', {
-		url:'/wishlist/user/:userid',
-		templateUrl: '/js/wishlist/wishlists.html',
-		controller: 'AdminWishlistCtrl',
-		resolve: {
-			wishlistList: function(UserFactory, $stateParams){
-       				// admin version of wishlist controller goes here
-
-			}
-		}
 	})
+
+	// $stateProvider.state('adminWishlistsView', {
+	// 	url:'/wishlist/user/:userid',
+	// 	templateUrl: '/js/wishlist/wishlists.html',
+	// 	controller: 'AdminWishlistCtrl',
+	// 	resolve: {
+	// 		wishlistList: function(UserFactory, $stateParams){
+ //       				// admin version of wishlist controller goes here
+
+	// 		}
+	// 	}
+	// })
 })
 
 
@@ -53,13 +53,10 @@ app.controller('WishlistCtrl', function($scope, UserFactory, wishlistPerson, the
 	$scope.wishlister = wishlistPerson;
 
 	$scope.wishlist = theWishlist
-	console.log($scope.wishlist)
 	$scope.buyWishlistItem = function(item){
 		// OrderFactory.create(item)
 		// console.log(item);
 		OrderFactory.createFromWishlist({items: {price: item.price, quantity: item.quantity, product: item.product._id}}).then(function(order){
-
-			console.log("HERROOO", order);
 			$state.go('checkout', {order: order._id});	
 		})
 	}
@@ -72,7 +69,6 @@ app.controller('WishlistsCtrl', function($scope, ourWishlists, AuthService, $sta
 	// 	$scope.theUser = user;
 	// })
 	$scope.theUser = ourUser;
-	console.log($scope.theUser._id);
 
 	$scope.goToWishlist = function(wishlistId){
 		$state.go('wishlist', {userId: $scope.theUser._id, wishlistId: wishlistId})

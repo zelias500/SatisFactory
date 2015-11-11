@@ -1,11 +1,14 @@
-<h1 class="wishlists">{{wishlister.name || wishlister.email}}'s Wishlist</h1>
-<h2 class="link">Share This Link: {{theLink}}</h2>
+<h1 class="wishlists">{{wishlister.name || wishlister.email || wishlister.twitter.username}}'s Wishlist</h1>
+<div class="box">
+<h4 class="link">Share This Link:</h4>
+<p> {{theLink}}</p>
+</div>
 	<div class="center">
 	<ul>
 		<li class="list-group-item" ng-repeat="item in wishlist.items">
-			<img class="thumbnail" src={{item.product.photo}} />
+			<img class="thumbnail" ng-src={{item.product.photo}} />
 			<h2>{{item.product.title}}</h2><h2>Price: {{item.price | currency}}</h2><h2>Qty: {{item.quantity}}</h2>
-			 <button class="btn btn-success" ng-click="buyWishlistItem(item)"><span class="glyphicon glyphicon-thumbs-up"></span> Buy for {{wishlister.email || wishlister.name}}</button>
+			 <button class="btn btn-success" ng-click="buyWishlistItem(item)"><span class="glyphicon glyphicon-thumbs-up"></span> Buy for {{wishlister.email || wishlister.name || wishlister.twitter.username}}</button>
 		</li>
 	</ul>
 </div>

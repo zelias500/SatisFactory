@@ -47,7 +47,6 @@ app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session, $s
 
 	$scope.goToCheckout = function(){
 		if($scope.order.items.length){
-			console.log("From the OrderCtrl: ", $scope.order);
 			$state.go('checkout', {order: $scope.order._id});
 		} 
 	}

@@ -45,11 +45,11 @@
             <input ng-click="useShipping()" type="checkbox">
             </label>
             <label class="checkout-field-label">To:</label>
-            <input id="checkout-input" type="text" ng-model="billing.address.name"/>
-            <label class="checkout-field-label">Line One</label>
+            <input type="text" ng-model="billing.address.name"/>
+            <label class="checkout-field-label">Address Line One</label>
             <input type="text" ng-model="billing.address.lineOne"/>
-            <label class="checkout-field-label">Line Two</label>
-            <input  type="text" ng-model="billing.address.lineTwo"/>
+            <label class="checkout-field-label">Address Line Two</label>
+            <input type="text" ng-model="billing.address.lineTwo"/>
             <label class="checkout-field-label">City</label>
             <input  type="text" ng-model="billing.address.city"/>
             <label class="checkout-field-label">Zip Code</label>
@@ -80,11 +80,12 @@
   <section id="checkout-summary" class="checkout-panel">
      <div class="checkout-heading"><h3>ORDER SUMMARY</h3></div>
     <div class="order-summary">
-       <ul>
+       <ul class='checkout-list'>
           <li ng-repeat="item in items">
-            <div class="item-pic">
+            <div class="item-pic thumbnail">
               <img ng-src="{{item.product.photo}}"</img>
             </div>
+            <br />
             <div class="item-details">
              <p> {{item.product.title}}</p>
              <p>  Price: {{item.price}}</p>
@@ -102,6 +103,7 @@
       <p>{{ orderAddress.city }}</p>
       <p>{{ orderAddress.zip }}</p>
       <p>{{ orderAddress.state }}</p>
+
 
     </div>
 

@@ -54,7 +54,7 @@ var seedProducts = function() {
     var products = [
         {
             title: "Buy a Ferrari",
-            description: "Purchase a Ferrari F430 at a heavily discounted price",
+            description: "Purchase a Ferrari F430 at a heavily discounted price. Vroom vroom.",
             price: 100000.00,
             quantity: 10,
             category: "Cars",
@@ -62,7 +62,7 @@ var seedProducts = function() {
         },
         {
             title: "Buy a Porsche 911",
-            description: "Indulge your need for speed by by a limited edition Porsche 911 at a discounted price.",
+            description: "Indulge your need for speed by buying a limited edition Porsche 911, only available at Satis-Factory.",
             price: 50000.00,
             quantity: 10,
             category: "Cars",
@@ -70,8 +70,8 @@ var seedProducts = function() {
         },
 
         {
-            title: "Max Brenner Speciality Chocolate",
-            description: "Satisfy your craving for chocolate with the a years supply of New York's favourite chocolate pizza",
+            title: "Max Brenner Specialty Chocolate",
+            description: "Satisfy your craving for chocolate with the a year's supply of New York's favourite chocolate pizza",
             price: 999.99,
             quantity: 100,
             category: "Food",
@@ -89,7 +89,7 @@ var seedProducts = function() {
 
         {
             title: "Meet Grumpy Cat",
-            description: "Sometimes, nothing beats a bad day except spreading the grumpy around...",
+            description: "Sometimes, nothing beats a bad day except spreading the grumpy around...mee-ow.",
             price: 500.00,
             quantity: 4,
             category: "Experiences",
@@ -97,7 +97,7 @@ var seedProducts = function() {
         },
         {
             title: "Dinner with Omri Bernstein",
-            description: "A once in a lifetime experience, dinner with esteemed time traveller and software engineer, Omri Bernstein DFC.",
+            description: "A once in a lifetime experience- dinner with esteemed time traveller and software engineer, Omri Bernstein DFC.",
             price: 2000.00,
             quantity: 2,
             category: "Experiences",
@@ -114,7 +114,7 @@ var seedProducts = function() {
 
         {
             title: "Swiss Snowboarding",
-            description: "Fresh powder, endless runs and Swiss Chocolate, nothing beats a European snowboarding experience",
+            description: "Fresh powder, endless runs and Swiss Chocolate. Nothing beats the ultimate European snowboarding experience",
             price: 15000.00,
             quantity: 20,
             category: "Vacations",
@@ -122,7 +122,7 @@ var seedProducts = function() {
         },
 
         {
-            title: "The ultimate Spa experience",
+            title: "The Ultimate Spa experience",
             description: "Eliminate all the aches and pains of city life by indulging in a spa experience like no other at the Kempinksi Spa",
             price: 2000.00,
             quantity: 12,
@@ -140,7 +140,7 @@ var seedProducts = function() {
         },
         {
             title: "Superbowl 2016 - VIP",
-            description: "Your going to the superbowl...why settle for less. Satisfy your fan fever and watch the game from our exclusive private box.",
+            description: "You're going to the superbowl...why settle for less? Satisfy your fan fever and watch the game from our exclusive private box.",
             price: 5000.00,
             quantity: 1,
             category: "Sports",
@@ -148,7 +148,7 @@ var seedProducts = function() {
         },
         {
             title: "Pickup Basketball with the man himself...",
-            description: "Want to satisfy your dream of meeting the worlds best basketball player...and try and beat him at his own game? This is for you.",
+            description: "Want to satisfy your dream of meeting the world's best basketball player...AND try to beat him at his own game? This one is for you.",
             price: 60.00,
             quantity: 20,
             category: "Sports",
@@ -157,7 +157,7 @@ var seedProducts = function() {
 
         {
             title: "Phish...with a difference",
-            description: "Phish, if you want to see them, why not meet them as well? Watch the band then meet up with them backstage for the afterparty!",
+            description: "Phish, if you want to see them, why not meet them as well? Watch the band, then meet up with them backstage for the afterparty!",
             price: 100.00,
             quantity: 10,
             category: "Concerts",
@@ -166,7 +166,7 @@ var seedProducts = function() {
 
         {
             title: "Hang out Jay-Z",
-            description: "What's better than going to see Jay - Z, hanging with the man himself and watching from the stage.",
+            description: "What's better than going to see Jay - Z? Hanging with the man himself and watching from the stage.",
             price: 150.00,
             quantity: 10,
             category: "Concerts",

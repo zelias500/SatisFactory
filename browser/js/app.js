@@ -11,9 +11,6 @@ app.config(function ($urlRouterProvider, $locationProvider) {
 app.run(function(OrderFactory, $cookies) {
     if ($cookies.get('order')) {
         return OrderFactory.getOne($cookies.get("order"))
-        // .then(function(order) {
-        //     console.log("THIS IS OUR ORDER", order);
-        // });
     }
 })
 

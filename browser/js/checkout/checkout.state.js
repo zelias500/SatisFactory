@@ -15,11 +15,7 @@ app.config(function ($stateProvider) {
           catch(e) {
             console.error(e)
           }
-        }
-        // check if current order id is the same as the cached order
-        // if it is , whatever
-        // if it's not, call get from wishlist
-        // console.log("Resolved object:", $stateParams.order)       
+        }     
       },
       currentUser: function(AuthService, UserFactory){
         if (!AuthService.getCurrentUser) return;

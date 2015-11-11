@@ -7,7 +7,6 @@ app.factory('WishlistFactory', function($http) {
 
 	return {
 		getWishlists: function(user){
-			console.log("THIS IS OUR USER", user)
 			return $http.get(baseURL+user._id+'/wishlist/').then(toData)
 		},
 
