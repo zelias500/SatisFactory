@@ -85,7 +85,7 @@ app.controller('ProductCtrl', function ($scope, theUser, theProduct, UserFactory
 		$scope.added = true;
 		$timeout(function () { $scope.added = false; }, 2000)
 		if (!$cookies.get('order')) {
-			OrderFactory.create({items: [{price: $scope.product.price, product: $scope.product._id, quantity: $scope.order.number}]})
+			OrderFactory.create({ order: {items: [{price: $scope.product.price, product: $scope.product._id, quantity: $scope.order.number}]}, user: $scope.user })
 				.then(function(createdOrder) {
 					$cookies.put('order', createdOrder._id);
 				})
