@@ -49,7 +49,7 @@ router.param("id", function(req, res, next, id){
   .then(function(product){
     product.reviews = product.reviews.map(function(review){
       if(!review.user.name){
-        return review.user.name = "Anonymous";
+        return review.user.name === "Anonymous";
       }
     })
     req.product = product;
@@ -58,11 +58,11 @@ router.param("id", function(req, res, next, id){
   .then(null, next);
 })
 
-router.get("/:id", function(req, res, next){
+router.get("/:id", function(req, res){
   res.status(200).json(req.product)
 })
 
-router.get('/:id/reviews', function(req, res, next){
+router.get('/:id/reviews', function(req, res){
     if(req.product.reviews.length === 0){
       res.status(200).json("There are no Reviews")
     } else {
@@ -79,7 +79,7 @@ router.put("/:id", function(req, res, next){
   }).then(null, next);
 })
 
-router.delete("/:id", function(req, res, next){
+router.delete("/:id", function(req, res){
   req.product.remove()
   .then(function(){
     res.sendStatus(204);

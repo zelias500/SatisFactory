@@ -1,5 +1,4 @@
 var mongoose = require('mongoose');
-var User = require("./user");
 var Product = require("./product");
 var Schema = mongoose.Schema;
 var _ = require('lodash');

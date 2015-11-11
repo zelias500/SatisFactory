@@ -1,4 +1,4 @@
-app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFactory, $state){
+app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFactory, $state, UserFactory){
   $scope.items = theOrder.items;
   var order = theOrder;
 

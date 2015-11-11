@@ -52,10 +52,15 @@ input[type='text'] {
   border: 1px solid white;  
   background-color: black;
   color: white;
+  font-family: Helvetica;
 }
 
 input[type='text']:focus {
   background-color: salmon;
+}
+
+input[type='password'] {
+  font-family: Helvetica;
 }
 
 label {
@@ -63,6 +68,7 @@ label {
   display: block;
   color: white;
   font-family: satisfy;
+  font-size: 1.3em;
 }
 
 #logo {
