@@ -3,11 +3,13 @@
       <thead>
          <td><strong>Product</strong></td>
          <td><strong>Price</strong></td>
-         <td><strong>Remove</strong></td>
+         <td></strong>Quantity</strong></td>
+         <td><strong>Edit Product</strong></td>
       </thead>
       <tr ng-repeat="product in products">
 		     <td>{{product.title}}</td>
-         <td>{{ product.price | currency}}</td>
+            <td>{{ product.price | currency}}</td>
+            <td>{{ product.quantity }}</td>
 		     <td><button class="btn btn-default" ng-click="editProduct(product)">Edit</button><td>
       </tr>
    </table>
