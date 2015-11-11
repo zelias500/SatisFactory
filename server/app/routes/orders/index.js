@@ -16,10 +16,10 @@ router.get("/", function(req, res, next){
 
 router.post("/", function(req, res, next){
   var order;
-  Order.create(req.body)
+  Order.create(req.body.order)
   .then(function(createdOrder){
     order = createdOrder;
-    return User.findById(createdOrder.user)
+    return User.findById(req.body.user._id)
   }).then(function(user){
     if (user) {
       user.orders.push(order._id)
@@ -90,7 +90,16 @@ router.put("/:id/checkout", function(req, res, next){
 router.delete("/:id", function(req, res, next){
   req.order.remove()
   .then(function(){
-    res.sendStatus(204);
+    console.log("USER:", req.session.passport.user)
+    User.findById(req.session.passport.user)
+    .then(function(user){
+      user.orders.pull(req.order._id)
+      return user.save()
+      .then(function(user){
+        res.status(204).json(user);
+      })
+    })
+
   })
   .then(null, next);
 })

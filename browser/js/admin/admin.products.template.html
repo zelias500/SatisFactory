@@ -1,12 +1,16 @@
 <div class="admin-products">
-   <ul>
-      <li ng-repeat="product in products">
-		     <p>{{product.title}}</p>
-         <p></p>
-         <p></p>
-         <p></p>
-         <p></p>
-		     <button ng-click="editProduct(product)">Edit</button>
-      </li>
-   </ul>
+   <table class="table">
+      <thead>
+         <td><strong>Product</strong></td>
+         <td><strong>Price</strong></td>
+         <td></strong>Quantity</strong></td>
+         <td><strong>Edit Product</strong></td>
+      </thead>
+      <tr ng-repeat="product in products">
+		     <td>{{product.title}}</td>
+            <td>{{ product.price | currency}}</td>
+            <td>{{ product.quantity }}</td>
+		     <td><button class="btn btn-default" ng-click="editProduct(product)">Edit</button><td>
+      </tr>
+   </table>
 </div>

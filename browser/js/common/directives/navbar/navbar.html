@@ -1,7 +1,7 @@
 <nav class="navbar navbar-static-top">
     <div id='nav' class="container">
         <div class="navbar-header">
-            <fullstack-logo></fullstack-logo>
+            <h1>Satis-Factory</h1>
         </div>
         <ul class="nav navbar-nav">
             <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
@@ -11,10 +11,10 @@
         </ul>
         <button ng-show="!user" ui-sref="login" class="btn login-button">Login/Signup</button>
         <div ng-show="user" class="welcome">
-            <span><a ui-sref="wishlists(user)">My Wishlists  </a>  </span>
-            <span><a ui-sref='user(user)'>Welcome, {{ user.name || user.email || user.twitter.username }}!</a></span>
-            <span ng-show="user.isAdmin"><a ui-sref="admin(user)">Admin</a></span>
-            <a ng-click="logout()">Logout</a>
+            <button class="btn nav-btn" ui-sref="wishlists(user)">My Wishlists</button>
+            <button class="btn nav-btn" ui-sref='viewuser(user)'>Welcome, {{ user.name || user.email || user.twitter.username }}!</button>
+            <button ng-show="user.isAdmin" class="btn nav-btn" ui-sref="admin(user)">Admin</button>
+            <button class="btn nav-btn" ng-click="logout()">Logout</button>
         </div>
     </div>
 </nav>

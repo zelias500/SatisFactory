@@ -1,7 +1,12 @@
-<div class="admin">
-   <span><a ui-sref="admin.users">See All Users</a></span>
-   <span><a ui-sref="admin.products">See All Products</a></span>
-   <span><a ui-sref="admin.orders">See All Orders</a></span>
+<div id="admin-holder">
+  <h1 class="satisfy-font">Hi! What would you like to see?</h1>
+  <hr>
+  <div class="admin-button-holder">
+   <span><a ui-sref="admin.users" class="btn btn-default">See All Users</a></span>
+   <span><a ui-sref="admin.products" class="btn btn-default">See All Products</a></span>
+   <span><a ui-sref="admin.orders" class="btn btn-default">See All Orders</a></span>
+  <hr>
+  </div>
    <div class="admin-detail">
       <div ui-view></div>
    </div>
