@@ -4,16 +4,16 @@
     </div>
     <div class="modal-body ng-scope">
       <form name="editItem" class="edit-product-form">
-      <label>Product Title</label>
-      <input ng-model="productToUpdate.title"></input>
-      <label>Price</label>
-      <input type="number" ng-model="productToUpdate.price"></input>
-      <label>Description</label>
-      <textarea class="review-textarea" name="productToUpdate-description" ng-model="productToUpdate.description" ng-required=true></textarea>
-      <label>Quantity</label>
-      <input type="text" ng-model="productToUpdate.quantity"></input>
-      <label>Photo, Enter a URL:</label>
-      <input type="text" ng-model="productToUpdate.photo"></input>
+        <label>Product Title</label>
+        <input class="modify-product-field" ng-model="productToUpdate.title"></input>
+        <label>Price</label>
+        <input class="modify-product-field" type="number" ng-model="productToUpdate.price"></input>
+        <label>Description</label>
+        <textarea class="review-textarea modify-product-field" name="productToUpdate-description" ng-model="productToUpdate.description" ng-required=true></textarea>
+        <label>Quantity</label>
+        <input class="modify-product-field" type="text" ng-model="productToUpdate.quantity"></input>
+        <label>Photo, Enter a URL:</label>
+        <input class="modify-product-field" type="text" ng-model="productToUpdate.photo"></input>
 
 
 

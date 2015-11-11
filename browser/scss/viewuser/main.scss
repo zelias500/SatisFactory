@@ -1,0 +1,38 @@
+#viewuser-holder {
+  background-color: white;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: $dark-shadow;
+
+
+  header {
+    padding: 10px;
+    margin: 0px auto;
+  }
+
+  .viewuser-orders {
+    padding: 20px;
+
+    ul {
+      list-style-type: none;
+
+      li {
+        box-shadow: $shadow;
+        border-radius: 10px;
+        padding: 10px;
+
+        .order-item {
+          display: inline-block;
+          padding: 10px;
+          box-shadow: 0px 0px 5px rgba(0,0,0,0.5) inset;
+          vertical-align: top;
+          border-radius: 6px;
+        }
+
+      }
+    }
+
+  }
+
+}
