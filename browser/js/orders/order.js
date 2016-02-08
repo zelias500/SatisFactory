@@ -18,7 +18,8 @@ app.config(function($stateProvider){
 
 app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session, $state) {
 	$scope.order = theOrder;
-	$scope.empty = true
+	$scope.empty = true;
+	$scope.nouser = false;
 
 	$scope.removeFromOrder = function(item){
 		var idx = _.findIndex(OrderFactory.getCurrentOrder().items, function(i){
@@ -46,9 +47,12 @@ app.controller('OrderCtrl', function($scope, theOrder, OrderFactory, Session, $s
 	}
 
 	$scope.goToCheckout = function(){
+		// if (!Session.user) {
+  //          $scope.nouser = true;
+		// }
 		if($scope.order.items.length){
 			$state.go('checkout', {order: $scope.order._id});
-		} 
+		}
 	}
 
 })

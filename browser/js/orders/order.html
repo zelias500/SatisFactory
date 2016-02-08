@@ -16,6 +16,7 @@
 
 	<h1 class="cart-heading">TOTAL: {{total | currency}}</h1>
 	<span ng-show="order.items.length == 0" class="label label-danger">Hmmm, looks like your cart is empty!</span>
+	<span ng-show="nouser" class="label label-danger">Pleae log in before checkout</span><br/>
 	<button class="btn btn-success" ng-click='goToCheckout()' ng-disabled="empty">Checkout</button>
 	<button class="btn btn-warning" ng-click='deleteOrder()'>Delete Order</button>
 

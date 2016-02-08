@@ -1,5 +1,6 @@
 app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFactory, $state, UserFactory){
 
+
   $scope.items = theOrder.items;
   var order = theOrder;
 
@@ -8,10 +9,19 @@ app.controller("CheckoutCtrl", function($scope, theOrder, currentUser, OrderFact
     $scope.userShippingAddresses = currentUser.addresses;
     $scope.userBillingDetails = currentUser.billingDetails;
   }
+  else{
+    $scope.userShippingAddresses = {};
+    $scope.userBillingDetails= {};
+  }
 
   $scope.billingOption = $scope.userBillingDetails[0] || {};
 
-  $scope.orderAddress = $scope.userShippingAddresses[0];
+  if($scope.userShippingAddresses){
+    $scope.orderAddress = $scope.userShippingAddresses[0]
+  }
+  else{
+    $scope.orderAddress = {}
+  }
 
   $scope.totalPrice = OrderFactory.calculatePrice();
   $scope.billing = {};
